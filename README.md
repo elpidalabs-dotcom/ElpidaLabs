@@ -20,6 +20,8 @@ Open http://127.0.0.1:8000/ElpidaLabs/. The preview server mirrors the project b
 
 The orbital hero responds to desktop pointer movement and has a pause/resume control. System reduced-motion preferences disable animation and pointer tilt. Content and navigation remain available without JavaScript; on narrow screens, navigation expands into a visible link list when scripting is unavailable.
 
+The shared footer uses a responsive grid, readable text, and links with 44-pixel minimum touch heights. It stacks on phones without hiding the tagline. Layout gutters and the header/footer account for device safe areas, content tracks can shrink and wrap, and short landscape navigation scrolls within the available viewport. Decorative asterisks use inline SVG so browsers do not substitute emoji artwork.
+
 ## Pages
 
 | File                         | Purpose                                                                      |
@@ -45,6 +47,21 @@ npm test
 If Chrome is already installed, use `$env:PLAYWRIGHT_CHANNEL = 'chrome'; npm test` to test that browser instead of downloading Chromium. Development packages are used only for formatting and browser verification; the site does not load them.
 
 The browser checks cover all eight content pages at 1440, 768, 390, and 320 pixels; horizontal overflow; images; WCAG A/AA axe scans; local links and fragments; menu/Escape behavior; skip-link focus; profile expansion; orbit interaction; pause and reduced motion; JavaScript errors; and nested 404 resources. Screenshots are saved to ignored `test-results/`. Automated checks supplement manual visual inspection and do not constitute a full accessibility audit.
+
+For the wider responsive regression suite:
+
+```powershell
+npx playwright install webkit
+$env:TEST_BROWSERS = 'chrome,msedge,webkit'
+npm run test:responsive
+npm run test:safe-areas
+```
+
+This checks all nine pages (including the 404 page) at 22 portrait and landscape viewport sizes from 280 to 2560 CSS pixels, footer readability and touch targets, actual text boundaries, WCAG text-spacing overrides, 200% zoom-equivalent reflow, and four phone/tablet touch profiles in both orientations. The default browser is installed Chrome; use `TEST_BROWSERS` to choose installed browsers. WebKit represents Safari's rendering engine; device profiles are emulations rather than tests on physical devices. Footer screenshots and a JSON report are saved in `test-results/responsive/`.
+
+The safe-area suite separately simulates display-cutout and home-indicator insets on every page in portrait and landscape. It verifies header/footer clearances and that the menu's final internal destination remains reachable in a short viewport.
+
+Local verification passed in Chrome, Edge, and WebKit. Firefox is supported by the test scripts but was not verified on this computer: the downloaded browser could not start because Windows reported an incorrect side-by-side runtime configuration. To include it on a compatible setup, install it with `npx playwright install firefox` and add `firefox` to `TEST_BROWSERS`.
 
 ## GitHub Pages
 

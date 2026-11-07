@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta name="theme-color" content="#0b0e0c" />
     <title>People — Elpida Labs</title>
     <meta
@@ -100,7 +103,19 @@
         <p class="eyebrow">EXPLORE THE TEAM STRUCTURE</p>
         <details class="profile">
           <summary>
-            <span class="profile-icon" aria-hidden="true">✳</span
+            <span class="profile-icon" aria-hidden="true"
+              ><svg
+                class="asterisk"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  d="M32 5v54M5 32h54M13 13l38 38M13 51l38-38"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="5"
+                /></svg></span
             ><span
               ><span class="eyebrow">01 / Founding direction</span
               ><span class="profile-title">Founder</span></span
@@ -201,25 +216,46 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer wrap">
-      <div class="footer-top">
-        <a class="brand" href="index.html"
-          ><img
-            src="assets/elpida-mark.png"
-            width="40"
-            height="40"
-            alt=""
-          /><span>elpida<span class="brand-muted">labs</span><b>.</b></span></a
-        >
-        <p>Independent minds. Shared momentum.</p>
-        <a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
-          >GitHub <span aria-hidden="true">↗</span></a
-        >
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 Elpida Labs</span
-        ><span>Student-founded. Future-focused.</span
-        ><a href="#main">Back to top ↑</a>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              ><img
+                src="assets/elpida-mark.png"
+                width="40"
+                height="40"
+                alt=""
+              /><span
+                >elpida<span class="brand-muted">labs</span><b>.</b></span
+              ></a
+            >
+            <p>Independent minds.<br />Shared momentum.</p>
+          </div>
+          <nav class="footer-nav" aria-label="Footer navigation">
+            <div class="footer-group">
+              <h2>The lab</h2>
+              <a href="about.html">About us</a><a href="team.html">Our people</a
+              ><a href="journal.html">Journal</a
+              ><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
+                >GitHub <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <div class="footer-group">
+              <h2>Our work</h2>
+              <a href="elpida.html">Elpida</a
+              ><a href="chaos-engine.html">Chaos Engine</a
+              ><a href="https://elpida.fun"
+                >Visit elpida.fun <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Elpida Labs</span
+          ><span class="footer-tagline">Student-founded. Future-focused.</span
+          ><a href="#main">Back to top ↑</a>
+        </div>
       </div>
     </footer>
   </body>
