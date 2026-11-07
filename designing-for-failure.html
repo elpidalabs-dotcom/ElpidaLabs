@@ -31,7 +31,7 @@
     />
     <meta
       property="og:image"
-      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-card.png"
+      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-chaos.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -41,20 +41,47 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/elpida-mark.png" type="image/png" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css?v=0c8c226ac0ac" />
+    <link rel="stylesheet" href="experience.css?v=0c8c226ac0ac" />
+    <script src="script.js?v=0c8c226ac0ac" defer></script>
+    <script type="module" src="enhancements.js?v=0c8c226ac0ac"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Elpida Labs",
-        "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
-        "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
-        "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization",
+            "name": "Elpida Labs",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
+            "email": "elpidalabs@gmail.com",
+            "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
+            "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+          },
+          {
+            "@type": "Article",
+            "headline": "Designing for failure, before it happens.",
+            "name": "Designing for failure, before it happens.",
+            "description": "Chaos Engine is an early research concept for resilience testing. We are exploring how controlled experiments could help teams understand failure and recovery before an incident.",
+            "inLanguage": "en",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/designing-for-failure.html",
+            "publisher": {
+              "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization"
+            },
+            "image": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-chaos.png"
+          }
+        ]
       }
     </script>
   </head>
-  <body>
+  <body data-page="designing-for-failure">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap nav-shell">
@@ -76,7 +103,7 @@
           <a href="index.html">Home</a><a href="index.html#work">Our work</a
           ><a href="about.html">The lab</a
           ><a href="journal.html" aria-current="page">Journal</a
-          ><a href="team.html">People</a
+          ><a href="team.html">People</a><a href="contact.html">Contact</a
           ><a class="nav-visit" href="https://elpida.fun"
             >Visit Elpida <span aria-hidden="true">↗</span></a
           >
@@ -94,12 +121,16 @@
           failure and recovery before an incident.
         </p>
         <div class="article-meta">
-          <span>ELPIDA LABS / PRODUCT NOTES</span
+          <span>ELPIDA LABS / PRODUCT NOTES · 3 MIN READ</span
           ><span class="status"
             ><i aria-hidden="true"></i>Direction, not a release
             announcement</span
           >
         </div>
+        <aside class="article-takeaway" aria-label="At a glance">
+          <span class="micro-label">THE IDEA IN ONE LINE</span>
+          <p>A useful experiment begins with a specific question.</p>
+        </aside>
         <div class="article-layout">
           <aside aria-label="Article contents">
             <p class="eyebrow">IN THIS NOTE</p>
@@ -110,6 +141,45 @@
             ><a href="#section-5">05 / What progress would look like</a>
           </aside>
           <div class="article-body">
+            <figure class="system-diagram compact-diagram cyan-diagram">
+              <figcaption>
+                <svg
+                  class="line-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M3 12h4l3-7 4 14 3-7h4" /></svg
+                ><span>A proposed experiment loop</span
+                ><span class="micro-label">CONCEPT MAP</span>
+              </figcaption>
+              <ol>
+                <li>
+                  <span class="diagram-number">01</span
+                  ><strong>Hypothesis</strong
+                  ><span>State expected behavior.</span>
+                </li>
+                <li>
+                  <span class="diagram-number">02</span
+                  ><strong>Bounded disruption</strong
+                  ><span>Change one condition.</span>
+                </li>
+                <li>
+                  <span class="diagram-number">03</span
+                  ><strong>Observation</strong
+                  ><span>Compare, restore, learn.</span>
+                </li>
+              </ol>
+              <p>
+                A learning loop for an isolated environment. This website does
+                not connect to infrastructure.
+              </p>
+            </figure>
             <section id="section-1">
               <h2>Start with a question</h2>
               <p>
@@ -204,6 +274,25 @@
             </div>
           </div>
         </div>
+        <section class="related-notes" aria-labelledby="related-heading">
+          <p class="eyebrow">FOLLOW THE THREAD</p>
+          <h2 id="related-heading">Keep exploring.</h2>
+          <div class="related-grid">
+            <a href="building-elpida.html"
+              ><span class="micro-label">Product thinking</span>
+              <h3>Building Elpida: from launch to community.</h3>
+              <span class="text-link"
+                >Read the note <span aria-hidden="true">↗</span></span
+              ></a
+            ><a href="building-for-every-screen.html"
+              ><span class="micro-label">Inside the build</span>
+              <h3>A small screen is a design constraint.</h3>
+              <span class="text-link"
+                >Read the note <span aria-hidden="true">↗</span></span
+              ></a
+            >
+          </div>
+        </section>
       </article>
     </main>
     <footer class="site-footer">
@@ -227,6 +316,7 @@
               <h2>The lab</h2>
               <a href="about.html">About us</a><a href="team.html">Our people</a
               ><a href="journal.html">Journal</a
+              ><a href="contact.html">Contact</a
               ><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
                 >GitHub <span aria-hidden="true">↗</span></a
               >

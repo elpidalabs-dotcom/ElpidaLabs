@@ -28,7 +28,7 @@
     />
     <meta
       property="og:image"
-      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-card.png"
+      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-chaos.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -38,20 +38,43 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/elpida-mark.png" type="image/png" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css?v=0c8c226ac0ac" />
+    <link rel="stylesheet" href="experience.css?v=0c8c226ac0ac" />
+    <script src="script.js?v=0c8c226ac0ac" defer></script>
+    <script type="module" src="enhancements.js?v=0c8c226ac0ac"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Elpida Labs",
-        "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
-        "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
-        "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization",
+            "name": "Elpida Labs",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
+            "email": "elpidalabs@gmail.com",
+            "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
+            "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+          },
+          {
+            "@type": "WebPage",
+            "headline": "Chaos Engine",
+            "name": "Chaos Engine",
+            "description": "Chaos Engine is an early resilience-testing research concept. Explore the proposed workflow, safety principles and questions still being investigated.",
+            "inLanguage": "en",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/chaos-engine.html"
+          }
+        ]
       }
     </script>
   </head>
-  <body>
+  <body data-page="chaos-engine">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap nav-shell">
@@ -73,7 +96,7 @@
           <a href="index.html">Home</a
           ><a href="index.html#work" aria-current="page">Our work</a
           ><a href="about.html">The lab</a><a href="journal.html">Journal</a
-          ><a href="team.html">People</a
+          ><a href="team.html">People</a><a href="contact.html">Contact</a
           ><a class="nav-visit" href="https://elpida.fun"
             >Visit Elpida <span aria-hidden="true">↗</span></a
           >
@@ -98,8 +121,8 @@
               software reliability through controlled failure experiments.
             </p>
             <div class="actions">
-              <a class="button" href="designing-for-failure.html"
-                >Read the research note<span aria-hidden="true">↗</span></a
+              <a class="button" href="#resilience-sandbox"
+                >Try the scenario<span aria-hidden="true">↗</span></a
               ><a class="button secondary" href="#direction"
                 >Explore the direction<span aria-hidden="true">↗</span></a
               >
@@ -113,6 +136,186 @@
             ><span class="art-corner">QUESTION / TEST / UNDERSTAND</span>
           </div>
         </div>
+      </section>
+      <section
+        class="section wrap product-experience chaos-experience"
+        id="resilience-sandbox"
+        aria-labelledby="chaos-preview-title"
+      >
+        <p class="eyebrow">INTERACTIVE EXPLAINER / CHAOS ENGINE</p>
+        <div class="section-head">
+          <div>
+            <h2 id="chaos-preview-title">
+              Change a condition.<br /><span class="serif"
+                >See the question.</span
+              >
+            </h2>
+          </div>
+          <p>
+            A deterministic browser illustration of a failure-and-recovery
+            story. Values are generated for this explainer, not measured from a
+            service.
+          </p>
+        </div>
+        <div class="demo-window chaos-demo" data-chaos-demo>
+          <div class="demo-toolbar">
+            <span class="window-lights" aria-hidden="true"
+              ><i></i><i></i><i></i></span
+            ><span>chaos engine / resilience sandbox</span
+            ><span class="demo-badge">ILLUSTRATIVE MODEL</span>
+          </div>
+          <div class="sandbox-layout">
+            <div class="sandbox-controls">
+              <p class="micro-label">DEFINE THE SCENARIO</p>
+              <label for="failure-mode">Disruption</label
+              ><select id="failure-mode">
+                <option value="latency">A dependency slows down</option>
+                <option value="outage">
+                  A dependency becomes unavailable
+                </option></select
+              ><label for="latency"
+                >Added delay
+                <output id="latency-value" for="latency">300 ms</output></label
+              ><input
+                id="latency"
+                type="range"
+                min="0"
+                max="800"
+                step="50"
+                value="300"
+              /><label for="recovery-mode">Illustrative response</label
+              ><select id="recovery-mode">
+                <option value="wait">Wait for the dependency</option>
+                <option value="fallback">Use a bounded fallback</option></select
+              ><button type="button" class="button" id="run-scenario" disabled>
+                Draw the scenario <span aria-hidden="true">↗</span></button
+              ><button
+                type="button"
+                class="reset-button"
+                id="reset-scenario"
+                disabled
+              >
+                Reset illustration
+              </button>
+              <p class="demo-note">
+                No network requests. No real failures injected. Adjustments only
+                change the model drawn here.
+              </p>
+            </div>
+            <div class="sandbox-results">
+              <div class="chart-heading">
+                <div>
+                  <span class="micro-label">SYNTHETIC RESPONSE TIME</span>
+                  <h3>A bounded disruption.</h3>
+                </div>
+                <span class="chart-unit">ms</span>
+              </div>
+              <svg
+                class="scenario-chart"
+                viewBox="0 0 640 260"
+                role="img"
+                aria-labelledby="scenario-chart-title scenario-chart-description"
+              >
+                <title id="scenario-chart-title">
+                  Illustrative response-time scenario
+                </title>
+                <desc id="scenario-chart-description">
+                  Generated sample response times increase during a simulated
+                  disruption and return to the baseline afterward. This is not
+                  live telemetry.
+                </desc>
+                <path
+                  class="chart-grid"
+                  d="M40 30H620M40 90H620M40 150H620M40 210H620"
+                />
+                <rect
+                  class="disruption-zone"
+                  x="230"
+                  y="20"
+                  width="190"
+                  height="195"
+                />
+                <text x="236" y="40" class="chart-label">
+                  DISRUPTION WINDOW
+                </text>
+                <path
+                  id="scenario-line"
+                  class="chart-line"
+                  d="M40 195L160 192L230 195L250 122L400 126L430 194L620 192"
+                />
+              </svg>
+              <div class="chart-stages" aria-hidden="true">
+                <span>BEFORE</span><span>DURING</span><span>AFTER</span>
+              </div>
+              <div
+                class="scenario-summary"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <h4 id="scenario-result">A slowdown, then a return.</h4>
+                <p id="scenario-explanation">
+                  The default illustration adds 300 ms during the disruption
+                  window. The line returns to the generated baseline afterward.
+                </p>
+              </div>
+              <div class="scenario-question">
+                <span>THE USEFUL QUESTION</span>
+                <p id="scenario-question">
+                  Would a person using the application understand the delay and
+                  know what to do next?
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="demo-footer">
+            <span>EXPLAINER / NOT A TESTING SERVICE</span
+            ><span id="scenario-state">Default illustration</span>
+          </div>
+        </div>
+        <noscript
+          ><p class="demo-note">
+            The default scenario is shown above. Enable JavaScript to change its
+            generated values.
+          </p></noscript
+        >
+        <figure class="system-diagram cyan-diagram">
+          <figcaption>
+            <svg
+              class="line-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M3 12h4l3-7 4 14 3-7h4" /></svg
+            ><span>A proposed experiment loop</span
+            ><span class="micro-label">CONCEPT MAP</span>
+          </figcaption>
+          <ol>
+            <li>
+              <span class="diagram-number">01</span><strong>Hypothesis</strong
+              ><span>State expected behavior.</span>
+            </li>
+            <li>
+              <span class="diagram-number">02</span
+              ><strong>Bounded disruption</strong
+              ><span>Change one condition.</span>
+            </li>
+            <li>
+              <span class="diagram-number">03</span><strong>Observation</strong
+              ><span>Compare, restore, learn.</span>
+            </li>
+          </ol>
+          <p>
+            A learning loop for an isolated environment. This website does not
+            connect to infrastructure.
+          </p>
+        </figure>
       </section>
       <section id="direction" class="section wrap">
         <div class="intro-grid">
@@ -188,6 +391,53 @@
           >
         </div>
       </section>
+      <section class="section wrap progress-section">
+        <div>
+          <p class="eyebrow">DEVELOPMENT / THE NEXT USEFUL STEP</p>
+          <h2>
+            Progress with<br /><span class="muted">the context attached.</span>
+          </h2>
+          <p>
+            Direction is useful. A clearly defined next objective is better.
+          </p>
+        </div>
+        <ol class="development-track">
+          <li class="is-current">
+            <span class="track-dot" aria-hidden="true"></span>
+            <div>
+              <span class="micro-label">CURRENT STAGE</span>
+              <h3>Research & concept exploration</h3>
+              <p>
+                The resilience-testing direction is described here. This website
+                now includes a synthetic scenario explainer.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="track-dot" aria-hidden="true"></span>
+            <div>
+              <span class="micro-label">NEXT OBJECTIVE / PLANNED</span>
+              <h3>Define one reproducible experiment</h3>
+              <p>
+                Document a hypothesis, an isolated environment, a bounded
+                disruption, and a verified cleanup procedure.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="track-dot" aria-hidden="true"></span>
+            <div>
+              <span class="micro-label">FUTURE / NOT YET CONFIRMED</span>
+              <h3>Evaluate a working prototype</h3>
+              <p>
+                Scope, readiness criteria, and actual results need to be
+                documented before claiming a released capability. No release
+                date is announced.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
       <section class="cta wrap">
         <div>
           <p class="eyebrow">GOOD QUESTIONS DESERVE GOOD ENGINEERING</p>
@@ -198,8 +448,8 @@
             Explore the work. Get to know the thinking.<br />Find your next
             question.
           </p>
-          <a class="button secondary" href="team.html"
-            >Meet the collective<span aria-hidden="true">↗</span></a
+          <a class="button secondary" href="contact.html"
+            >Start a conversation<span aria-hidden="true">↗</span></a
           >
         </div>
         <span class="cta-star" aria-hidden="true"
@@ -239,6 +489,7 @@
               <h2>The lab</h2>
               <a href="about.html">About us</a><a href="team.html">Our people</a
               ><a href="journal.html">Journal</a
+              ><a href="contact.html">Contact</a
               ><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
                 >GitHub <span aria-hidden="true">↗</span></a
               >

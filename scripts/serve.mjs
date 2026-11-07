@@ -35,6 +35,7 @@ export function serve(port = 8000) {
       ".png": "image/png",
       ".svg": "image/svg+xml",
       ".xml": "application/xml",
+      ".woff2": "font/woff2",
     };
     try {
       const data = await readFile(target);

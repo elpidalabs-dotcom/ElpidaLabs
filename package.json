@@ -3,16 +3,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs && node scripts/format-pages.mjs",
     "preview": "node scripts/serve.mjs",
     "test": "node scripts/test.mjs",
     "test:responsive": "node scripts/test-responsive.mjs",
     "test:safe-areas": "node scripts/test-safe-areas.mjs",
-    "format": "prettier --write *.html *.css *.js scripts/*.mjs README.md"
+    "format": "prettier --write *.html *.css *.js scripts/*.mjs content/*.json .github/workflows/*.yml README.md",
+    "build:social": "node scripts/generate-social.mjs",
+    "test:experiences": "node scripts/test-experiences.mjs",
+    "test:model": "node --test scripts/demo-model.test.mjs",
+    "check": "node scripts/check.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
     "playwright": "1.65.0",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "sharp": "0.35.5"
   }
 }

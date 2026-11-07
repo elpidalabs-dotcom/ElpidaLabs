@@ -40,20 +40,43 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/elpida-mark.png" type="image/png" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css?v=0c8c226ac0ac" />
+    <link rel="stylesheet" href="experience.css?v=0c8c226ac0ac" />
+    <script src="script.js?v=0c8c226ac0ac" defer></script>
+    <script type="module" src="enhancements.js?v=0c8c226ac0ac"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Elpida Labs",
-        "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
-        "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
-        "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization",
+            "name": "Elpida Labs",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
+            "email": "elpidalabs@gmail.com",
+            "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
+            "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+          },
+          {
+            "@type": "WebPage",
+            "headline": "Page not found",
+            "name": "Page not found",
+            "description": "This page could not be found. Return to Elpida Labs to explore our products and journal.",
+            "inLanguage": "en",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/404.html"
+          }
+        ]
       }
     </script>
   </head>
-  <body>
+  <body data-page="404">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap nav-shell">
@@ -74,7 +97,7 @@
         <nav id="primary-nav" aria-label="Primary navigation">
           <a href="index.html">Home</a><a href="index.html#work">Our work</a
           ><a href="about.html">The lab</a><a href="journal.html">Journal</a
-          ><a href="team.html">People</a
+          ><a href="team.html">People</a><a href="contact.html">Contact</a
           ><a class="nav-visit" href="https://elpida.fun"
             >Visit Elpida <span aria-hidden="true">↗</span></a
           >
@@ -114,6 +137,7 @@
               <h2>The lab</h2>
               <a href="about.html">About us</a><a href="team.html">Our people</a
               ><a href="journal.html">Journal</a
+              ><a href="contact.html">Contact</a
               ><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
                 >GitHub <span aria-hidden="true">↗</span></a
               >

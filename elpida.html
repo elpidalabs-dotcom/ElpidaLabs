@@ -28,7 +28,7 @@
     />
     <meta
       property="og:image"
-      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-card.png"
+      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-elpida.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -38,20 +38,43 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/elpida-mark.png" type="image/png" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css?v=0c8c226ac0ac" />
+    <link rel="stylesheet" href="experience.css?v=0c8c226ac0ac" />
+    <script src="script.js?v=0c8c226ac0ac" defer></script>
+    <script type="module" src="enhancements.js?v=0c8c226ac0ac"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Elpida Labs",
-        "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
-        "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
-        "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization",
+            "name": "Elpida Labs",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
+            "email": "elpidalabs@gmail.com",
+            "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
+            "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+          },
+          {
+            "@type": "WebPage",
+            "headline": "Elpida",
+            "name": "Elpida",
+            "description": "Elpida is a multichain token launchpad in development. Explore its intended direction, open questions and development status.",
+            "inLanguage": "en",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/elpida.html"
+          }
+        ]
       }
     </script>
   </head>
-  <body>
+  <body data-page="elpida">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap nav-shell">
@@ -73,7 +96,7 @@
           <a href="index.html">Home</a
           ><a href="index.html#work" aria-current="page">Our work</a
           ><a href="about.html">The lab</a><a href="journal.html">Journal</a
-          ><a href="team.html">People</a
+          ><a href="team.html">People</a><a href="contact.html">Contact</a
           ><a class="nav-visit" href="https://elpida.fun"
             >Visit Elpida <span aria-hidden="true">↗</span></a
           >
@@ -97,8 +120,8 @@
             <div class="actions">
               <a class="button" href="https://elpida.fun"
                 >Visit elpida.fun<span aria-hidden="true">↗</span></a
-              ><a class="button secondary" href="#direction"
-                >Explore the direction<span aria-hidden="true">↗</span></a
+              ><a class="button secondary" href="#product-preview"
+                >Try the interface study<span aria-hidden="true">↗</span></a
               >
             </div>
           </div>
@@ -112,6 +135,240 @@
             /><span class="art-corner">CREATE / DISCOVER / CONNECT</span>
           </div>
         </div>
+      </section>
+      <section
+        class="section wrap product-experience"
+        id="product-preview"
+        aria-labelledby="elpida-preview-title"
+      >
+        <p class="eyebrow">INTERFACE STUDY / ELPIDA</p>
+        <div class="section-head">
+          <div>
+            <h2 id="elpida-preview-title">
+              An idea you can<br /><span class="serif lime">step inside.</span>
+            </h2>
+          </div>
+          <p>
+            Try a proposed project-information flow. This interactive study uses
+            sample content and does not create tokens, connect a wallet, or make
+            transactions.
+          </p>
+        </div>
+        <div class="demo-window elpida-demo" data-elpida-demo>
+          <div class="demo-toolbar">
+            <span class="window-lights" aria-hidden="true"
+              ><i></i><i></i><i></i></span
+            ><span>elpida / creator workspace</span
+            ><span class="demo-badge">CONCEPT PREVIEW</span>
+          </div>
+          <div class="demo-layout">
+            <div class="demo-sidebar">
+              <img
+                src="assets/elpida-mark.png"
+                width="36"
+                height="36"
+                alt=""
+                loading="lazy"
+              />
+              <p class="micro-label">A PROJECT’S FIRST CHAPTER</p>
+              <div
+                class="step-controls"
+                role="group"
+                aria-label="Preview steps"
+              >
+                <button
+                  type="button"
+                  data-demo-step="0"
+                  aria-pressed="true"
+                  aria-controls="create-panel"
+                >
+                  <span>01</span>Tell the story</button
+                ><button
+                  type="button"
+                  data-demo-step="1"
+                  aria-pressed="false"
+                  aria-controls="review-panel"
+                >
+                  <span>02</span>Review the context</button
+                ><button
+                  type="button"
+                  data-demo-step="2"
+                  aria-pressed="false"
+                  aria-controls="discover-panel"
+                >
+                  <span>03</span>See the preview
+                </button>
+              </div>
+              <p class="demo-side-note">
+                Illustrative interface.<br />Your edits stay on this page.
+              </p>
+            </div>
+            <div class="demo-main">
+              <section data-demo-panel="0" id="create-panel">
+                <p class="micro-label">01 / MAKE THE IDEA UNDERSTANDABLE</p>
+                <h3>Start with the story.</h3>
+                <p>
+                  Give this sample project a name and a purpose. See the
+                  information carry through the proposed journey.
+                </p>
+                <label for="sample-name">Project name</label
+                ><input
+                  id="sample-name"
+                  type="text"
+                  maxlength="60"
+                  value="Sample project"
+                  autocomplete="off"
+                /><label for="sample-purpose"
+                  >What is the project exploring?</label
+                ><textarea id="sample-purpose" maxlength="240" rows="3">
+A community bringing curious people together around a shared idea.</textarea
+                ><button class="button" type="button" data-demo-next="1">
+                  Review the context <span aria-hidden="true">↗</span>
+                </button>
+              </section>
+              <section data-demo-panel="1" id="review-panel">
+                <p class="micro-label">02 / CONTEXT BEFORE A COMMITMENT</p>
+                <h3>Clarity before action.</h3>
+                <div class="review-block">
+                  <span class="micro-label">PROJECT</span
+                  ><strong data-sample-name>Sample project</strong>
+                  <p data-sample-purpose>
+                    A community bringing curious people together around a shared
+                    idea.
+                  </p>
+                </div>
+                <ul class="review-checklist">
+                  <li>
+                    <svg
+                      class="line-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d="m5 12 4 4L19 6" /></svg
+                    >Project description visible
+                  </li>
+                  <li>
+                    <svg
+                      class="line-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d="m5 12 4 4L19 6" /></svg
+                    >Development status stated
+                  </li>
+                  <li>
+                    <span class="review-pending" aria-hidden="true">○</span
+                    >Network and launch mechanics: still to be defined
+                  </li>
+                </ul>
+                <p class="demo-note">
+                  This review is illustrative. It is not a security check,
+                  approval, or launch-readiness assessment.
+                </p>
+                <button class="button" type="button" data-demo-next="2">
+                  See the preview <span aria-hidden="true">↗</span>
+                </button>
+              </section>
+              <section data-demo-panel="2" id="discover-panel">
+                <p class="micro-label">03 / A CLEARER FIRST IMPRESSION</p>
+                <h3>A place for the idea.</h3>
+                <div class="sample-project">
+                  <div class="sample-cover" aria-hidden="true">
+                    <svg
+                      class="line-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d="m12 3 8 5v8l-8 5-8-5V8Z" />
+                      <path d="m4 8 8 5 8-5m-8 5v8" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="demo-badge">SAMPLE / NOT A REAL LAUNCH</span>
+                    <h4 data-sample-name>Sample project</h4>
+                    <p data-sample-purpose>
+                      A community bringing curious people together around a
+                      shared idea.
+                    </p>
+                    <span class="sample-stage"
+                      >Concept · community information preview</span
+                    >
+                  </div>
+                </div>
+                <p class="demo-note">
+                  The direction: make project context easier to understand. The
+                  product is still in development.
+                </p>
+                <button
+                  class="button secondary"
+                  type="button"
+                  data-demo-next="0"
+                >
+                  Start again <span aria-hidden="true">↶</span>
+                </button>
+              </section>
+            </div>
+          </div>
+          <div class="demo-footer">
+            <span>DESIGN STUDY / NO ONCHAIN ACTIONS</span
+            ><span data-demo-position aria-live="polite">Step 1 of 3</span>
+          </div>
+        </div>
+        <figure class="system-diagram">
+          <figcaption>
+            <svg
+              class="line-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="m12 3 8 5v8l-8 5-8-5V8Z" />
+              <path d="m4 8 8 5 8-5m-8 5v8" /></svg
+            ><span>A proposed creator journey</span
+            ><span class="micro-label">CONCEPT MAP</span>
+          </figcaption>
+          <ol>
+            <li>
+              <span class="diagram-number">01</span
+              ><strong>Creator context</strong><span>What is being built?</span>
+            </li>
+            <li>
+              <span class="diagram-number">02</span><strong>Clear review</strong
+              ><span>What am I choosing?</span>
+            </li>
+            <li>
+              <span class="diagram-number">03</span><strong>Community</strong
+              ><span>What happens next?</span>
+            </li>
+          </ol>
+          <p>
+            An interface can clarify the journey. Network support and launch
+            functionality remain unconfirmed.
+          </p>
+        </figure>
       </section>
       <section id="direction" class="section wrap">
         <div class="intro-grid">
@@ -186,6 +443,53 @@
           >
         </div>
       </section>
+      <section class="section wrap progress-section">
+        <div>
+          <p class="eyebrow">DEVELOPMENT / THE NEXT USEFUL STEP</p>
+          <h2>
+            Progress with<br /><span class="muted">the context attached.</span>
+          </h2>
+          <p>
+            Direction is useful. A clearly defined next objective is better.
+          </p>
+        </div>
+        <ol class="development-track">
+          <li class="is-current">
+            <span class="track-dot" aria-hidden="true"></span>
+            <div>
+              <span class="micro-label">CURRENT STAGE</span>
+              <h3>Product in development</h3>
+              <p>
+                The multichain launchpad direction is described here. This
+                website now includes an interactive interface study.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="track-dot" aria-hidden="true"></span>
+            <div>
+              <span class="micro-label">NEXT OBJECTIVE / PLANNED</span>
+              <h3>Define a testable first journey</h3>
+              <p>
+                Narrow the creator experience, specify its constraints, and test
+                whether the project information is understandable.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="track-dot" aria-hidden="true"></span>
+            <div>
+              <span class="micro-label">FUTURE / NOT YET CONFIRMED</span>
+              <h3>Validate an implementation</h3>
+              <p>
+                Scope, readiness criteria, and actual results need to be
+                documented before claiming a released capability. No release
+                date is announced.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
       <section class="cta wrap">
         <div>
           <p class="eyebrow">GOOD QUESTIONS DESERVE GOOD ENGINEERING</p>
@@ -196,8 +500,8 @@
             Explore the work. Get to know the thinking.<br />Find your next
             question.
           </p>
-          <a class="button secondary" href="team.html"
-            >Meet the collective<span aria-hidden="true">↗</span></a
+          <a class="button secondary" href="contact.html"
+            >Start a conversation<span aria-hidden="true">↗</span></a
           >
         </div>
         <span class="cta-star" aria-hidden="true"
@@ -237,6 +541,7 @@
               <h2>The lab</h2>
               <a href="about.html">About us</a><a href="team.html">Our people</a
               ><a href="journal.html">Journal</a
+              ><a href="contact.html">Contact</a
               ><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
                 >GitHub <span aria-hidden="true">↗</span></a
               >

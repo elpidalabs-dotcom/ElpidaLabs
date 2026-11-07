@@ -1,4 +1,32 @@
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import {
+  site,
+  enhanceContent,
+  contactPage,
+  editorials,
+  journalEntries,
+} from "./enhancements.mjs";
+const generatedPages = [];
+const assetVersion = createHash("sha256")
+  .update(
+    [
+      "styles.css",
+      "experience.css",
+      "script.js",
+      "enhancements.js",
+      "demo-model.js",
+    ]
+      .map((file) =>
+        readFileSync(new URL("../" + file, import.meta.url), "utf8").replace(
+          /\r\n/g,
+          "\n",
+        ),
+      )
+      .join(""),
+  )
+  .digest("hex")
+  .slice(0, 12);
 const root = new URL("../", import.meta.url);
 const write = (file, content) =>
   writeFileSync(new URL(file, root), content.trim() + "\n");
@@ -19,16 +47,67 @@ const cta = `<section class="cta wrap"><div>${label("GOOD QUESTIONS DESERVE GOOD
 const products = `<div class="product-grid"><article class="product-card"><a class="product-art elpida-art" href="elpida.html"><div class="art-rings"></div><img src="assets/elpida-mark.png" alt="" width="240" height="240" loading="lazy"/><span class="art-corner">01 / ELPIDA</span><span class="art-arrow" aria-hidden="true">↗</span></a><div class="card-copy">${status("In development")}<h3><a href="elpida.html">Elpida</a></h3><p>A multichain token launchpad exploring how creators launch and communities discover what comes next.</p><div class="card-foot"><span>WEB3 · PRODUCT R&D</span><a href="elpida.html">Explore product ${arrow}</a></div></div></article><article class="product-card"><a class="product-art chaos-art" href="chaos-engine.html"><div class="chaos-grid"></div><div class="chaos-symbol">⌁</div><span class="signal signal-one"></span><span class="signal signal-two"></span><span class="art-corner">02 / CHAOS ENGINE</span><span class="art-arrow" aria-hidden="true">↗</span></a><div class="card-copy">${status("Research & exploration")}<h3><a href="chaos-engine.html">Chaos Engine</a></h3><p>A resilience-testing concept asking a simple question: how does your software respond when things go wrong?</p><div class="card-foot"><span>DEVTOOLS · SYSTEMS RESEARCH</span><a href="chaos-engine.html">Explore concept ${arrow}</a></div></div></article></div>`;
 const notes = `<div class="notes-grid"><a class="note-card" href="building-elpida.html"><span class="note-type">PRODUCT THINKING <span>01</span></span><h3>Building Elpida:<br>from launch to community.</h3><p>The questions shaping a multichain launchpad, and the work still ahead.</p><span class="text-link">Read the article ${arrow}</span></a><a class="note-card" href="designing-for-failure.html"><span class="note-type">ENGINEERING NOTES <span>02</span></span><h3>Designing for failure,<br>before it happens.</h3><p>What we're exploring with Chaos Engine, and why scope and safety come first.</p><span class="text-link">Read the article ${arrow}</span></a></div>`;
 function page(file, title, description, content, active = "") {
+  content = enhanceContent(file, content);
+  generatedPages.push(file);
+  const entry = journalEntries.find((item) => item.file === file);
+  const readingMinutes = Math.max(
+    1,
+    Math.ceil(content.replace(/<[^>]*>/g, " ").split(/\s+/).length / 220),
+  );
+  if (entry)
+    content = content.replace(
+      "ELPIDA LABS / PRODUCT NOTES",
+      "ELPIDA LABS / " +
+        (entry.tag === "engineering" ? "INSIDE THE BUILD" : "PRODUCT NOTES") +
+        " · " +
+        readingMinutes +
+        " MIN READ",
+    );
+  const shareImage =
+    file === "elpida.html" || file === "building-elpida.html"
+      ? "social-elpida.png"
+      : file === "chaos-engine.html" || file === "designing-for-failure.html"
+        ? "social-chaos.png"
+        : "social-card.png";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": origin + "#organization",
+        name: "Elpida Labs",
+        url: origin,
+        email: site.email,
+        logo: origin + "assets/elpida-mark.png",
+        sameAs: [site.repository],
+      },
+      {
+        "@type": entry ? "Article" : "WebPage",
+        headline: title,
+        name: title,
+        description,
+        inLanguage: "en",
+        url: origin + (file === "index.html" ? "" : file),
+        ...(entry
+          ? {
+              publisher: { "@id": origin + "#organization" },
+              image: origin + "assets/" + shareImage,
+            }
+          : {}),
+      },
+    ],
+  };
   const links = [
     ["index.html", "Home"],
     ["index.html#work", "Our work"],
     ["about.html", "The lab"],
     ["journal.html", "Journal"],
     ["team.html", "People"],
+    ["contact.html", "Contact"],
   ];
   write(
     file,
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${title} — Elpida Labs</title><meta name="description" content="${description}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${file.includes("building-") || file.includes("designing-") ? "article" : "website"}"/><meta property="og:title" content="${title} — Elpida Labs"/><meta property="og:description" content="${description}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/social-card.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="stylesheet" href="styles.css"/><script src="script.js" defer></script><script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "Elpida Labs", url: origin, logo: origin + "assets/elpida-mark.png", sameAs: ["https://github.com/elpidalabs-dotcom/ElpidaLabs"] })}</script></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ↑</a></div></div></footer></body></html>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${title} — Elpida Labs</title><meta name="description" content="${description}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${title} — Elpida Labs"/><meta property="og:description" content="${description}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData)}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ↑</a></div></div></footer></body></html>`,
   );
 }
 page(
@@ -242,6 +321,16 @@ article(
   ["chaos-engine.html", "Explore Chaos Engine"],
 );
 page(
+  "contact.html",
+  "Start a conversation",
+  "Contact Elpida Labs about engineering collaborations, product feedback, and research. Prepare an enquiry for " +
+    site.email +
+    ".",
+  contactPage,
+  "Contact",
+);
+for (const editorial of editorials) article(...editorial);
+page(
   "404.html",
   "Page not found",
   "This page could not be found. Return to Elpida Labs to explore our products and journal.",
@@ -249,7 +338,7 @@ page(
 );
 // GitHub Pages serves this document at the original missing URL, including nested paths.
 // A fixed base keeps all fallback assets and navigation within the project site.
-const { readFileSync } = await import("node:fs");
+
 write(
   "404.html",
   readFileSync(new URL("404.html", root), "utf8").replace(
@@ -259,7 +348,13 @@ write(
 );
 write(
   "sitemap.xml",
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["", "elpida.html", "chaos-engine.html", "about.html", "team.html", "journal.html", "building-elpida.html", "designing-for-failure.html"].map((p) => `<url><loc>${origin}${p}</loc></url>`).join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${generatedPages
+    .filter((file) => file !== "404.html")
+    .map((file) => (file === "index.html" ? "" : file))
+    .map((p) => `<url><loc>${origin}${p}</loc></url>`)
+    .join("")}</urlset>`,
 );
 write(".nojekyll", "");
-console.log("Generated 8 pages, 404 fallback, and sitemap.");
+console.log(
+  `Generated ${generatedPages.length - 1} content pages, 404 fallback, and sitemap.`,
+);

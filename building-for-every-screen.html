@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0b0e0c" />
+    <title>A small screen is a design constraint. — Elpida Labs</title>
+    <meta
+      name="description"
+      content="A look at the actual decisions behind this website’s mobile footer, safe-area spacing, and responsive browser checks."
+    />
+    <link
+      rel="canonical"
+      href="https://elpidalabs-dotcom.github.io/ElpidaLabs/building-for-every-screen.html"
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="A small screen is a design constraint. — Elpida Labs"
+    />
+    <meta
+      property="og:description"
+      content="A look at the actual decisions behind this website’s mobile footer, safe-area spacing, and responsive browser checks."
+    />
+    <meta
+      property="og:url"
+      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/building-for-every-screen.html"
+    />
+    <meta
+      property="og:image"
+      content="https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Elpida Labs. Curiosity into code. Code into impact."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/elpida-mark.png" type="image/png" />
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css?v=0c8c226ac0ac" />
+    <link rel="stylesheet" href="experience.css?v=0c8c226ac0ac" />
+    <script src="script.js?v=0c8c226ac0ac" defer></script>
+    <script type="module" src="enhancements.js?v=0c8c226ac0ac"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization",
+            "name": "Elpida Labs",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/",
+            "email": "elpidalabs@gmail.com",
+            "logo": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/elpida-mark.png",
+            "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
+          },
+          {
+            "@type": "Article",
+            "headline": "A small screen is a design constraint.",
+            "name": "A small screen is a design constraint.",
+            "description": "A look at the actual decisions behind this website’s mobile footer, safe-area spacing, and responsive browser checks.",
+            "inLanguage": "en",
+            "url": "https://elpidalabs-dotcom.github.io/ElpidaLabs/building-for-every-screen.html",
+            "publisher": {
+              "@id": "https://elpidalabs-dotcom.github.io/ElpidaLabs/#organization"
+            },
+            "image": "https://elpidalabs-dotcom.github.io/ElpidaLabs/assets/social-card.png"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body data-page="building-for-every-screen">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap nav-shell">
+        <a class="brand" href="index.html"
+          ><img
+            src="assets/elpida-mark.png"
+            width="40"
+            height="40"
+            alt=""
+          /><span>elpida<span class="brand-muted">labs</span><b>.</b></span></a
+        ><button
+          class="menu-toggle"
+          aria-controls="primary-nav"
+          aria-expanded="false"
+        >
+          Menu <span aria-hidden="true">☰</span>
+        </button>
+        <nav id="primary-nav" aria-label="Primary navigation">
+          <a href="index.html">Home</a><a href="index.html#work">Our work</a
+          ><a href="about.html">The lab</a
+          ><a href="journal.html" aria-current="page">Journal</a
+          ><a href="team.html">People</a><a href="contact.html">Contact</a
+          ><a class="nav-visit" href="https://elpida.fun"
+            >Visit Elpida <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <article class="article wrap">
+        <a class="breadcrumb" href="journal.html">← Back to journal</a>
+        <p class="eyebrow">INSIDE THE BUILD / RESPONSIVE DESIGN</p>
+        <h1>A small screen is a design constraint.</h1>
+        <p class="article-deck">
+          A look at the actual decisions behind this website’s mobile footer,
+          safe-area spacing, and responsive browser checks.
+        </p>
+        <div class="article-meta">
+          <span>ELPIDA LABS / INSIDE THE BUILD · 3 MIN READ</span
+          ><span class="status"
+            ><i aria-hidden="true"></i>Direction, not a release
+            announcement</span
+          >
+        </div>
+        <aside class="article-takeaway" aria-label="At a glance">
+          <span class="micro-label">THE IDEA IN ONE LINE</span>
+          <p>A layout can fit and still be too small to use.</p>
+        </aside>
+        <div class="article-layout">
+          <aside aria-label="Article contents">
+            <p class="eyebrow">IN THIS NOTE</p>
+            <a href="#section-1">01 / Fitting is not the same as working</a
+            ><a href="#section-2">02 / The browser is part of the design</a
+            ><a href="#section-3">03 / Leave room for the device</a
+            ><a href="#section-4">04 / Check the text, not only the page</a
+            ><a href="#section-5">05 / Keep the limits visible</a>
+          </aside>
+          <div class="article-body">
+            <figure class="system-diagram">
+              <figcaption>
+                <svg
+                  class="line-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18" /></svg
+                ><span>A small website, with clear boundaries</span
+                ><span class="micro-label">IMPLEMENTED HERE</span>
+              </figcaption>
+              <ol>
+                <li>
+                  <span class="diagram-number">01</span
+                  ><strong>Content & templates</strong
+                  ><span
+                    >Verified copy, shared components, local generation.</span
+                  >
+                </li>
+                <li>
+                  <span class="diagram-number">02</span
+                  ><strong>Static output</strong
+                  ><span>HTML, CSS, and small browser enhancements.</span>
+                </li>
+                <li>
+                  <span class="diagram-number">03</span
+                  ><strong>GitHub Pages</strong
+                  ><span>Direct routes under /ElpidaLabs/.</span>
+                </li>
+              </ol>
+              <p>
+                Demonstrations run in the browser. Enquiries open an email
+                draft. No application server is required.
+              </p>
+            </figure>
+            <section id="section-1">
+              <h2>Fitting is not the same as working</h2>
+              <p>
+                The first footer could fit within a phone’s width by shrinking
+                its secondary text to eight pixels and hiding a tagline. That
+                avoided a horizontal scrollbar, but it did not create a
+                comfortable reading experience.
+              </p>
+              <p>
+                The revised footer uses a grid that becomes a single stack for
+                the brand and two columns for navigation. Secondary text stays
+                at a readable size, and links have a minimum touch height of 44
+                pixels. The layout changes rather than removing useful
+                information.
+              </p>
+            </section>
+            <section id="section-2">
+              <h2>The browser is part of the design</h2>
+              <p>
+                The same decorative asterisk could appear as a plain glyph in
+                one browser and as a green emoji tile in another. Inline SVG now
+                gives these marks a stable shape and color.
+              </p>
+              <p>
+                WebKit also exposed a narrow-screen overflow in the decorative
+                focus strip that Chromium did not show. On phones, that strip
+                now uses a three-column layout with the decorative separators
+                removed. Testing a second rendering engine found something that
+                a simple width check in one browser could miss.
+              </p>
+            </section>
+            <section id="section-3">
+              <h2>Leave room for the device</h2>
+              <p>
+                A viewport is not always an unobstructed rectangle. The header,
+                gutters, and footer account for safe-area insets, and the
+                narrow-screen menu uses the available viewport height.
+              </p>
+              <p>
+                The safe-area tests simulate cutout and home-indicator spacing.
+                They also check that the final internal menu destination can be
+                reached in a short landscape viewport. These are emulated
+                conditions; they supplement, rather than claim to replace,
+                physical-device testing.
+              </p>
+            </section>
+            <section id="section-4">
+              <h2>Check the text, not only the page</h2>
+              <p>
+                A document can have the correct width while individual lines
+                overflow a card or a footer link becomes too small. The
+                responsive suite inspects actual text line boundaries, footer
+                geometry, and touch heights.
+              </p>
+              <p>
+                It covers portrait and landscape sizes from 280 to 2560 CSS
+                pixels, text-spacing overrides, and phone/tablet touch profiles.
+                The broader lesson is practical: test the thing a person needs
+                to read or activate, not just the outer page rectangle.
+              </p>
+            </section>
+            <section id="section-5">
+              <h2>Keep the limits visible</h2>
+              <p>
+                Local checks have run in Chrome, Edge, and WebKit. The
+                downloaded Firefox test browser on this Windows machine could
+                not start because of a runtime configuration problem; that is a
+                verification gap, not a passing result.
+              </p>
+              <p>
+                The repository includes reusable browser checks so future edits
+                can be evaluated against the same constraints. As real devices
+                and new content become available, they should become part of the
+                review too.
+              </p>
+            </section>
+            <div class="article-end">
+              <p class="eyebrow">CONTINUE EXPLORING</p>
+              <a class="button" href="index.html"
+                >Explore the website<span aria-hidden="true">↗</span></a
+              ><a class="text-link" href="journal.html"
+                >All journal notes <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </div>
+        </div>
+        <section class="related-notes" aria-labelledby="related-heading">
+          <p class="eyebrow">FOLLOW THE THREAD</p>
+          <h2 id="related-heading">Keep exploring.</h2>
+          <div class="related-grid">
+            <a href="building-elpida.html"
+              ><span class="micro-label">Product thinking</span>
+              <h3>Building Elpida: from launch to community.</h3>
+              <span class="text-link"
+                >Read the note <span aria-hidden="true">↗</span></span
+              ></a
+            ><a href="designing-for-failure.html"
+              ><span class="micro-label">Engineering notes</span>
+              <h3>Designing for failure, before it happens.</h3>
+              <span class="text-link"
+                >Read the note <span aria-hidden="true">↗</span></span
+              ></a
+            >
+          </div>
+        </section>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              ><img
+                src="assets/elpida-mark.png"
+                width="40"
+                height="40"
+                alt=""
+              /><span
+                >elpida<span class="brand-muted">labs</span><b>.</b></span
+              ></a
+            >
+            <p>Independent minds.<br />Shared momentum.</p>
+          </div>
+          <nav class="footer-nav" aria-label="Footer navigation">
+            <div class="footer-group">
+              <h2>The lab</h2>
+              <a href="about.html">About us</a><a href="team.html">Our people</a
+              ><a href="journal.html">Journal</a
+              ><a href="contact.html">Contact</a
+              ><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs"
+                >GitHub <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <div class="footer-group">
+              <h2>Our work</h2>
+              <a href="elpida.html">Elpida</a
+              ><a href="chaos-engine.html">Chaos Engine</a
+              ><a href="https://elpida.fun"
+                >Visit elpida.fun <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Elpida Labs</span
+          ><span class="footer-tagline">Student-founded. Future-focused.</span
+          ><a href="#main">Back to top ↑</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

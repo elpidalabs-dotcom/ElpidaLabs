@@ -1,72 +1,98 @@
 # Elpida Labs
 
-A responsive, multipage technology company website. The published site is static HTML, CSS, and JavaScript, with no runtime dependencies or build step required by GitHub Pages.
+A responsive, multipage technology company website for GitHub Pages at `https://elpidalabs-dotcom.github.io/ElpidaLabs/`. Production is static HTML, CSS, a self-hosted font, and small browser scripts. It requires no application server, database, visitor accounts, or runtime package downloads.
 
-## Preview
-
-```powershell
-npm run preview
-```
-
-Open http://127.0.0.1:8000/ElpidaLabs/. The preview server mirrors the project base path, including a nested-URL 404 fallback. It binds to the local computer only.
-
-## Editing
-
-- `scripts/build.mjs` is the source for page content, shared navigation/footer, metadata, and sitemap. Run `npm run build` after editing it. Generated HTML is committed so Pages can serve it directly.
-- `styles.css` contains the responsive design system; `script.js` handles mobile navigation and the interactive orbital hero.
-- `assets/elpida-logo.png` is the untouched supplied logo. `assets/elpida-mark.png` is a transparent, cropped derivative preserving its shape and green appearance. The dark square and surrounding glow were removed with a foreground alpha extraction; it is used for the brand, product art, orbit, and favicon.
-- `assets/social-card.png` is a 1200 × 630 social preview. The earlier SVG assets are retained for history but are no longer referenced.
-- Team entries use native expandable `details` elements. Replace the pending text with verified names, consented biographies, and real links when supplied. No identities are assumed.
-
-The orbital hero responds to desktop pointer movement and has a pause/resume control. System reduced-motion preferences disable animation and pointer tilt. Content and navigation remain available without JavaScript; on narrow screens, navigation expands into a visible link list when scripting is unavailable.
-
-The shared footer uses a responsive grid, readable text, and links with 44-pixel minimum touch heights. It stacks on phones without hiding the tagline. Layout gutters and the header/footer account for device safe areas, content tracks can shrink and wrap, and short landscape navigation scrolls within the available viewport. Decorative asterisks use inline SVG so browsers do not substitute emoji artwork.
-
-## Pages
-
-| File                         | Purpose                                                                      |
-| ---------------------------- | ---------------------------------------------------------------------------- |
-| `index.html`                 | Company home, interactive hero, products and journal                         |
-| `elpida.html`                | Elpida product direction and development status; links to https://elpida.fun |
-| `chaos-engine.html`          | Early resilience-testing concept and unconfirmed scope                       |
-| `about.html`                 | Lab background, capabilities and principles                                  |
-| `team.html`                  | Expandable founder, co-founder and collaborator profile spaces               |
-| `journal.html`               | Product article index                                                        |
-| `building-elpida.html`       | Detailed Elpida product direction article                                    |
-| `designing-for-failure.html` | Detailed Chaos Engine research article                                       |
-| `404.html`                   | GitHub Pages fallback with fixed `/ElpidaLabs/` base                         |
-
-## Verify
+## Preview and build
 
 ```powershell
 npm ci
-npx playwright install chromium
-npm test
+npm run build
+npm run preview
 ```
 
-If Chrome is already installed, use `$env:PLAYWRIGHT_CHANNEL = 'chrome'; npm test` to test that browser instead of downloading Chromium. Development packages are used only for formatting and browser verification; the site does not load them.
+Open http://127.0.0.1:8000/ElpidaLabs/. The local-only preview mirrors the project base path and nested 404 behavior. Refresh the browser after editing. Generated HTML is committed, so GitHub Pages itself needs no build step.
 
-The browser checks cover all eight content pages at 1440, 768, 390, and 320 pixels; horizontal overflow; images; WCAG A/AA axe scans; local links and fragments; menu/Escape behavior; skip-link focus; profile expansion; orbit interaction; pause and reduced motion; JavaScript errors; and nested 404 resources. Screenshots are saved to ignored `test-results/`. Automated checks supplement manual visual inspection and do not constitute a full accessibility audit.
+## Experience
 
-For the wider responsive regression suite:
+- **Meaningful orbit:** selectable AI, Web3, and Systems focus areas update the hero explanation, artwork, and destination. Keyboard arrows, Home/End, touch, pause/resume, and reduced motion are supported.
+- **Elpida interface study:** a three-step sample creator journey carries edited project information into review and discovery views. It is explicitly a concept, with no wallet, token creation, transactions, or network claims. Edits stay in the current page.
+- **Chaos Engine explainer:** deterministic synthetic data illustrates latency, dependency unavailability, and bounded fallback behavior. The graph, text summary, and accessible description update together. It does not test services, inject failures, or show real telemetry.
+- **Product direction:** architecture/journey diagrams and development tracks distinguish current stages, planned next objectives, and unconfirmed future work.
+- **Journal:** four filterable notes, original technical diagrams, reading estimates, article summaries, reading progress, active contents links, and related reading. The two new engineering notes describe actual decisions in this website.
+- **Evidence:** website milestones link to real repository commits. They are separated from product-release progress; no live activity counters or fabricated product metrics are used.
+- **Contact:** `elpidalabs@gmail.com` is the owner-supplied destination. The enquiry form prepares a reviewed email draft; visitors send it in their own email app. Copy actions provide an alternative. Long drafts use copy/paste to avoid email-handler URL limits. Nothing is claimed to have been sent by the website, and enquiries are not stored here.
+- **Visual identity:** lime product styling for Elpida, cyan for Chaos Engine, inline SVG diagrams and icons, self-hosted Manrope, optional native page transitions, and separate PNG social previews. Runtime requests stay on the website origin.
+
+Without JavaScript, core content and navigation remain available, all three concept steps remain readable, all journal notes are shown, and the contact form can open the email app. View transitions are an optional browser enhancement and respect reduced-motion preferences.
+
+## Sources and editing
+
+| Source                     | Purpose                                                                                                   |
+| -------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `scripts/build.mjs`        | Shared page shell, base page content, metadata, structured data, asset fingerprints, sitemap              |
+| `scripts/enhancements.mjs` | Product experiences, diagrams, journal entries, engineering articles, development tracks, contact page    |
+| `content/site.json`        | Verified contact destination, repository/product links, website milestones, future approved team profiles |
+| `styles.css`               | Base layout, responsive typography, safe areas, accessible footer                                         |
+| `experience.css`           | Product and editorial visual systems, form styles, self-hosted font, progressive transitions              |
+| `script.js`                | Mobile navigation and reduced-motion-aware orbital animation                                              |
+| `enhancements.js`          | Focus-area selection, local studies, filters, enquiry drafts, clipboard fallback, reading progress        |
+| `demo-model.js`            | Pure synthetic scenario model; no DOM or network access                                                   |
+
+Run `npm run build` after content, CSS, or browser-script changes. It writes formatted HTML and updates the shared asset fingerprint so newly deployed pages request the matching CSS and JavaScript. Relative navigation and assets preserve the `/ElpidaLabs/` project path. The 404 document has a fixed project base for missing nested URLs.
+
+Team names and biographies remain unpublished, as requested. The existing expandable role profiles remain available. Approved future `content/site.json` team entries can contain `name`, `bio`, and `links` with `label` and HTTPS `url`; supplied text is escaped. No invented people, portraits, credentials, testimonials, release dates, audits, or supported networks are included.
+
+## Pages
+
+| File                             | Purpose                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------- |
+| `index.html`                     | Company overview, selectable orbit, products, journal, website build record           |
+| `elpida.html`                    | Development direction, editable interface study, journey diagram, next objectives     |
+| `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives |
+| `about.html`                     | Lab principles, AI approach, and repository evidence                                  |
+| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                        |
+| `journal.html`                   | Four filterable product and engineering notes                                         |
+| `building-elpida.html`           | Product direction and open questions                                                  |
+| `designing-for-failure.html`     | Resilience-testing research direction                                                 |
+| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                    |
+| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries             |
+| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                   |
+| `404.html`                       | Project-base-aware fallback                                                           |
+
+## Assets and attribution
+
+The supplied `assets/elpida-logo.png` is preserved. `assets/elpida-mark.png` is its transparent, cropped derivative. Three 1200 × 630 PNG share cards are committed. Regenerate them manually with `npm run build:social`; this uses development-only Sharp and system font rendering, so results can vary slightly by operating system. CI does not regenerate these binary images.
+
+Manrope's Latin variable WOFF2 is served from `assets/fonts/`, with its SIL Open Font License in `assets/fonts/OFL-Manrope.txt`. Original font source: https://fonts.google.com/specimen/Manrope. The site makes no Google Fonts requests. System fonts remain fallbacks. The earlier SVG favicon/share artwork is retained but no longer referenced.
+
+## Verification
 
 ```powershell
-npx playwright install webkit
-$env:TEST_BROWSERS = 'chrome,msedge,webkit'
+npm run check
+npm run test:model
+npx playwright install chromium webkit
+npm test
+$env:TEST_BROWSERS = 'chromium,webkit'
+npm run test:experiences
 npm run test:responsive
 npm run test:safe-areas
 ```
 
-This checks all nine pages (including the 404 page) at 22 portrait and landscape viewport sizes from 280 to 2560 CSS pixels, footer readability and touch targets, actual text boundaries, WCAG text-spacing overrides, 200% zoom-equivalent reflow, and four phone/tablet touch profiles in both orientations. The default browser is installed Chrome; use `TEST_BROWSERS` to choose installed browsers. WebKit represents Safari's rendering engine; device profiles are emulations rather than tests on physical devices. Footer screenshots and a JSON report are saved in `test-results/responsive/`.
+When Chrome/Edge are installed locally, use `$env:PLAYWRIGHT_CHANNEL = 'chrome'; npm test` for the main suite and `$env:TEST_BROWSERS = 'chrome,msedge,webkit'` for the other browser suites.
 
-The safe-area suite separately simulates display-cutout and home-indicator insets on every page in portrait and landscape. It verifies header/footer clearances and that the menu's final internal destination remains reachable in a short viewport.
+- `check` verifies generated experiences, unique IDs, base paths, metadata, JSON-LD, social image dimensions, and uncompressed asset budgets (35 KB browser JavaScript, 100 KB CSS, 50 KB font).
+- `test:model` verifies deterministic data, bounded disruption, recovery, fallback semantics, and invalid-input handling.
+- `test` discovers every content page and checks four viewport widths, WCAG A/AA axe scans, images, local links, keyboard navigation, profile expansion, pause/reduced motion, pointer interaction, and nested 404 behavior.
+- `test:experiences` checks meaningful orbit selection, editable preview state, active-panel accessibility, synthetic scenario controls, filters, safe text insertion, enquiry validation/encoding, long-message fallback, copy behavior, reading progress, no external demonstration requests, and no-JavaScript fallbacks.
+- `test:responsive` discovers all pages and checks 22 portrait/landscape viewport sizes from 280 to 2560 CSS pixels, actual text boundaries, footer geometry/readability/touch heights, text-spacing overrides, zoom-equivalent reflow, and four touch profiles in both orientations.
+- `test:safe-areas` checks all pages with simulated cutout/home-indicator insets and short landscape menus.
 
-Local verification passed in Chrome, Edge, and WebKit. Firefox is supported by the test scripts but was not verified on this computer: the downloaded browser could not start because Windows reported an incorrect side-by-side runtime configuration. To include it on a compatible setup, install it with `npx playwright install firefox` and add `firefox` to `TEST_BROWSERS`.
+Reports and screenshots are saved to ignored `test-results/`. Device profiles and safe areas are emulations, not claims of physical-device coverage. Automated accessibility checks supplement visual and keyboard review.
 
-## GitHub Pages
+Local verification uses Chrome, Edge, and WebKit. The downloaded Firefox test browser cannot launch on this Windows computer because of a side-by-side runtime configuration error. Firefox remains included in Linux CI; its hosted results cannot be verified until the workflow is pushed and runs.
 
-Use the repository root as the Pages publishing source. `.nojekyll` keeps these files as a plain static site. Page links and asset paths are relative, while canonical URLs, the sitemap, and the 404 base explicitly target `https://elpidalabs-dotcom.github.io/ElpidaLabs/`. Direct `.html` routes work without an SPA fallback or server rewrites.
+## GitHub quality checks and publishing
 
-The company pages clearly distinguish development intentions from shipped features. Elpida is in development; Chaos Engine is in research and exploration. No release dates, supported networks, audits, testimonials, metrics, or team identities are invented. The previously unconfigured contact email was removed. The product destination and verified repository are the public links.
+`.github/workflows/quality.yml` is prepared for pushes to `main`, pull requests, and manual runs. Its Linux matrix checks Chromium, WebKit, and Firefox, verifies generated-page consistency, and saves screenshots/reports for seven days. Third-party actions are pinned to verified commit SHAs, and workflow permissions are read-only. It does not deploy or push changes. To enforce checks before merging, configure the desired required checks in GitHub repository rules.
 
-Nothing in this workflow pushes or publishes changes. Review locally before approving a push.
+Continue publishing from the repository root through GitHub Pages. `.nojekyll` preserves plain static output. Direct `.html` routes need no SPA fallback or server rewrite. Nothing in the local build or test scripts pushes or publishes changes; review before approving a push.

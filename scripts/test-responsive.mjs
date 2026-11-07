@@ -1,19 +1,11 @@
 import { chromium, firefox, webkit, devices } from "playwright";
 import assert from "node:assert/strict";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, readdir } from "node:fs/promises";
 import { serve } from "./serve.mjs";
 
-const pages = [
-  "index.html",
-  "elpida.html",
-  "chaos-engine.html",
-  "about.html",
-  "team.html",
-  "journal.html",
-  "building-elpida.html",
-  "designing-for-failure.html",
-  "404.html",
-];
+const pages = (await readdir(new URL("../", import.meta.url))).filter((file) =>
+  file.endsWith(".html"),
+);
 const viewports = [
   [280, 653],
   [320, 568],

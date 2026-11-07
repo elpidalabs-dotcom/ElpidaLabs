@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import assert from "node:assert/strict";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readdir } from "node:fs/promises";
 import { serve } from "./serve.mjs";
 const server = await serve(0);
 const base = `http://127.0.0.1:${server.address().port}/ElpidaLabs/`;
@@ -10,16 +10,9 @@ const browser = await chromium.launch(
     ? { channel: process.env.PLAYWRIGHT_CHANNEL }
     : {},
 );
-const pages = [
-  "index.html",
-  "elpida.html",
-  "chaos-engine.html",
-  "about.html",
-  "team.html",
-  "journal.html",
-  "building-elpida.html",
-  "designing-for-failure.html",
-];
+const pages = (await readdir(new URL("../", import.meta.url))).filter(
+  (file) => file.endsWith(".html") && file !== "404.html",
+);
 const errors = [];
 await mkdir("test-results", { recursive: true });
 try {
@@ -34,7 +27,9 @@ try {
     await page.setViewportSize({ width, height: 1000 });
     for (const file of pages) {
       await page.goto(base + file);
-      for (const img of await page.locator('img[loading="lazy"]').all()) {
+      for (const img of await page
+        .locator('img[loading="lazy"]:visible')
+        .all()) {
         await img.scrollIntoViewIfNeeded();
         await page.waitForFunction(
           (el) => el.complete && el.naturalWidth > 0,
@@ -56,7 +51,7 @@ try {
       );
       assert.equal(
         await page
-          .locator("img")
+          .locator("img:visible")
           .evaluateAll((imgs) =>
             imgs.every((img) => img.complete && img.naturalWidth > 0),
           ),
