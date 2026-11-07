@@ -1,0 +1,16 @@
+{
+  "name": "elpida-labs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs",
+    "test": "node scripts/test.mjs",
+    "format": "prettier --write *.html *.css *.js scripts/*.mjs README.md"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "playwright": "1.65.0",
+    "prettier": "3.6.2"
+  }
+}
