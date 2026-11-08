@@ -27,10 +27,10 @@ IDs are identifiers, not credentials. Builds use `vercel pull`, `vercel build
 One repository secret is required before the first automatic deployment:
 
 1. In [Vercel tokens](https://vercel.com/account/settings/tokens), create a token
-   named `ElpidaLabs GitHub Actions`, scoped to the **Ulquiorra** team. Choose an
+   named `ElpidaLabs GitHub Actions`, scoped to **Ulquiorra → elpidalabs**. Choose an
    expiration you can maintain and replace the GitHub secret before it expires.
-   Team scope can permit operations on other projects in that team; keep this
-   token private and use it only for this workflow.
+   Select this project rather than All Projects; keep this token private and use
+   it only for this workflow. The initial token was created with a one-year lifetime.
 2. In [this repository's Actions secrets](https://github.com/elpidalabs-dotcom/ElpidaLabs/settings/secrets/actions),
    add a **repository secret** named `VERCEL_TOKEN` and paste the token directly
    there. Do not put it in source files, issues, chat, or workflow logs.

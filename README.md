@@ -2,7 +2,7 @@
 
 A responsive, multipage technology company website for GitHub Pages at `https://elpidalabs-dotcom.github.io/ElpidaLabs/`. Production is static HTML, CSS, a self-hosted font, and small browser scripts. It requires no application server, database, visitor accounts, or runtime package downloads.
 
-Vercel migration is prepared for `https://elpidalabs.xyz/`: `npm run build:vercel` generates an isolated root-domain artifact in `dist`, while the default build preserves GitHub Pages compatibility. See [DEPLOYMENT.md](DEPLOYMENT.md) for the exact project settings, domain connection, DNS/HTTPS checks, and local verification. Preparation alone does not attach the domain or publish the migration.
+Production is hosted on Vercel at `https://elpidalabs.xyz/`: `npm run build:vercel` generates an isolated root-domain artifact in `dist`, while the default build preserves GitHub Pages compatibility. GitHub Actions deploys approved pushes to `main` after all browser checks pass, using a dedicated project-scoped credential. See [DEPLOYMENT.md](DEPLOYMENT.md) for project settings, credential maintenance, DNS/HTTPS checks, and local verification.
 
 ## Preview and build
 
@@ -96,6 +96,6 @@ Local verification uses Chrome, Edge, and WebKit. The downloaded Firefox test br
 
 ## GitHub quality checks and publishing
 
-`.github/workflows/quality.yml` is prepared for pushes to `main`, pull requests, and manual runs. Its Linux matrix checks Chromium, WebKit, and Firefox, verifies generated-page consistency, and saves screenshots/reports for seven days. Third-party actions are pinned to verified commit SHAs, and workflow permissions are read-only. It does not deploy or push changes. To enforce checks before merging, configure the desired required checks in GitHub repository rules.
+`.github/workflows/quality.yml` runs on pushes to `main`, pull requests, and manual runs. Its Linux matrix checks Chromium, WebKit, and Firefox, verifies generated-page consistency, and saves screenshots/reports for seven days. Third-party actions are pinned to verified commit SHAs, and GitHub token permissions are read-only. After every browser job passes, pushes or manual runs on `main` deploy to the existing Vercel project through the CLI and the `VERCEL_TOKEN` repository secret. Pull requests never deploy. To enforce checks before merging, configure the desired required checks in GitHub repository rules.
 
-Continue publishing from the repository root through GitHub Pages. `.nojekyll` preserves plain static output. Direct `.html` routes need no SPA fallback or server rewrite. Nothing in the local build or test scripts pushes or publishes changes; review before approving a push.
+GitHub Pages can continue publishing from the repository root; `.nojekyll` preserves plain static output and `/ElpidaLabs/` remains supported. Vercel uses the separate root-domain artifact. Direct `.html` routes need no SPA fallback or server rewrite. Local build and test scripts do not publish; an approved push to `main` triggers the hosted quality and deployment workflow.
