@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:vercel": "node scripts/build-vercel.mjs",
+    "preview:vercel": "node scripts/serve.mjs --vercel",
+    "test:deployment": "node scripts/test-deployment.mjs",
     "build": "node scripts/build.mjs && node scripts/format-pages.mjs",
     "preview": "node scripts/serve.mjs",
     "test": "node scripts/test.mjs",

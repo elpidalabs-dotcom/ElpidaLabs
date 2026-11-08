@@ -174,8 +174,8 @@
                 </li>
                 <li>
                   <span class="diagram-number">03</span
-                  ><strong>GitHub Pages</strong
-                  ><span>Direct routes under /ElpidaLabs/.</span>
+                  ><strong>Static hosting</strong
+                  ><span>Host-specific output for GitHub Pages or Vercel.</span>
                 </li>
               </ol>
               <p>
@@ -193,10 +193,10 @@
               </p>
               <p>
                 The implementation uses generated HTML, a shared stylesheet, and
-                browser enhancements. The generated pages are committed, which
-                lets GitHub Pages serve them directly. This is a choice for this
-                company website, not a prescription for the products the lab
-                might build.
+                browser enhancements. The default output can be served directly
+                by GitHub Pages; a separate Vercel build creates a root-domain
+                deployment artifact. This is a choice for this company website,
+                not a prescription for the products the lab might build.
               </p>
             </section>
             <section id="section-2">
@@ -224,10 +224,11 @@
                 stay relative to the current document.
               </p>
               <p>
-                The 404 document is a special case: GitHub Pages can serve it at
-                an arbitrary missing nested URL. Its fixed project base keeps
-                its assets and navigation pointing to the real site. Canonical
-                URLs and the sitemap use the full project address.
+                The 404 document is a special case: a host can serve it at an
+                arbitrary missing nested URL. Its base must match the
+                deployment: /ElpidaLabs/ for GitHub Pages and / for the
+                root-domain Vercel build. Canonical URLs, share images, and the
+                sitemap use the selected deployment’s public address.
               </p>
             </section>
             <section id="section-4">

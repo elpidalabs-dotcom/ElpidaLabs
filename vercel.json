@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "npm run build:vercel",
+  "installCommand": "npm ci",
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.elpidalabs.xyz" }],
+      "destination": "https://elpidalabs.xyz/:path*",
+      "permanent": true
+    },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/ElpidaLabs", "destination": "/", "permanent": true },
+    {
+      "source": "/ElpidaLabs/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    }
+  ]
+}

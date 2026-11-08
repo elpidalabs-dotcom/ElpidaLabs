@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://elpidalabs-dotcom.github.io/ElpidaLabs/sitemap.xml

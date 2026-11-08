@@ -1,5 +1,7 @@
 import { writeFileSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { mkdirSync } from "node:fs";
+import { output, origin, basePath } from "./deployment.mjs";
 import {
   site,
   enhanceContent,
@@ -28,9 +30,9 @@ const assetVersion = createHash("sha256")
   .digest("hex")
   .slice(0, 12);
 const root = new URL("../", import.meta.url);
+mkdirSync(output, { recursive: true });
 const write = (file, content) =>
-  writeFileSync(new URL(file, root), content.trim() + "\n");
-const origin = "https://elpidalabs-dotcom.github.io/ElpidaLabs/";
+  writeFileSync(new URL(file, output), content.trim() + "\n");
 const logo =
   '<img src="assets/elpida-mark.png" width="40" height="40" alt="" />';
 const asterisk =
@@ -334,16 +336,16 @@ page(
   "404.html",
   "Page not found",
   "This page could not be found. Return to Elpida Labs to explore our products and journal.",
-  `<section class="page-hero wrap">${label("404 / A SMALL DETOUR")}<h1>A little outside<br>the <span class="serif lime">orbit.</span></h1><p>The page you’re looking for could not be found.</p><a class="button" href="/ElpidaLabs/">Return to the lab ${arrow}</a></section>`,
+  `<section class="page-hero wrap">${label("404 / A SMALL DETOUR")}<h1>A little outside<br>the <span class="serif lime">orbit.</span></h1><p>The page you’re looking for could not be found.</p><a class="button" href="${basePath}">Return to the lab ${arrow}</a></section>`,
 );
 // GitHub Pages serves this document at the original missing URL, including nested paths.
 // A fixed base keeps all fallback assets and navigation within the project site.
 
 write(
   "404.html",
-  readFileSync(new URL("404.html", root), "utf8").replace(
+  readFileSync(new URL("404.html", output), "utf8").replace(
     "<head>",
-    '<head><base href="/ElpidaLabs/"/><meta name="robots" content="noindex"/>',
+    `<head><base href="${basePath}"/><meta name="robots" content="noindex"/>`,
   ),
 );
 write(
@@ -355,6 +357,7 @@ write(
     .join("")}</urlset>`,
 );
 write(".nojekyll", "");
+write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${origin}sitemap.xml`);
 console.log(
   `Generated ${generatedPages.length - 1} content pages, 404 fallback, and sitemap.`,
 );

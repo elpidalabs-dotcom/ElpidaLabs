@@ -37,8 +37,10 @@ jobs:
       - run: npm run build
       - run: npm run check
       - run: npm run test:model
+      - name: Verify Vercel root-domain artifact
+        run: npm run test:deployment
       - name: Verify committed pages match their source
-        run: git diff --exit-code -- '*.html' sitemap.xml .nojekyll
+        run: git diff --exit-code -- '*.html' sitemap.xml robots.txt .nojekyll
       - name: Accessibility, metadata, keyboard and links
         if: matrix.browser == 'chromium'
         run: npm test

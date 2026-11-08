@@ -2,6 +2,8 @@
 
 A responsive, multipage technology company website for GitHub Pages at `https://elpidalabs-dotcom.github.io/ElpidaLabs/`. Production is static HTML, CSS, a self-hosted font, and small browser scripts. It requires no application server, database, visitor accounts, or runtime package downloads.
 
+Vercel migration is prepared for `https://elpidalabs.xyz/`: `npm run build:vercel` generates an isolated root-domain artifact in `dist`, while the default build preserves GitHub Pages compatibility. See [DEPLOYMENT.md](DEPLOYMENT.md) for the exact project settings, domain connection, DNS/HTTPS checks, and local verification. Preparation alone does not attach the domain or publish the migration.
+
 ## Preview and build
 
 ```powershell
@@ -86,6 +88,7 @@ When Chrome/Edge are installed locally, use `$env:PLAYWRIGHT_CHANNEL = 'chrome';
 - `test:experiences` checks meaningful orbit selection, editable preview state, active-panel accessibility, synthetic scenario controls, filters, safe text insertion, enquiry validation/encoding, long-message fallback, copy behavior, reading progress, no external demonstration requests, and no-JavaScript fallbacks.
 - `test:responsive` discovers all pages and checks 22 portrait/landscape viewport sizes from 280 to 2560 CSS pixels, actual text boundaries, footer geometry/readability/touch heights, text-spacing overrides, zoom-equivalent reflow, and four touch profiles in both orientations.
 - `test:safe-areas` checks all pages with simulated cutout/home-indicator insets and short landscape menus.
+- `test:deployment` builds the Vercel artifact and verifies its production metadata, local routes/assets, nested root-domain 404, both product demonstrations, artifact boundaries, and preservation of the GitHub Pages output.
 
 Reports and screenshots are saved to ignored `test-results/`. Device profiles and safe areas are emulations, not claims of physical-device coverage. Automated accessibility checks supplement visual and keyboard review.
 

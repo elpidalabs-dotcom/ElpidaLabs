@@ -3,7 +3,13 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { resolve, extname, sep } from "node:path";
 export const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
-export function serve(port = 8000) {
+export function serve(
+  port = 8000,
+  { directory = root, basePath = "/ElpidaLabs/" } = {},
+) {
+  const contentRoot = resolve(directory);
+  if (!basePath.startsWith("/") || !basePath.endsWith("/"))
+    throw new Error("A preview base path must start and end with /.");
   const server = createServer(async (req, res) => {
     let path;
     try {
@@ -12,19 +18,19 @@ export function serve(port = 8000) {
       res.writeHead(400).end();
       return;
     }
-    if (path === "/") {
-      res.writeHead(302, { Location: "/ElpidaLabs/" }).end();
+    if (path === "/" && basePath !== "/") {
+      res.writeHead(302, { Location: basePath }).end();
       return;
     }
-    if (!path.startsWith("/ElpidaLabs/")) {
+    if (!path.startsWith(basePath)) {
       res.writeHead(404).end();
       return;
     }
     const target = resolve(
-      root,
-      path.slice("/ElpidaLabs/".length) || "index.html",
+      contentRoot,
+      path.slice(basePath.length) || "index.html",
     );
-    if (!target.startsWith(root + sep) || path.includes("/.")) {
+    if (!target.startsWith(contentRoot + sep) || path.includes("/.")) {
       res.writeHead(403).end();
       return;
     }
@@ -47,7 +53,7 @@ export function serve(port = 8000) {
     } catch {
       res
         .writeHead(404, { "Content-Type": "text/html; charset=utf-8" })
-        .end(await readFile(resolve(root, "404.html")));
+        .end(await readFile(resolve(contentRoot, "404.html")));
     }
   });
   return new Promise((resolveReady) =>
@@ -55,6 +61,11 @@ export function serve(port = 8000) {
   );
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  await serve();
-  console.log("Preview: http://127.0.0.1:8000/ElpidaLabs/");
+  const vercel = process.argv.includes("--vercel");
+  const basePath = vercel ? "/" : "/ElpidaLabs/";
+  await serve(8000, {
+    directory: vercel ? resolve(root, "dist") : root,
+    basePath,
+  });
+  console.log(`Preview: http://127.0.0.1:8000${basePath}`);
 }
