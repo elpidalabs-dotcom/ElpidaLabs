@@ -2,3 +2,6 @@ node_modules/
 test-results/
 dist/
 .vercel/
+
+.vercel
+.env*
