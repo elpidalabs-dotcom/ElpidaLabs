@@ -455,11 +455,16 @@ select:focus-visible {
   min-width: 0;
 }
 .system-diagram li:not(:last-child):after {
-  content: "→";
+  content: "";
   position: absolute;
   left: 100%;
   top: 50%;
-  width: 24px;
+  width: 9px;
+  height: 9px;
+  margin-left: 5px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
   text-align: center;
   color: var(--quiet);
   font-size: 16px;
@@ -1372,13 +1377,13 @@ html:not(.js) .copy-email {
     padding: 20px;
   }
   .system-diagram li:not(:last-child):after {
-    content: "↓";
+    content: "";
     left: 50%;
     top: 100%;
-    width: 20px;
-    height: 22px;
-    line-height: 22px;
-    transform: translateX(-50%);
+    width: 9px;
+    height: 9px;
+    margin: 5px 0 0;
+    transform: translateX(-50%) rotate(135deg);
   }
   .diagram-number {
     margin-bottom: 15px;
@@ -1560,4 +1565,213 @@ html:not(.js) .copy-email {
   .contact-hero > h1 {
     font-size: clamp(2.35rem, 10.5vw, 3.2rem);
   }
+}
+
+/* Drawn icons remain identical across emoji-capable operating systems. */
+.arrow-icon {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  flex: 0 0 auto;
+  vertical-align: -0.2em;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.art-arrow .arrow-icon {
+  width: 24px;
+  height: 24px;
+}
+.breadcrumbs {
+  padding-top: 28px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.breadcrumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs li {
+  display: inline;
+  overflow-wrap: anywhere;
+}
+.breadcrumbs li + li:before {
+  content: "/";
+  margin-right: 12px;
+  opacity: 0.5;
+}
+.breadcrumbs a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.breadcrumbs a:hover {
+  color: var(--lime);
+}
+
+/* Layered telemetry artwork: transforms and opacity, no animation library. */
+.orbit-field {
+  position: absolute;
+  inset: 2%;
+  width: 96%;
+  height: 96%;
+  fill: none;
+  pointer-events: none;
+}
+.field-track {
+  stroke: #8baf6730;
+  stroke-width: 1;
+}
+.field-ticks {
+  stroke: #b9de8d55;
+  stroke-width: 3;
+  stroke-dasharray: 1 18;
+}
+.field-crosshair {
+  stroke: #c1f58c70;
+  stroke-width: 1;
+}
+.field-arc {
+  stroke: #c7fb83;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transform-origin: 250px 250px;
+}
+.orbit-path:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 185deg,
+    transparent 0deg 245deg,
+    #b9f77c08 280deg,
+    #b9f77c99 355deg,
+    transparent 360deg
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1px), #000 100%);
+}
+.path-b:before {
+  opacity: 0.5;
+}
+.path-c {
+  inset: 22%;
+  animation-duration: 19s;
+}
+.path-c .satellite {
+  width: 4px;
+  height: 4px;
+  background: #91d9ff;
+  box-shadow: 0 0 14px #91d9ff80;
+}
+.core:before,
+.core:after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border: 1px solid #c4fb7c25;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.core:after {
+  inset: -25%;
+  border-style: dashed;
+  border-color: #c4fb7c18;
+}
+.orbit,
+.core,
+.orbit-tag {
+  transition:
+    border-color 450ms ease,
+    background-color 450ms ease,
+    box-shadow 450ms ease;
+}
+.js .field-arc {
+  animation: field-scan 42s linear infinite;
+}
+.js .core:before {
+  animation: core-breathe 6s ease-in-out infinite;
+}
+.js .core img {
+  animation: core-float 7s ease-in-out infinite;
+}
+.orbital.paused *,
+.orbital.motion-idle *,
+.orbital.paused *:before,
+.orbital.motion-idle *:before {
+  animation-play-state: paused !important;
+}
+@keyframes field-scan {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes core-breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+}
+@keyframes core-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(3deg);
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  a:hover > .arrow-icon,
+  button:hover > .arrow-icon {
+    transform: translate(2px, -2px);
+  }
+  .product-card,
+  .note-card,
+  .record-card {
+    transition:
+      transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 250ms ease;
+  }
+  .product-card:hover,
+  .note-card:hover,
+  .record-card:hover {
+    transform: translateY(-4px);
+  }
+  .product-art img {
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .product-art:hover img {
+    transform: scale(1.06) rotate(-4deg);
+  }
+}
+@media (max-width: 600px) {
+  .breadcrumbs {
+    font-size: 11px;
+    padding-top: 20px;
+  }
+  .field-ticks {
+    stroke-dasharray: 1 28;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .field-arc,
+  .js .core:before,
+  .js .core img {
+    animation: none !important;
+  }
+  .arrow-icon {
+    transition: none;
+  }
+}
+.menu-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
 }

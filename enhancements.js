@@ -1,5 +1,13 @@
-const arrow = '<span aria-hidden="true">↗</span>';
+const arrow =
+  '<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg>';
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+reducedMotion.addEventListener("change", () => {
+  if (reducedMotion.matches)
+    document
+      .querySelector("[data-orbit-explorer]")
+      ?.getAnimations()
+      .forEach((animation) => animation.cancel());
+});
 
 const explorer = document.querySelector("[data-orbit-explorer]");
 if (explorer) {
@@ -44,6 +52,16 @@ if (explorer) {
       anchor.href = href;
       anchor.replaceChildren(document.createTextNode(link + " "));
       anchor.insertAdjacentHTML("beforeend", arrow);
+      if (!reducedMotion.matches && explorer.animate) {
+        explorer.getAnimations().forEach((animation) => animation.cancel());
+        explorer.animate(
+          [
+            { opacity: 0.55, transform: "translateY(7px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          { duration: 360, easing: "cubic-bezier(.16,1,.3,1)" },
+        );
+      }
     });
     control.addEventListener("keydown", (event) => {
       const current = controls.indexOf(control);

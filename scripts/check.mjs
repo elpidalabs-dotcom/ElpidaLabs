@@ -25,11 +25,44 @@ for (const file of [
 assert.ok(js < 35000, `Browser JavaScript budget exceeded: ${js}`);
 assert.ok(css < 100000, `Stylesheet budget exceeded: ${css}`);
 const pages = (await readdir(root)).filter((file) => file.endsWith(".html"));
+const titles = new Set();
+const descriptions = new Set();
 for (const file of pages) {
   const html = await readFile(new URL(file, root), "utf8");
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(new Set(ids).size, ids.length, `${file}: duplicate IDs`);
-  assert.ok(html.includes("/ElpidaLabs/"), `${file}: project path`);
+  const canonical = `https://elpidalabs.xyz/${file === "index.html" ? "" : file}`;
+  assert.ok(
+    html.match(/rel="canonical"\s+href="([^"]+)"/)?.[1] === canonical,
+    `${file}: production canonical on both hosts`,
+  );
+  const title = html.match(/<title>(.*?)<\/title>/s)?.[1];
+  const description = html.match(/name="description"\s+content="([^"]+)"/)?.[1];
+  assert.ok(title && !titles.has(title), `${file}: unique title`);
+  assert.ok(
+    description && !descriptions.has(description),
+    `${file}: unique description`,
+  );
+  titles.add(title);
+  descriptions.add(description);
+  assert.ok(
+    !html.includes("↗"),
+    `${file}: arrows must not depend on emoji fonts`,
+  );
+  assert.match(html, /name="twitter:image"/);
+  assert.match(html, /property="og:site_name"/);
+  assert.equal(
+    (html.match(/name="robots"/g) || []).length,
+    1,
+    `${file}: one robots directive`,
+  );
+  assert.ok(
+    html.includes(
+      file === "404.html"
+        ? "noindex, follow"
+        : "index, follow, max-image-preview:large",
+    ),
+  );
   assert.match(html, /styles\.css\?v=[a-f0-9]{12}/, `${file}: cache version`);
   assert.match(html, /experience\.css\?v=[a-f0-9]{12}/);
   assert.match(html, /<meta\s+name="description"/);
@@ -38,7 +71,21 @@ for (const file of pages) {
     /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
   );
   assert.ok(schema, `${file}: structured data`);
-  JSON.parse(schema[1]);
+  const graph = JSON.parse(schema[1])["@graph"];
+  assert.ok(
+    graph.some((item) => item["@type"] === "WebSite"),
+    `${file}: website identity`,
+  );
+  if (file !== "index.html" && file !== "404.html") {
+    assert.ok(
+      graph.some((item) => item["@type"] === "BreadcrumbList"),
+      `${file}: breadcrumbs schema`,
+    );
+    assert.ok(
+      html.includes('aria-label="Breadcrumb"'),
+      `${file}: visible breadcrumbs`,
+    );
+  }
   assert.ok(
     !html.includes("hello@elpidalabs.xyz"),
     `${file}: no unconfigured mailbox`,

@@ -165,6 +165,47 @@ try {
     "pointer orbit response",
   );
   const checked = new Set();
+  await page.locator(".site-footer").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() =>
+    document.querySelector(".orbital").classList.contains("motion-idle"),
+  );
+  assert.equal(
+    await page
+      .locator(".field-arc")
+      .evaluate((el) => getComputedStyle(el).animationPlayState),
+    "paused",
+    "offscreen artwork stops animating",
+  );
+  await page.locator(".orbital").scrollIntoViewIfNeeded();
+  await page.waitForFunction(
+    () => !document.querySelector(".orbital").classList.contains("motion-idle"),
+  );
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const selector of [".field-arc", ".core img"]) {
+    assert.equal(
+      await page
+        .locator(selector)
+        .evaluate((el) => getComputedStyle(el).animationName),
+      "none",
+      `${selector}: reduced motion`,
+    );
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const icon of await page
+    .locator(".hero-copy .actions .arrow-icon")
+    .all()) {
+    assert.equal(
+      await icon.evaluate((el) => el.tagName.toLowerCase()),
+      "svg",
+      "mobile action arrows are vectors",
+    );
+    assert.equal(await icon.getAttribute("aria-hidden"), "true");
+    const box = await icon.boundingBox();
+    assert.ok(
+      box.width >= 12 && box.width <= 32 && box.height >= 12,
+      "mobile arrow has stable dimensions",
+    );
+  }
   for (const file of pages) {
     await page.goto(base + file);
     const links = await page

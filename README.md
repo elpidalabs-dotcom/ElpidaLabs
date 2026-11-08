@@ -4,6 +4,14 @@ A responsive, multipage technology company website for GitHub Pages at `https://
 
 Production is hosted on Vercel at `https://elpidalabs.xyz/`: `npm run build:vercel` generates an isolated root-domain artifact in `dist`, while the default build preserves GitHub Pages compatibility. GitHub Actions deploys approved pushes to `main` after all browser checks pass, using a dedicated project-scoped credential. See [DEPLOYMENT.md](DEPLOYMENT.md) for project settings, credential maintenance, DNS/HTTPS checks, and local verification.
 
+Both builds use the custom domain as their SEO canonical while preserving their
+own navigation paths. [SEO.md](SEO.md) describes structured data, crawlability,
+social previews, validation, and the remaining Search Console account setup.
+Action arrows are inline SVGs to prevent emoji rendering on iOS. The orbital
+hero includes layered trails, a scanning arc, core motion, and frame-rate-aware
+pointer easing. Motion stops offscreen, in hidden tabs, or when paused; reduced
+motion suppresses both decorative loops and entrance/focus transitions.
+
 ## Preview and build
 
 ```powershell

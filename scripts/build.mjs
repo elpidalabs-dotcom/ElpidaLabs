@@ -37,7 +37,9 @@ const logo =
   '<img src="assets/elpida-mark.png" width="40" height="40" alt="" />';
 const asterisk =
   '<svg class="asterisk" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 5v54M5 32h54M13 13l38 38M13 51l38-38" fill="none" stroke="currentColor" stroke-width="5"/></svg>';
-const arrow = '<span aria-hidden="true">↗</span>';
+const arrow =
+  '<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg>';
+const arrowUp = arrow.replace("M5 19 19 5M5 5h14v14", "M12 20V4M5 11l7-7 7 7");
 const btn = (href, label, outline = false) =>
   `<a class="button ${outline ? "secondary" : ""}" href="${href}">${label}${arrow}</a>`;
 const label = (text) => `<p class="eyebrow">${text}</p>`;
@@ -46,7 +48,7 @@ const status = (text) =>
 const sectionHead = (n, title, text) =>
   `<div class="section-head"><div>${label(n)}<h2>${title}</h2></div><p>${text}</p></div>`;
 const cta = `<section class="cta wrap"><div>${label("GOOD QUESTIONS DESERVE GOOD ENGINEERING")}<h2>What could we<br>build together?</h2></div><div><p>Explore the work. Get to know the thinking.<br>Find your next question.</p>${btn("team.html", "Meet the collective", true)}</div><span class="cta-star" aria-hidden="true">${asterisk}</span></section>`;
-const products = `<div class="product-grid"><article class="product-card"><a class="product-art elpida-art" href="elpida.html"><div class="art-rings"></div><img src="assets/elpida-mark.png" alt="" width="240" height="240" loading="lazy"/><span class="art-corner">01 / ELPIDA</span><span class="art-arrow" aria-hidden="true">↗</span></a><div class="card-copy">${status("In development")}<h3><a href="elpida.html">Elpida</a></h3><p>A multichain token launchpad exploring how creators launch and communities discover what comes next.</p><div class="card-foot"><span>WEB3 · PRODUCT R&D</span><a href="elpida.html">Explore product ${arrow}</a></div></div></article><article class="product-card"><a class="product-art chaos-art" href="chaos-engine.html"><div class="chaos-grid"></div><div class="chaos-symbol">⌁</div><span class="signal signal-one"></span><span class="signal signal-two"></span><span class="art-corner">02 / CHAOS ENGINE</span><span class="art-arrow" aria-hidden="true">↗</span></a><div class="card-copy">${status("Research & exploration")}<h3><a href="chaos-engine.html">Chaos Engine</a></h3><p>A resilience-testing concept asking a simple question: how does your software respond when things go wrong?</p><div class="card-foot"><span>DEVTOOLS · SYSTEMS RESEARCH</span><a href="chaos-engine.html">Explore concept ${arrow}</a></div></div></article></div>`;
+const products = `<div class="product-grid"><article class="product-card"><a class="product-art elpida-art" href="elpida.html"><div class="art-rings"></div><img src="assets/elpida-mark.png" alt="" width="240" height="240" loading="lazy"/><span class="art-corner">01 / ELPIDA</span><span class="art-arrow" aria-hidden="true">${arrow}</span></a><div class="card-copy">${status("In development")}<h3><a href="elpida.html">Elpida</a></h3><p>A multichain token launchpad exploring how creators launch and communities discover what comes next.</p><div class="card-foot"><span>WEB3 · PRODUCT R&D</span><a href="elpida.html">Explore product ${arrow}</a></div></div></article><article class="product-card"><a class="product-art chaos-art" href="chaos-engine.html"><div class="chaos-grid"></div><div class="chaos-symbol">⌁</div><span class="signal signal-one"></span><span class="signal signal-two"></span><span class="art-corner">02 / CHAOS ENGINE</span><span class="art-arrow" aria-hidden="true">${arrow}</span></a><div class="card-copy">${status("Research & exploration")}<h3><a href="chaos-engine.html">Chaos Engine</a></h3><p>A resilience-testing concept asking a simple question: how does your software respond when things go wrong?</p><div class="card-foot"><span>DEVTOOLS · SYSTEMS RESEARCH</span><a href="chaos-engine.html">Explore concept ${arrow}</a></div></div></article></div>`;
 const notes = `<div class="notes-grid"><a class="note-card" href="building-elpida.html"><span class="note-type">PRODUCT THINKING <span>01</span></span><h3>Building Elpida:<br>from launch to community.</h3><p>The questions shaping a multichain launchpad, and the work still ahead.</p><span class="text-link">Read the article ${arrow}</span></a><a class="note-card" href="designing-for-failure.html"><span class="note-type">ENGINEERING NOTES <span>02</span></span><h3>Designing for failure,<br>before it happens.</h3><p>What we're exploring with Chaos Engine, and why scope and safety come first.</p><span class="text-link">Read the article ${arrow}</span></a></div>`;
 function page(file, title, description, content, active = "") {
   content = enhanceContent(file, content);
@@ -84,12 +86,39 @@ function page(file, title, description, content, active = "") {
         sameAs: [site.repository],
       },
       {
-        "@type": entry ? "Article" : "WebPage",
+        "@type": "WebSite",
+        "@id": origin + "#website",
+        name: "Elpida Labs",
+        url: origin,
+        inLanguage: "en",
+        publisher: { "@id": origin + "#organization" },
+      },
+      {
+        "@type":
+          file === "about.html"
+            ? "AboutPage"
+            : file === "contact.html"
+              ? "ContactPage"
+              : file === "journal.html"
+                ? "CollectionPage"
+                : "WebPage",
+        "@id": origin + (file === "index.html" ? "" : file) + "#webpage",
         headline: title,
         name: title,
         description,
         inLanguage: "en",
         url: origin + (file === "index.html" ? "" : file),
+        isPartOf: { "@id": origin + "#website" },
+        about: { "@id": origin + "#organization" },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: origin + "assets/" + shareImage,
+          width: 1200,
+          height: 630,
+        },
+        ...(file !== "index.html" && file !== "404.html"
+          ? { breadcrumb: { "@id": origin + file + "#breadcrumb" } }
+          : {}),
         ...(entry
           ? {
               publisher: { "@id": origin + "#organization" },
@@ -97,8 +126,60 @@ function page(file, title, description, content, active = "") {
             }
           : {}),
       },
+      ...(entry
+        ? [
+            {
+              "@type": "Article",
+              "@id": origin + file + "#article",
+              headline: title,
+              description,
+              inLanguage: "en",
+              mainEntityOfPage: { "@id": origin + file + "#webpage" },
+              author: { "@id": origin + "#organization" },
+              publisher: { "@id": origin + "#organization" },
+              image: origin + "assets/" + shareImage,
+            },
+          ]
+        : []),
+      ...(file !== "index.html" && file !== "404.html"
+        ? [
+            {
+              "@type": "BreadcrumbList",
+              "@id": origin + file + "#breadcrumb",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: origin,
+                },
+                ...(entry
+                  ? [
+                      {
+                        "@type": "ListItem",
+                        position: 2,
+                        name: "Journal",
+                        item: origin + "journal.html",
+                      },
+                    ]
+                  : []),
+                {
+                  "@type": "ListItem",
+                  position: entry ? 3 : 2,
+                  name: title,
+                  item: origin + file,
+                },
+              ],
+            },
+          ]
+        : []),
     ],
   };
+  if (file !== "index.html" && file !== "404.html") {
+    content =
+      `<nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li>${entry ? '<li><a href="journal.html">Journal</a></li>' : ""}<li><span aria-current="page">${title}</span></li></ol></nav>` +
+      content;
+  }
   const links = [
     ["index.html", "Home"],
     ["index.html#work", "Our work"],
@@ -109,17 +190,17 @@ function page(file, title, description, content, active = "") {
   ];
   write(
     file,
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${title} — Elpida Labs</title><meta name="description" content="${description}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${title} — Elpida Labs"/><meta property="og:description" content="${description}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="twitter:card" content="summary_large_image"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData)}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ↑</a></div></div></footer></body></html>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${title} — Elpida Labs</title><meta name="description" content="${description}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${title} — Elpida Labs"/><meta property="og:description" content="${description}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta property="og:site_name" content="Elpida Labs"/><meta property="og:locale" content="en_US"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${title} — Elpida Labs"/><meta name="twitter:description" content="${description}"/><meta name="twitter:image" content="${origin}assets/${shareImage}"/><meta name="twitter:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="robots" content="${file === "404.html" ? "noindex, follow" : "index, follow, max-image-preview:large"}"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData)}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <svg class="menu-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ${arrowUp}</a></div></div></footer></body></html>`,
   );
 }
 page(
   "index.html",
-  "Curiosity into code. Code into impact.",
+  "AI, Web3 & Software Research",
   "A student-founded technology collective exploring AI, Web3 and useful software. Discover Elpida, Chaos Engine and the thinking behind our work.",
   `
-<section class="hero wrap"><div class="hero-topline"><span><i class="live-dot" aria-hidden="true"></i> INDEPENDENT MINDS. SHARED MOMENTUM.</span><span>TECHNOLOGY / WITH INTENT</span></div><div class="hero-grid"><div class="hero-copy">${label("A STUDENT-FOUNDED TECHNOLOGY LAB")}<h1>Curiosity into<br><em>code.</em> Code<br>into <span class="serif">impact.</span></h1><p>We turn ambitious questions into thoughtful technology. Exploring AI, Web3, and the systems that connect ideas to the real world.</p><div class="actions">${btn("#work", "Explore our work")}${btn("https://elpida.fun", "Visit elpida.fun", true)}</div><div class="hero-note"><span class="tiny-mark">${asterisk}</span><span>Small team. Open minds.<br><strong>Always a work in progress.</strong></span></div></div><div class="hero-visual"><div class="orbital" role="img" aria-label="An orbital system around the Elpida mark, connecting AI, Web3 and real-world software"><div class="orbital-grid"></div><div class="orbit-stage"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div><div class="orbit-path path-a"><span class="satellite"></span></div><div class="orbit-path path-b"><span class="satellite"></span></div><div class="core">${logo}</div><span class="orbit-tag tag-ai">01 <b>AI</b></span><span class="orbit-tag tag-web">02 <b>WEB3</b></span><span class="orbit-tag tag-real">03 <b>REAL WORLD</b></span><span class="coordinate coordinate-a">EL / 001</span><span class="coordinate coordinate-b">IDEAS IN MOTION</span></div></div><div class="visual-caption"><span><i class="live-dot" aria-hidden="true"></i> THE ELPIDA ORBIT</span><button class="motion-toggle" aria-pressed="false">Pause orbit Ⅱ</button></div></div></div><div class="focus-strip"><span>THINK DEEPLY.</span><b>${asterisk}</b><span>BUILD THOUGHTFULLY.</span><b>${asterisk}</b><span>LEARN CONTINUOUSLY.</span><b>${asterisk}</b></div></section>
+<section class="hero wrap"><div class="hero-topline"><span><i class="live-dot" aria-hidden="true"></i> INDEPENDENT MINDS. SHARED MOMENTUM.</span><span>TECHNOLOGY / WITH INTENT</span></div><div class="hero-grid"><div class="hero-copy">${label("A STUDENT-FOUNDED TECHNOLOGY LAB")}<h1>Curiosity into<br><em>code.</em> Code<br>into <span class="serif">impact.</span></h1><p>We turn ambitious questions into thoughtful technology. Exploring AI, Web3, and the systems that connect ideas to the real world.</p><div class="actions">${btn("#work", "Explore our work")}${btn("https://elpida.fun", "Visit elpida.fun", true)}</div><div class="hero-note"><span class="tiny-mark">${asterisk}</span><span>Small team. Open minds.<br><strong>Always a work in progress.</strong></span></div></div><div class="hero-visual"><div class="orbital" role="img" aria-label="An orbital system around the Elpida mark, connecting AI, Web3 and real-world software"><div class="orbital-grid"></div><svg class="orbit-field" viewBox="0 0 500 500" aria-hidden="true" focusable="false"><circle class="field-track" cx="250" cy="250" r="220"/><circle class="field-ticks" cx="250" cy="250" r="202"/><path class="field-arc" d="M250 30a220 220 0 0 1 190 110"/><path class="field-crosshair" d="M250 13v22M250 465v22M13 250h22M465 250h22"/></svg><div class="orbit-stage"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div><div class="orbit-path path-a"><span class="satellite"></span></div><div class="orbit-path path-b"><span class="satellite"></span></div><div class="orbit-path path-c"><span class="satellite"></span></div><div class="core">${logo}</div><span class="orbit-tag tag-ai">01 <b>AI</b></span><span class="orbit-tag tag-web">02 <b>WEB3</b></span><span class="orbit-tag tag-real">03 <b>REAL WORLD</b></span><span class="coordinate coordinate-a">EL / 001</span><span class="coordinate coordinate-b">IDEAS IN MOTION</span></div></div><div class="visual-caption"><span><i class="live-dot" aria-hidden="true"></i> THE ELPIDA ORBIT</span><button class="motion-toggle" aria-pressed="false">Pause orbit</button></div></div></div><div class="focus-strip"><span>THINK DEEPLY.</span><b>${asterisk}</b><span>BUILD THOUGHTFULLY.</span><b>${asterisk}</b><span>LEARN CONTINUOUSLY.</span><b>${asterisk}</b></div></section>
 <section class="section wrap intro">${label("01 / THE WAY WE THINK")}<div class="intro-grid"><h2>Big questions.<br><span class="muted">A builder’s mindset.</span></h2><div><p class="lead">Good technology starts with curiosity. Meaningful technology takes care, craft, and the willingness to keep learning.</p><p>We're a collective of Computer Science students researching, designing, and engineering original products. We pair solid fundamentals with modern tools to move ideas forward.</p><a class="text-link" href="about.html">Inside the lab ${arrow}</a></div></div></section>
-<section id="work" class="section wrap">${sectionHead("02 / EXPLORATIONS TAKING SHAPE", 'Our work.<br><span class="muted">A little closer to tomorrow.</span>', "Original ideas at different stages of development. Clear about the ambition. Honest about what is still being built.")}${products}<div class="work-note"><span>↳</span><p>Built in the open. Both projects are evolving; descriptions outline direction, not a promise of available features.</p></div></section>
+<section id="work" class="section wrap">${sectionHead("02 / EXPLORATIONS TAKING SHAPE", 'Our work.<br><span class="muted">A little closer to tomorrow.</span>', "Original ideas at different stages of development. Clear about the ambition. Honest about what is still being built.")}${products}<div class="work-note"><span aria-hidden="true">${arrow}</span><p>Built in the open. Both projects are evolving; descriptions outline direction, not a promise of available features.</p></div></section>
 <section class="capabilities section"><div class="wrap">${sectionHead("03 / FROM QUESTION TO POSSIBILITY", "Curious by nature.<br>Practical by design.", "We develop our own products and explore collaborations around useful, technically ambitious problems.")}<div class="capability-grid"><article><span>01 / INTELLIGENCE</span><h3>AI & automation</h3><p>Exploring tools that simplify workflows and make complex information more useful.</p></article><article><span>02 / CONNECTION</span><h3>Web3 & applications</h3><p>Researching onchain experiences and building considered interfaces for the web.</p></article><article><span>03 / FOUNDATION</span><h3>Systems & research</h3><p>Prototyping ideas, understanding constraints, and learning how software behaves.</p></article></div></div></section>
 <section class="section wrap">${sectionHead("04 / NOTES FROM THE LAB", 'The thinking<br><span class="muted">behind the building.</span>', "Product direction, engineering questions, and the decisions still ahead. Explore our first two product notes.")}${notes}</section>${cta}`,
   "Home",
@@ -209,7 +290,7 @@ page(
   ]
     .map(
       ([n, role, focus, desc]) =>
-        `<details class="profile"><summary><span class="profile-icon" aria-hidden="true">${n === "01" ? asterisk : n === "02" ? "⌘" : "↗"}</span><span><span class="eyebrow">${n} / ${focus}</span><span class="profile-title">${role}</span></span><span class="profile-state">Profile forthcoming</span><span class="expand" aria-hidden="true">+</span></summary><div class="profile-body"><p>${desc}</p><dl><div><dt>Name & biography</dt><dd>To be confirmed</dd></div><div><dt>Public profile & contributions</dt><dd>Links will be added when confirmed.</dd></div></dl></div></details>`,
+        `<details class="profile"><summary><span class="profile-icon" aria-hidden="true">${n === "01" ? asterisk : n === "02" ? "⌘" : arrow}</span><span><span class="eyebrow">${n} / ${focus}</span><span class="profile-title">${role}</span></span><span class="profile-state">Profile forthcoming</span><span class="expand" aria-hidden="true">+</span></summary><div class="profile-body"><p>${desc}</p><dl><div><dt>Name & biography</dt><dd>To be confirmed</dd></div><div><dt>Public profile & contributions</dt><dd>Links will be added when confirmed.</dd></div></dl></div></details>`,
     )
     .join(
       "",
@@ -345,7 +426,7 @@ write(
   "404.html",
   readFileSync(new URL("404.html", output), "utf8").replace(
     "<head>",
-    `<head><base href="${basePath}"/><meta name="robots" content="noindex"/>`,
+    `<head><base href="${basePath}"/>`,
   ),
 );
 write(
