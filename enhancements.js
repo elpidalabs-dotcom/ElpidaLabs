@@ -55,10 +55,7 @@ if (explorer) {
       if (!reducedMotion.matches && explorer.animate) {
         explorer.getAnimations().forEach((animation) => animation.cancel());
         explorer.animate(
-          [
-            { transform: "translateY(7px)" },
-            { transform: "translateY(0)" },
-          ],
+          [{ transform: "translateY(7px)" }, { transform: "translateY(0)" }],
           { duration: 360, easing: "cubic-bezier(.16,1,.3,1)" },
         );
       }

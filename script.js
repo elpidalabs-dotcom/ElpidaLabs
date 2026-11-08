@@ -114,10 +114,7 @@ const entranceAnimations = new Set();
 function reveal(element, delay = 0) {
   if (reduced.matches || !element.animate) return;
   const animation = element.animate(
-    [
-      { transform: "translateY(20px)" },
-      { transform: "translateY(0)" },
-    ],
+    [{ transform: "translateY(20px)" }, { transform: "translateY(0)" }],
     { duration: 680, delay, easing: "cubic-bezier(.16,1,.3,1)" },
   );
   entranceAnimations.add(animation);
