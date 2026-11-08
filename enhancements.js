@@ -56,8 +56,8 @@ if (explorer) {
         explorer.getAnimations().forEach((animation) => animation.cancel());
         explorer.animate(
           [
-            { opacity: 0.55, transform: "translateY(7px)" },
-            { opacity: 1, transform: "translateY(0)" },
+            { transform: "translateY(7px)" },
+            { transform: "translateY(0)" },
           ],
           { duration: 360, easing: "cubic-bezier(.16,1,.3,1)" },
         );

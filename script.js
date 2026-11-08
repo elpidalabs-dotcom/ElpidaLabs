@@ -115,8 +115,8 @@ function reveal(element, delay = 0) {
   if (reduced.matches || !element.animate) return;
   const animation = element.animate(
     [
-      { opacity: 0.25, transform: "translateY(20px)" },
-      { opacity: 1, transform: "translateY(0)" },
+      { transform: "translateY(20px)" },
+      { transform: "translateY(0)" },
     ],
     { duration: 680, delay, easing: "cubic-bezier(.16,1,.3,1)" },
   );
