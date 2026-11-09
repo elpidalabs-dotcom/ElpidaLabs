@@ -53,8 +53,6 @@ export function productProgress(elpida) {
   return `<section class="section wrap progress-section"><div>${eyebrow("DEVELOPMENT / THE NEXT USEFUL STEP")}<h2>Progress with<br><span class="muted">the context attached.</span></h2><p>Direction is useful. A clearly defined next objective is better.</p></div><ol class="development-track"><li class="is-current"><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">CURRENT STAGE</span><h3>${elpida ? "Product in development" : "Research & concept exploration"}</h3><p>${elpida ? "The multichain launchpad direction is described here. This website now includes an interactive interface study." : "The resilience-testing direction is described here. This website now includes a synthetic scenario explainer."}</p></div></li><li><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">NEXT OBJECTIVE / PLANNED</span><h3>${elpida ? "Define a testable first journey" : "Define one reproducible experiment"}</h3><p>${elpida ? "Narrow the creator experience, specify its constraints, and test whether the project information is understandable." : "Document a hypothesis, an isolated environment, a bounded disruption, and a verified cleanup procedure."}</p></div></li><li><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">FUTURE / NOT YET CONFIRMED</span><h3>${elpida ? "Validate an implementation" : "Evaluate a working prototype"}</h3><p>Scope, readiness criteria, and actual results need to be documented before claiming a released capability. No release date is announced.</p></div></li></ol></section>`;
 }
 
-export const buildRecord = `<section class="section wrap build-record" id="build-record"><div class="section-head"><div>${eyebrow("BUILD RECORD / THE COMPANY WEBSITE")}<h2>A visible trail<br><span class="muted">of work.</span></h2></div><p>Concrete changes in this website’s public repository. These are website milestones, separate from product release progress.</p></div><div class="record-grid">${site.websiteMilestones.map((item) => `<a class="record-card" href="${site.repository}/commit/${item.commit}"><span class="record-date"><time datetime="${item.date}">07 NOV 2026</time><code>${item.commit}</code></span><h3>${item.title}</h3><p>${item.description}</p><span class="text-link">Inspect the commit ${arrow}</span></a>`).join("")}</div><a class="text-link" href="${site.repository}/commits/main/">Follow the repository history ${arrow}</a></section>`;
-
 export const journalEntries = [
   {
     file: "building-elpida.html",
@@ -150,9 +148,6 @@ export function enhanceContent(file, content) {
       /<div class="notes-grid">[\s\S]*?<\/div><\/section>/,
       `${journalShowcase}</section>`,
     );
-    const ctaStart = content.lastIndexOf('<section class="cta wrap">');
-    content =
-      content.slice(0, ctaStart) + buildRecord + content.slice(ctaStart);
   }
   if (file === "elpida.html" || file === "chaos-engine.html") {
     const elpida = file === "elpida.html";
@@ -181,7 +176,6 @@ export function enhanceContent(file, content) {
     content =
       content.slice(0, insert) +
       `<section class="section wrap" id="ai-approach"><div class="intro-grid"><div>${eyebrow("AI / AN AMPLIFIER OF JUDGMENT")}<h2>More possibility.<br><span class="muted">The same responsibility.</span></h2></div><div><p class="lead">Intelligent tools can help us explore. Understanding the result remains our work.</p><p>Our approach is to use AI to support research, prototyping, and engineering, while keeping review, testing, and decisions with people. We do not present an AI product as released.</p><a class="text-link" href="why-we-build-static.html">Read about this website’s engineering ${arrow}</a></div></div></section>` +
-      buildRecord +
       content.slice(insert);
   }
   if (file === "team.html") {
@@ -210,8 +204,6 @@ export function enhanceContent(file, content) {
           );
       },
     );
-    const insert = content.lastIndexOf('<section class="section wrap">');
-    content = content.slice(0, insert) + buildRecord + content.slice(insert);
   }
   if (file === "journal.html") {
     const start = content.indexOf('<div class="notes-grid">');

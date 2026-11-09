@@ -29,7 +29,6 @@ Open http://127.0.0.1:8000/ElpidaLabs/. The local-only preview mirrors the proje
 - **Chaos Engine explainer:** deterministic synthetic data illustrates latency, dependency unavailability, and bounded fallback behavior. The graph, text summary, and accessible description update together. It does not test services, inject failures, or show real telemetry.
 - **Product direction:** architecture/journey diagrams and development tracks distinguish current stages, planned next objectives, and unconfirmed future work.
 - **Journal:** four filterable notes, original technical diagrams, reading estimates, article summaries, reading progress, active contents links, and related reading. The two new engineering notes describe actual decisions in this website.
-- **Evidence:** website milestones link to real repository commits. They are separated from product-release progress; no live activity counters or fabricated product metrics are used.
 - **Contact:** `elpidalabs@gmail.com` is the owner-supplied destination. The enquiry form prepares a reviewed email draft; visitors send it in their own email app. Copy actions provide an alternative. Long drafts use copy/paste to avoid email-handler URL limits. Nothing is claimed to have been sent by the website, and enquiries are not stored here.
 - **Visual identity:** lime product styling for Elpida, cyan for Chaos Engine, inline SVG diagrams and icons, self-hosted Manrope, optional native page transitions, and separate PNG social previews. Runtime requests stay on the website origin.
 
@@ -37,16 +36,16 @@ Without JavaScript, core content and navigation remain available, all three conc
 
 ## Sources and editing
 
-| Source                     | Purpose                                                                                                   |
-| -------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `scripts/build.mjs`        | Shared page shell, base page content, metadata, structured data, asset fingerprints, sitemap              |
-| `scripts/enhancements.mjs` | Product experiences, diagrams, journal entries, engineering articles, development tracks, contact page    |
-| `content/site.json`        | Verified contact destination, repository/product links, website milestones, future approved team profiles |
-| `styles.css`               | Base layout, responsive typography, safe areas, accessible footer                                         |
-| `experience.css`           | Product and editorial visual systems, form styles, self-hosted font, progressive transitions              |
-| `script.js`                | Mobile navigation and reduced-motion-aware orbital animation                                              |
-| `enhancements.js`          | Focus-area selection, local studies, filters, enquiry drafts, clipboard fallback, reading progress        |
-| `demo-model.js`            | Pure synthetic scenario model; no DOM or network access                                                   |
+| Source                     | Purpose                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `scripts/build.mjs`        | Shared page shell, base page content, metadata, structured data, asset fingerprints, sitemap           |
+| `scripts/enhancements.mjs` | Product experiences, diagrams, journal entries, engineering articles, development tracks, contact page |
+| `content/site.json`        | Verified contact destination, repository/product links, future approved team profiles                  |
+| `styles.css`               | Base layout, responsive typography, safe areas, accessible footer                                      |
+| `experience.css`           | Product and editorial visual systems, form styles, self-hosted font, progressive transitions           |
+| `script.js`                | Mobile navigation and reduced-motion-aware orbital animation                                           |
+| `enhancements.js`          | Focus-area selection, local studies, filters, enquiry drafts, clipboard fallback, reading progress     |
+| `demo-model.js`            | Pure synthetic scenario model; no DOM or network access                                                |
 
 Run `npm run build` after content, CSS, or browser-script changes. It writes formatted HTML and updates the shared asset fingerprint so newly deployed pages request the matching CSS and JavaScript. Relative navigation and assets preserve the `/ElpidaLabs/` project path. The 404 document has a fixed project base for missing nested URLs.
 
@@ -56,7 +55,7 @@ Team names and biographies remain unpublished, as requested. The existing expand
 
 | File                             | Purpose                                                                               |
 | -------------------------------- | ------------------------------------------------------------------------------------- |
-| `index.html`                     | Company overview, selectable orbit, products, journal, website build record           |
+| `index.html`                     | Company overview, selectable orbit, products, journal                                 |
 | `elpida.html`                    | Development direction, editable interface study, journey diagram, next objectives     |
 | `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives |
 | `about.html`                     | Lab principles, AI approach, and repository evidence                                  |

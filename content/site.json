@@ -4,22 +4,23 @@
   "repository": "https://github.com/elpidalabs-dotcom/ElpidaLabs",
   "productUrl": "https://elpida.fun",
   "team": [
-    { "role": "Founder", "name": null, "bio": null, "links": [] },
-    { "role": "Co-founder", "name": null, "bio": null, "links": [] },
-    { "role": "Collaborators", "name": null, "bio": null, "links": [] }
-  ],
-  "websiteMilestones": [
     {
-      "date": "2026-11-07",
-      "title": "A multipage home for the lab",
-      "description": "Dedicated product pages, development notes, an orbital hero, and a transparent version of the supplied logo.",
-      "commit": "9abd7d9"
+      "role": "Founder",
+      "name": null,
+      "bio": null,
+      "links": []
     },
     {
-      "date": "2026-11-07",
-      "title": "A better fit for every screen",
-      "description": "A rebuilt mobile footer, safe-area spacing, consistent SVG artwork, and responsive browser checks.",
-      "commit": "4b5fa00"
+      "role": "Co-founder",
+      "name": null,
+      "bio": null,
+      "links": []
+    },
+    {
+      "role": "Collaborators",
+      "name": null,
+      "bio": null,
+      "links": []
     }
   ]
 }
