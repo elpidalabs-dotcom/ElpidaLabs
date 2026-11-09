@@ -1,0 +1,17 @@
+{
+  "category": "Inside the build",
+  "tag": "engineering",
+  "title": "A small screen is a design constraint.",
+  "summary": "What the footer, browser differences, safe areas, and text-spacing checks taught us about this site.",
+  "takeaway": "A layout can fit and still be too small to use.",
+  "art": "screen",
+  "categoryLabel": "INSIDE THE BUILD / RESPONSIVE DESIGN",
+  "intro": "A look at the actual decisions behind this website’s mobile footer, safe-area spacing, and responsive browser checks.",
+  "published": true,
+  "order": 2,
+  "cover": "",
+  "coverAlt": "",
+  "product": "index.html",
+  "productLabel": "Explore the website",
+  "body": "## Fitting is not the same as working\n\nThe first footer could fit within a phone’s width by shrinking its secondary text to eight pixels and hiding a tagline. That avoided a horizontal scrollbar, but it did not create a comfortable reading experience.\n\nThe revised footer uses a grid that becomes a single stack for the brand and two columns for navigation. Secondary text stays at a readable size, and links have a minimum touch height of 44 pixels. The layout changes rather than removing useful information.\n\n## The browser is part of the design\n\nThe same decorative asterisk could appear as a plain glyph in one browser and as a green emoji tile in another. Inline SVG now gives these marks a stable shape and color.\n\nWebKit also exposed a narrow-screen overflow in the decorative focus strip that Chromium did not show. On phones, that strip now uses a three-column layout with the decorative separators removed. Testing a second rendering engine found something that a simple width check in one browser could miss.\n\n## Leave room for the device\n\nA viewport is not always an unobstructed rectangle. The header, gutters, and footer account for safe-area insets, and the narrow-screen menu uses the available viewport height.\n\nThe safe-area tests simulate cutout and home-indicator spacing. They also check that the final internal menu destination can be reached in a short landscape viewport. These are emulated conditions; they supplement, rather than claim to replace, physical-device testing.\n\n## Check the text, not only the page\n\nA document can have the correct width while individual lines overflow a card or a footer link becomes too small. The responsive suite inspects actual text line boundaries, footer geometry, and touch heights.\n\nIt covers portrait and landscape sizes from 280 to 2560 CSS pixels, text-spacing overrides, and phone/tablet touch profiles. The broader lesson is practical: test the thing a person needs to read or activate, not just the outer page rectangle.\n\n## Keep the limits visible\n\nLocal checks have run in Chrome, Edge, and WebKit. The downloaded Firefox test browser on this Windows machine could not start because of a runtime configuration problem; that is a verification gap, not a passing result.\n\nThe repository includes reusable browser checks so future edits can be evaluated against the same constraints. As real devices and new content become available, they should become part of the review too."
+}

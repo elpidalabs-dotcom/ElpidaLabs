@@ -2,25 +2,5 @@
   "websiteUrl": "https://elpidalabs.xyz",
   "email": "elpidalabs@gmail.com",
   "repository": "https://github.com/elpidalabs-dotcom/ElpidaLabs",
-  "productUrl": "https://elpida.fun",
-  "team": [
-    {
-      "role": "Founder",
-      "name": null,
-      "bio": null,
-      "links": []
-    },
-    {
-      "role": "Co-founder",
-      "name": null,
-      "bio": null,
-      "links": []
-    },
-    {
-      "role": "Collaborators",
-      "name": null,
-      "bio": null,
-      "links": []
-    }
-  ]
+  "productUrl": "https://elpida.fun"
 }

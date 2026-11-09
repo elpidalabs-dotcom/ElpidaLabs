@@ -41,6 +41,7 @@ for (const file of [
   await cp(resolve(root, file), resolve(dist, file));
 }
 await cp(resolve(root, "assets"), resolve(dist, "assets"), { recursive: true });
+await cp(resolve(root, "admin"), resolve(dist, "admin"), { recursive: true });
 console.log(
   "Vercel artifact ready in dist/. Repository sources and GitHub Pages output were preserved.",
 );

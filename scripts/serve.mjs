@@ -28,7 +28,8 @@ export function serve(
     }
     const target = resolve(
       contentRoot,
-      path.slice(basePath.length) || "index.html",
+      (path.slice(basePath.length) || "") +
+        (path.endsWith("/") ? "index.html" : ""),
     );
     if (!target.startsWith(contentRoot + sep) || path.includes("/.")) {
       res.writeHead(403).end();
@@ -42,6 +43,11 @@ export function serve(
       ".svg": "image/svg+xml",
       ".xml": "application/xml",
       ".woff2": "font/woff2",
+      ".json": "application/json",
+      ".jpg": "image/jpeg",
+      ".jpeg": "image/jpeg",
+      ".webp": "image/webp",
+      ".avif": "image/avif",
     };
     try {
       const data = await readFile(target);

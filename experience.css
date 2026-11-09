@@ -1775,3 +1775,49 @@ html:not(.js) .copy-email {
   height: 16px;
   flex: 0 0 auto;
 }
+.profile-icon img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.profile-portrait {
+  width: min(100%, 240px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.profile-body .text-link {
+  display: inline-flex;
+  margin: 0 24px 12px 0;
+}
+.article-cover {
+  margin: 32px 0 48px;
+}
+.article-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.article-upload {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 24px 0;
+}
+.article-body pre {
+  overflow: auto;
+  max-width: 100%;
+  padding: 16px;
+  background: #172013;
+}
+.article-body blockquote {
+  border-left: 2px solid var(--lime);
+  padding-left: 20px;
+  margin-inline: 0;
+}

@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { articles, people, renderPeople, escapeText } from "./content.mjs";
 export const site = JSON.parse(
   readFileSync(new URL("../content/site.json", import.meta.url), "utf8"),
 );
@@ -53,52 +54,11 @@ export function productProgress(elpida) {
   return `<section class="section wrap progress-section"><div>${eyebrow("DEVELOPMENT / THE NEXT USEFUL STEP")}<h2>Progress with<br><span class="muted">the context attached.</span></h2><p>Direction is useful. A clearly defined next objective is better.</p></div><ol class="development-track"><li class="is-current"><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">CURRENT STAGE</span><h3>${elpida ? "Product in development" : "Research & concept exploration"}</h3><p>${elpida ? "The multichain launchpad direction is described here. This website now includes an interactive interface study." : "The resilience-testing direction is described here. This website now includes a synthetic scenario explainer."}</p></div></li><li><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">NEXT OBJECTIVE / PLANNED</span><h3>${elpida ? "Define a testable first journey" : "Define one reproducible experiment"}</h3><p>${elpida ? "Narrow the creator experience, specify its constraints, and test whether the project information is understandable." : "Document a hypothesis, an isolated environment, a bounded disruption, and a verified cleanup procedure."}</p></div></li><li><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">FUTURE / NOT YET CONFIRMED</span><h3>${elpida ? "Validate an implementation" : "Evaluate a working prototype"}</h3><p>Scope, readiness criteria, and actual results need to be documented before claiming a released capability. No release date is announced.</p></div></li></ol></section>`;
 }
 
-export const journalEntries = [
-  {
-    file: "building-elpida.html",
-    category: "Product thinking",
-    tag: "elpida",
-    title: "Building Elpida: from launch to community.",
-    summary:
-      "Creation, discovery, and the context that makes an onchain project easier to understand.",
-    takeaway: "A clearer launch starts before a transaction.",
-    art: "elpida",
-  },
-  {
-    file: "designing-for-failure.html",
-    category: "Engineering notes",
-    tag: "systems",
-    title: "Designing for failure, before it happens.",
-    summary:
-      "Hypotheses, bounded disruptions, and the evidence a resilience experiment would need.",
-    takeaway: "A useful experiment begins with a specific question.",
-    art: "chaos",
-  },
-  {
-    file: "building-for-every-screen.html",
-    category: "Inside the build",
-    tag: "engineering",
-    title: "A small screen is a design constraint.",
-    summary:
-      "What the footer, browser differences, safe areas, and text-spacing checks taught us about this site.",
-    takeaway: "A layout can fit and still be too small to use.",
-    art: "screen",
-  },
-  {
-    file: "why-we-build-static.html",
-    category: "Inside the build",
-    tag: "engineering",
-    title: "Small surface. Thoughtful engineering.",
-    summary:
-      "Why this company website uses static pages, progressive enhancement, and a narrow JavaScript footprint.",
-    takeaway: "A website’s architecture should match the job it does.",
-    art: "code",
-  },
-];
+export const journalEntries = articles;
 const entryCard = (entry, i) =>
-  `<article class="editorial-card" data-journal-category="${entry.tag}"><a class="editorial-art editorial-${entry.art}" href="${entry.file}" aria-label="EL / NOTE ${String(i + 1).padStart(2, "0")} — ${escape(entry.title)}"><span class="editorial-index" aria-hidden="true">EL / NOTE ${String(i + 1).padStart(2, "0")}</span>${entry.art === "elpida" ? '<img src="assets/elpida-mark.png" width="100" height="100" alt="" loading="lazy"/>' : icon(entry.art === "chaos" ? "systems" : entry.art === "screen" ? "web" : "code")}</a><div class="editorial-copy"><span class="micro-label">${entry.category}</span><h3><a href="${entry.file}">${entry.title}</a></h3><p>${entry.summary}</p><a class="text-link" href="${entry.file}">Read the note ${arrow}</a></div></article>`;
+  `<article class="editorial-card" data-journal-category="${entry.tag}"><a class="editorial-art editorial-${entry.art}" href="${entry.file}" aria-label="EL / NOTE ${String(i + 1).padStart(2, "0")} — ${escape(entry.title)}"><span class="editorial-index" aria-hidden="true">EL / NOTE ${String(i + 1).padStart(2, "0")}</span>${entry.art === "elpida" ? '<img src="assets/elpida-mark.png" width="100" height="100" alt="" loading="lazy"/>' : icon(entry.art === "chaos" ? "systems" : entry.art === "screen" ? "web" : "code")}</a><div class="editorial-copy"><span class="micro-label">${escape(entry.category)}</span><h3><a href="${entry.file}">${escape(entry.title)}</a></h3><p>${escape(entry.summary)}</p><a class="text-link" href="${entry.file}">Read the note ${arrow}</a></div></article>`;
 export const journalShowcase = `<div class="editorial-grid">${journalEntries.slice(0, 2).map(entryCard).join("")}</div>`;
-export const journalIndex = `<div data-journal><div class="journal-tools" role="group" aria-label="Filter journal notes"><button type="button" data-journal-filter="all" aria-pressed="true">All notes <span>04</span></button><button type="button" data-journal-filter="elpida" aria-pressed="false">Elpida</button><button type="button" data-journal-filter="systems" aria-pressed="false">Systems</button><button type="button" data-journal-filter="engineering" aria-pressed="false">Inside the build</button></div><p class="filter-status sr-only" role="status" aria-live="polite">Showing 4 notes</p><div class="editorial-grid">${journalEntries.map(entryCard).join("")}</div></div>`;
+export const journalIndex = `<div data-journal><div class="journal-tools" role="group" aria-label="Filter journal notes"><button type="button" data-journal-filter="all" aria-pressed="true">All notes <span>${String(journalEntries.length).padStart(2, "0")}</span></button><button type="button" data-journal-filter="elpida" aria-pressed="false">Elpida</button><button type="button" data-journal-filter="systems" aria-pressed="false">Systems</button><button type="button" data-journal-filter="engineering" aria-pressed="false">Inside the build</button></div><p class="filter-status sr-only" role="status" aria-live="polite">Showing ${journalEntries.length} notes</p><div class="editorial-grid">${journalEntries.map(entryCard).join("")}</div></div>`;
 
 export const contactPage = `<section class="page-hero wrap contact-hero">${eyebrow("CONTACT / GOOD QUESTIONS WELCOME")}<h1>Let’s start<br>with a <span class="serif lime">conversation.</span></h1><div class="intro-grid"><p class="lead">An idea, a question,<br>or a problem worth exploring.</p><div><p>Tell us what you have in mind. We’re interested in thoughtful engineering collaborations, product feedback, and research conversations.</p><a class="contact-email" href="mailto:${site.email}">${site.email}${arrow}</a><button type="button" class="copy-email text-link" data-copy-email="${site.email}">Copy email address</button><p class="copy-status" role="status" aria-live="polite"></p></div></div></section><section class="section wrap contact-layout"><div>${eyebrow("A USEFUL FIRST MESSAGE")}<h2>A little context<br>goes a long way.</h2><ol class="contact-prompts"><li><span>01</span><div><h3>The idea</h3><p>What are you trying to build or understand?</p></div></li><li><span>02</span><div><h3>The context</h3><p>What exists already, and where is the challenge?</p></div></li><li><span>03</span><div><h3>The next step</h3><p>What kind of conversation would be useful?</p></div></li></ol><a class="text-link" href="${site.repository}">Prefer to explore the code? ${arrow}</a></div><div class="enquiry-card"><form id="enquiry-form" action="mailto:${site.email}" method="get"><p class="micro-label">PREPARE AN ENQUIRY</p><label for="enquiry-topic">What would you like to discuss?</label><select id="enquiry-topic"><option>Collaboration</option><option>Elpida feedback</option><option>Chaos Engine research</option><option>Something else</option></select><label for="enquiry-subject">Subject <span>(required)</span></label><input type="text" id="enquiry-subject" name="subject" maxlength="100" required autocomplete="off" placeholder="A brief introduction to your idea"/><label for="enquiry-body">Your message <span>(required)</span></label><textarea id="enquiry-body" name="body" rows="7" minlength="20" maxlength="4000" required placeholder="A little context about your idea, challenge, and the next step you have in mind."></textarea><p class="form-help" id="enquiry-help">This prepares a draft in your email app. You review and send it there. Your message is not stored on this website.</p><button class="button" type="submit" aria-describedby="enquiry-help">Prepare email draft ${arrow}</button></form><div id="enquiry-preview" class="enquiry-preview" hidden><h3>Your draft is ready.</h3><p>Open your email app to review and send it, or copy the draft into an app you prefer.</p><pre id="enquiry-text"></pre><div class="actions"><a class="button" id="enquiry-mailto" href="mailto:${site.email}">Open email app ${arrow}</a><button type="button" class="button secondary" id="copy-enquiry">Copy draft</button></div><p id="enquiry-status" role="status" aria-live="polite"></p></div></div></section>`;
 
@@ -114,14 +74,14 @@ export function articleExtras(file) {
       file === "building-elpida.html" ? 3 : 2,
     );
   return {
-    takeaway: `<aside class="article-takeaway" aria-label="At a glance"><span class="micro-label">THE IDEA IN ONE LINE</span><p>${entry.takeaway}</p></aside>`,
+    takeaway: `<aside class="article-takeaway" aria-label="At a glance"><span class="micro-label">THE IDEA IN ONE LINE</span><p>${escape(entry.takeaway)}</p></aside>`,
     figure:
       file === "building-elpida.html"
         ? diagram("elpida", true)
         : file === "designing-for-failure.html"
           ? diagram("chaos", true)
           : engineeringFigure,
-    related: `<section class="related-notes" aria-labelledby="related-heading"><p class="eyebrow">FOLLOW THE THREAD</p><h2 id="related-heading">Keep exploring.</h2><div class="related-grid">${related.map((e) => `<a href="${e.file}"><span class="micro-label">${e.category}</span><h3>${e.title}</h3><span class="text-link">Read the note ${arrow}</span></a>`).join("")}</div></section>`,
+    related: `<section class="related-notes" aria-labelledby="related-heading"><p class="eyebrow">FOLLOW THE THREAD</p><h2 id="related-heading">Keep exploring.</h2><div class="related-grid">${related.map((e) => `<a href="${e.file}"><span class="micro-label">${escape(e.category)}</span><h3>${escape(e.title)}</h3><span class="text-link">Read the note ${arrow}</span></a>`).join("")}</div></section>`,
   };
 }
 
@@ -179,31 +139,16 @@ export function enhanceContent(file, content) {
       content.slice(insert);
   }
   if (file === "team.html") {
-    let profileIndex = 0;
-    content = content.replace(
-      /<details class="profile">[\s\S]*?<\/details>/g,
-      (original) => {
-        const profile = site.team[profileIndex++];
-        if (!profile?.name) return original;
-        const links = profile.links.filter((link) => {
-          try {
-            return new URL(link.url).protocol === "https:";
-          } catch {
-            return false;
-          }
-        });
-        return original
-          .replace(
-            /<span class="profile-title">.*?<\/span>/,
-            `<span class="profile-title">${escape(profile.name)}</span>`,
-          )
-          .replace("Profile forthcoming", escape(profile.role))
-          .replace(
-            /<div class="profile-body">[\s\S]*?<\/div><\/details>/,
-            `<div class="profile-body"><p>${escape(profile.bio || "Biography forthcoming.")}</p>${links.map((link) => `<a class="text-link" href="${escape(link.url)}">${escape(link.label)} ${arrow}</a>`).join("")}</div></details>`,
-          );
-      },
-    );
+    if (people.length) {
+      content = content.replace(
+        /<section class="section wrap profiles">[\s\S]*?<\/section>/,
+        renderPeople(people),
+      );
+      content = content.replace(
+        "We\'re preparing individual profiles. Until names, biographies, and public links are confirmed, the spaces below describe the team structure without assigning identities.",
+        "Meet the founders and collaborators shaping the lab, with their published biographies and public links.",
+      );
+    }
   }
   if (file === "journal.html") {
     const start = content.indexOf('<div class="notes-grid">');
@@ -229,94 +174,3 @@ export function enhanceContent(file, content) {
   }
   return content;
 }
-
-export const editorials = [
-  [
-    "building-for-every-screen.html",
-    "A small screen is a design constraint.",
-    "INSIDE THE BUILD / RESPONSIVE DESIGN",
-    "A look at the actual decisions behind this website’s mobile footer, safe-area spacing, and responsive browser checks.",
-    [
-      [
-        "Fitting is not the same as working",
-        [
-          "The first footer could fit within a phone’s width by shrinking its secondary text to eight pixels and hiding a tagline. That avoided a horizontal scrollbar, but it did not create a comfortable reading experience.",
-          "The revised footer uses a grid that becomes a single stack for the brand and two columns for navigation. Secondary text stays at a readable size, and links have a minimum touch height of 44 pixels. The layout changes rather than removing useful information.",
-        ],
-      ],
-      [
-        "The browser is part of the design",
-        [
-          "The same decorative asterisk could appear as a plain glyph in one browser and as a green emoji tile in another. Inline SVG now gives these marks a stable shape and color.",
-          "WebKit also exposed a narrow-screen overflow in the decorative focus strip that Chromium did not show. On phones, that strip now uses a three-column layout with the decorative separators removed. Testing a second rendering engine found something that a simple width check in one browser could miss.",
-        ],
-      ],
-      [
-        "Leave room for the device",
-        [
-          "A viewport is not always an unobstructed rectangle. The header, gutters, and footer account for safe-area insets, and the narrow-screen menu uses the available viewport height.",
-          "The safe-area tests simulate cutout and home-indicator spacing. They also check that the final internal menu destination can be reached in a short landscape viewport. These are emulated conditions; they supplement, rather than claim to replace, physical-device testing.",
-        ],
-      ],
-      [
-        "Check the text, not only the page",
-        [
-          "A document can have the correct width while individual lines overflow a card or a footer link becomes too small. The responsive suite inspects actual text line boundaries, footer geometry, and touch heights.",
-          "It covers portrait and landscape sizes from 280 to 2560 CSS pixels, text-spacing overrides, and phone/tablet touch profiles. The broader lesson is practical: test the thing a person needs to read or activate, not just the outer page rectangle.",
-        ],
-      ],
-      [
-        "Keep the limits visible",
-        [
-          "Local checks have run in Chrome, Edge, and WebKit. The downloaded Firefox test browser on this Windows machine could not start because of a runtime configuration problem; that is a verification gap, not a passing result.",
-          "The repository includes reusable browser checks so future edits can be evaluated against the same constraints. As real devices and new content become available, they should become part of the review too.",
-        ],
-      ],
-    ],
-    ["index.html", "Explore the website"],
-  ],
-  [
-    "why-we-build-static.html",
-    "Small surface. Thoughtful engineering.",
-    "INSIDE THE BUILD / WEBSITE ARCHITECTURE",
-    "Why this company website uses static pages, progressive enhancement, and a small amount of browser JavaScript.",
-    [
-      [
-        "Match the architecture to the job",
-        [
-          "This website introduces a lab, explains product direction, publishes notes, and helps someone begin a conversation. Its content does not require an application server, visitor accounts, or a database.",
-          "The implementation uses generated HTML, a shared stylesheet, and browser enhancements. The default output can be served directly by GitHub Pages; a separate Vercel build creates a root-domain deployment artifact. This is a choice for this company website, not a prescription for the products the lab might build.",
-        ],
-      ],
-      [
-        "Make the baseline useful",
-        [
-          "Product descriptions, article text, team-status information, and navigation are rendered as HTML. Without JavaScript, the narrow-screen navigation remains a visible list and the product study can still be read.",
-          "JavaScript adds focus-area selection, local concept demonstrations, journal filtering, and email-draft preparation. Those interactions improve the experience without turning the site into a single-page application or changing its direct routes.",
-        ],
-      ],
-      [
-        "Respect the project base path",
-        [
-          "A GitHub project site lives under /ElpidaLabs/. A link that assumes the server root can work locally and fail after publication. Internal page links and asset references therefore stay relative to the current document.",
-          "The 404 document is a special case: a host can serve it at an arbitrary missing nested URL. Its base must match the deployment: /ElpidaLabs/ for GitHub Pages and / for the root-domain Vercel build. Canonical URLs, share images, and the sitemap use the selected deployment’s public address.",
-        ],
-      ],
-      [
-        "Keep interactions bounded",
-        [
-          "The Elpida study edits a sample project description in the current page. The Chaos Engine explainer draws deterministic synthetic data. Neither connects a wallet, submits a transaction, or contacts infrastructure.",
-          "The contact flow prepares an email draft for the visitor to review and send in their own app. It does not claim to have delivered a message. These boundaries make the behavior legible and keep the static architecture aligned with what the interface actually promises.",
-        ],
-      ],
-      [
-        "Let checks carry the decisions forward",
-        [
-          "The repository contains link, accessibility, interaction, responsive, and safe-area checks. A GitHub Actions workflow is prepared to run them when changes are pushed or reviewed. Its actual hosted run is only verifiable after the workflow is committed and pushed.",
-          "Browser-specific enhancements such as page transitions remain optional and respect reduced motion. The site should remain understandable when a browser omits an enhancement, a network is slow, or a visitor prefers a quieter interface.",
-        ],
-      ],
-    ],
-    ["about.html", "Inside the lab"],
-  ],
-];

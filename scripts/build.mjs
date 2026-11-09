@@ -1,4 +1,11 @@
-import { writeFileSync, readFileSync } from "node:fs";
+import {
+  articles,
+  articleRecords,
+  renderContentArticleBody,
+  escapeText,
+  mediaPath,
+} from "./content.mjs";
+import { writeFileSync, readFileSync, rmSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { mkdirSync } from "node:fs";
 import { output, origin, basePath } from "./deployment.mjs";
@@ -6,7 +13,6 @@ import {
   site,
   enhanceContent,
   contactPage,
-  editorials,
   journalEntries,
 } from "./enhancements.mjs";
 const generatedPages = [];
@@ -33,6 +39,10 @@ const root = new URL("../", import.meta.url);
 mkdirSync(output, { recursive: true });
 const write = (file, content) =>
   writeFileSync(new URL(file, output), content.trim() + "\n");
+for (const item of articleRecords.filter((item) => !item.published)) {
+  // Validated slugs cannot target another route or leave the output directory.
+  rmSync(new URL(item.file, output), { force: true });
+}
 const logo =
   '<img src="assets/elpida-mark.png" width="40" height="40" alt="" />';
 const asterisk =
@@ -52,6 +62,8 @@ const products = `<div class="product-grid"><article class="product-card"><a cla
 const notes = `<div class="notes-grid"><a class="note-card" href="building-elpida.html"><span class="note-type">PRODUCT THINKING <span>01</span></span><h3>Building Elpida:<br>from launch to community.</h3><p>The questions shaping a multichain launchpad, and the work still ahead.</p><span class="text-link">Read the article ${arrow}</span></a><a class="note-card" href="designing-for-failure.html"><span class="note-type">ENGINEERING NOTES <span>02</span></span><h3>Designing for failure,<br>before it happens.</h3><p>What we're exploring with Chaos Engine, and why scope and safety come first.</p><span class="text-link">Read the article ${arrow}</span></a></div>`;
 function page(file, title, description, content, active = "") {
   content = enhanceContent(file, content);
+  const metadataTitle = escapeText(title);
+  const metadataDescription = escapeText(description);
   generatedPages.push(file);
   const entry = journalEntries.find((item) => item.file === file);
   const readingMinutes = Math.max(
@@ -177,7 +189,7 @@ function page(file, title, description, content, active = "") {
   };
   if (file !== "index.html" && file !== "404.html") {
     content =
-      `<nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li>${entry ? '<li><a href="journal.html">Journal</a></li>' : ""}<li><span aria-current="page">${title}</span></li></ol></nav>` +
+      `<nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li>${entry ? '<li><a href="journal.html">Journal</a></li>' : ""}<li><span aria-current="page">${escapeText(title)}</span></li></ol></nav>` +
       content;
   }
   const links = [
@@ -190,7 +202,7 @@ function page(file, title, description, content, active = "") {
   ];
   write(
     file,
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${title} — Elpida Labs</title><meta name="description" content="${description}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${title} — Elpida Labs"/><meta property="og:description" content="${description}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta property="og:site_name" content="Elpida Labs"/><meta property="og:locale" content="en_US"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${title} — Elpida Labs"/><meta name="twitter:description" content="${description}"/><meta name="twitter:image" content="${origin}assets/${shareImage}"/><meta name="twitter:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="robots" content="${file === "404.html" ? "noindex, follow" : "index, follow, max-image-preview:large"}"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData)}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <svg class="menu-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ${arrowUp}</a></div></div></footer></body></html>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${metadataTitle} — Elpida Labs</title><meta name="description" content="${metadataDescription}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${metadataTitle} — Elpida Labs"/><meta property="og:description" content="${metadataDescription}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta property="og:site_name" content="Elpida Labs"/><meta property="og:locale" content="en_US"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${metadataTitle} — Elpida Labs"/><meta name="twitter:description" content="${metadataDescription}"/><meta name="twitter:image" content="${origin}assets/${shareImage}"/><meta name="twitter:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="robots" content="${file === "404.html" ? "noindex, follow" : "index, follow, max-image-preview:large"}"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, "\\u003c")}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <svg class="menu-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ${arrowUp}</a></div></div></footer></body></html>`,
   );
 }
 page(
@@ -304,105 +316,17 @@ page(
   `<section class="page-hero wrap">${label("THE JOURNAL / THINKING IN PUBLIC")}<h1>Before the launch.<br>Behind the <span class="serif lime">build.</span></h1><p class="lead narrow">A place for product direction, engineering questions, and the work that happens between an idea and a release.</p></section><section class="section wrap journal-list">${notes}<p class="work-note">These are product direction articles. They describe ongoing exploration and do not announce released capabilities.</p></section>${cta}`,
   "Journal",
 );
-function article(file, title, category, intro, sections, product) {
+function renderContentArticle(item) {
+  const sections = renderContentArticleBody(item.body);
+  const cover = mediaPath(item.cover);
   page(
-    file,
-    title,
-    intro,
-    `<article class="article wrap"><a class="breadcrumb" href="journal.html">← Back to journal</a>${label(category)}<h1>${title}</h1><p class="article-deck">${intro}</p><div class="article-meta"><span>ELPIDA LABS / PRODUCT NOTES</span>${status("Direction, not a release announcement")}</div><div class="article-layout"><aside aria-label="Article contents"><p class="eyebrow">IN THIS NOTE</p>${sections.map(([t], i) => `<a href="#section-${i + 1}">${String(i + 1).padStart(2, "0")} / ${t}</a>`).join("")}</aside><div class="article-body">${sections.map(([t, paras], i) => `<section id="section-${i + 1}"><h2>${t}</h2>${paras.map((p) => `<p>${p}</p>`).join("")}</section>`).join("")}<div class="article-end">${label("CONTINUE EXPLORING")}${btn(product[0], product[1])}<a class="text-link" href="journal.html">All journal notes ${arrow}</a></div></div></div></article>`,
+    item.file,
+    item.title,
+    item.intro,
+    `<article class="article wrap"><a class="breadcrumb" href="journal.html">Back to journal</a>${label(escapeText(item.categoryLabel))}<h1>${escapeText(item.title)}</h1><p class="article-deck">${escapeText(item.intro)}</p><div class="article-meta"><span>ELPIDA LABS / PRODUCT NOTES</span>${status("Direction, not a release announcement")}</div>${cover ? `<figure class="article-cover"><img src="${escapeText(cover)}" alt="${escapeText(item.coverAlt)}" width="1200" height="675" decoding="async"/></figure>` : ""}<div class="article-layout"><aside aria-label="Article contents"><p class="eyebrow">IN THIS NOTE</p>${sections.map((section, i) => `<a href="#section-${i + 1}">${String(i + 1).padStart(2, "0")} / ${escapeText(section.heading)}</a>`).join("")}</aside><div class="article-body">${sections.map((section, i) => `<section id="section-${i + 1}"><h2>${escapeText(section.heading)}</h2>${section.html}</section>`).join("")}<div class="article-end">${label("CONTINUE EXPLORING")}${btn(item.product, escapeText(item.productLabel))}<a class="text-link" href="journal.html">All journal notes ${arrow}</a></div></div></div></article>`,
     "Journal",
   );
 }
-article(
-  "building-elpida.html",
-  "Building Elpida: from launch to community.",
-  "PRODUCT THINKING / ELPIDA",
-  "Elpida is a multichain token launchpad in development. This note explains the intended product direction, the questions that matter, and what remains unconfirmed.",
-  [
-    [
-      "The question behind Elpida",
-      [
-        "What would it take to make an onchain launch easier to understand, both for the person creating a project and for the community discovering it? That is the starting question behind Elpida.",
-        "A token launch brings together technical decisions, project information, and community expectations. A useful product needs to explain those decisions clearly rather than treat the launch transaction as the whole experience. Elpida is exploring how that broader journey could fit together.",
-      ],
-    ],
-    [
-      "Three connected journeys",
-      [
-        "The first proposed journey is creation: helping a creator understand the information and decisions involved in preparing a launch. This could include project context, network selection, and clear review steps. These are design questions, not confirmed interface features.",
-        "The second is discovery: considering how participants could find projects and understand their context across chains. Consistent information and clear network boundaries would matter more than adding a long list of unsupported claims.",
-        "The third is continuity: thinking about what happens after a launch. Community information, project communication, and a coherent place to return could support a more useful experience. The scope of any such features is still being determined.",
-      ],
-    ],
-    [
-      "Why multichain requires care",
-      [
-        "Different networks have different transaction behavior, fees, tooling, and operational constraints. A multichain interface should make those differences visible at the moment they affect a decision.",
-        "The word multichain describes the direction of the project. This website does not confirm support for any named network, bridge, wallet, token standard, or launch mechanism. Those choices need implementation work and explicit documentation before they can be treated as available capabilities.",
-      ],
-    ],
-    [
-      "What must be resolved",
-      [
-        "The product still needs a defined initial scope, a validated creator journey, and an implementation that can be tested against that scope. Security review, permissions, transaction clarity, failure handling, and operational readiness would need attention before any public launch functionality could be presented as ready.",
-        "Fees, supported networks, release dates, and availability are not announced here. Nor does this article claim that any deployment has been audited or that participation provides a financial return. A convincing prototype and a documented set of constraints are more useful next steps than an unsupported timeline.",
-      ],
-    ],
-    [
-      "Where to follow the product",
-      [
-        'The external product destination is <a href="https://elpida.fun">elpida.fun</a>. Its current content and availability may change independently of this company website. Check the product site for its own current status and confirm any claims before taking action.',
-        "As the work becomes more concrete, these notes can be updated with verified capabilities, documented limitations, and actual milestones. For now, Elpida remains a product in development, with a clear question and an evolving path toward an answer.",
-      ],
-    ],
-  ],
-  ["elpida.html", "Explore Elpida"],
-);
-article(
-  "designing-for-failure.html",
-  "Designing for failure, before it happens.",
-  "ENGINEERING NOTES / CHAOS ENGINE",
-  "Chaos Engine is an early research concept for resilience testing. We are exploring how controlled experiments could help teams understand failure and recovery before an incident.",
-  [
-    [
-      "Start with a question",
-      [
-        "A dependency slows down. A request times out. A service becomes unavailable. These conditions can reveal assumptions that are hard to see during ordinary operation.",
-        "Chaos Engine begins with a question: could a deliberate, understandable experiment help a team learn how its software behaves under pressure? The concept is about learning from controlled conditions. It is not a released testing service or a claim that failure can be eliminated.",
-      ],
-    ],
-    [
-      "A proposed experiment loop",
-      [
-        "A useful experiment would begin with a specific expectation. For example: if a dependency responds slowly, does the application show a useful error and recover once normal conditions return? The expected result should be written down before introducing a disruption.",
-        "Next would come a bounded test in an isolated environment. Latency and dependency unavailability are examples of conditions worth researching, not a list of implemented Chaos Engine features.",
-        "Finally, the team would compare the observed behavior with its expectation, record what it learned, and decide what to change or test next. A report is useful only if the observations are trustworthy and the next action is understandable.",
-      ],
-    ],
-    [
-      "Safety is part of the design",
-      [
-        "A future prototype would need explicit authorization, a narrow target, a defined duration, and a reliable way to stop and clean up an experiment. The initial research direction should favor isolated test environments.",
-        "Access controls, clear experiment boundaries, and recovery checks would need to be designed and validated. No production-readiness or safety guarantees are made here. The terminal-like and signal graphics used on this website are illustrations; they do not connect to systems or inject failures.",
-      ],
-    ],
-    [
-      "What is still open",
-      [
-        "The appropriate first audience, deployment model, observability inputs, integrations, and experiment types remain research questions. There is no confirmed downloadable tool, hosted platform, public API, or release schedule.",
-        "The idea may become a narrow prototype before it becomes a platform. That would let the team evaluate whether a simple experiment loop produces useful findings without assuming a large feature set from the beginning.",
-      ],
-    ],
-    [
-      "What progress would look like",
-      [
-        "A meaningful first milestone would be a documented, reproducible experiment in a controlled environment: a stated hypothesis, a bounded disruption, reliable observations, and verified cleanup.",
-        "Until such work is demonstrated, Chaos Engine should be understood as a concept under exploration. Future notes can describe actual prototypes and measured results as they exist. This article describes the intended research direction, not work claimed to have been completed.",
-      ],
-    ],
-  ],
-  ["chaos-engine.html", "Explore Chaos Engine"],
-);
 page(
   "contact.html",
   "Start a conversation",
@@ -412,7 +336,7 @@ page(
   contactPage,
   "Contact",
 );
-for (const editorial of editorials) article(...editorial);
+for (const item of articles) renderContentArticle(item);
 page(
   "404.html",
   "Page not found",

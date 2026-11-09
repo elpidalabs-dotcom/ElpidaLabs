@@ -1,0 +1,49 @@
+body {
+  font:
+    16px/1.7 system-ui,
+    sans-serif;
+  background: #0b0e0c;
+  color: #edf2e7;
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+h1 {
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+h2 {
+  margin-top: 36px;
+  font-size: 25px;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.portrait {
+  width: 140px;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.kicker {
+  font: 12px monospace;
+  color: #baf368;
+  text-transform: uppercase;
+}
+.deck {
+  font-size: 19px;
+  color: #bec9b5;
+}
+a {
+  color: #baf368;
+}
+pre {
+  white-space: pre-wrap;
+}
+.preview-note {
+  border-bottom: 1px solid #34412d;
+  padding-bottom: 16px;
+  color: #bec9b5;
+  font-size: 12px;
+}

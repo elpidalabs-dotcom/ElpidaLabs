@@ -25,6 +25,18 @@
 
 ## Account setup after publishing
 
+On November 9, 2026, the `elpidalabs.xyz` Domain property was verified through
+Vercel DNS in the signed-in owner's Search Console account. The production
+sitemap was submitted and Google acknowledged the submission. Its initial
+processing status was “couldn't fetch”; public checks returned HTTP 200 with
+valid XML and 11 URLs, including with a Googlebot user agent. Sitemap processing
+and actual indexing must still be confirmed in Search Console. Keep the Google
+verification TXT record in DNS.
+
+Google also accepted individual indexing requests for the homepage,
+`elpida.html`, and `chaos-engine.html`, placing all three in its priority crawl
+queue. This records successful requests, not confirmed indexing or rankings.
+
 1. Add `elpidalabs.xyz` as a Domain property in
    [Google Search Console](https://search.google.com/search-console). Use the
    exact DNS TXT value Google supplies in the Vercel-managed DNS zone. Do not

@@ -1,0 +1,257 @@
+{
+  "backend": {
+    "name": "github",
+    "repo": "elpidalabs-dotcom/ElpidaLabs",
+    "branch": "main",
+    "base_url": "https://elpidalabs.xyz",
+    "auth_endpoint": "api/cms-auth"
+  },
+  "publish_mode": "editorial_workflow",
+  "media_folder": "assets/uploads",
+  "public_folder": "/assets/uploads",
+  "site_url": "https://elpidalabs.xyz",
+  "display_url": "https://elpidalabs.xyz",
+  "logo_url": "https://elpidalabs.xyz/assets/elpida-mark.png",
+  "show_preview_links": false,
+  "slug": {
+    "encoding": "ascii",
+    "clean_accents": true,
+    "sanitize_replacement": "-"
+  },
+  "collections": [
+    {
+      "name": "people",
+      "label": "People",
+      "label_singular": "Person",
+      "folder": "content/people",
+      "create": true,
+      "delete": false,
+      "extension": "json",
+      "format": "json",
+      "identifier_field": "name",
+      "slug": "{{slug}}",
+      "summary": "{{name}} · {{role}}",
+      "description": "Founders, co-founders, and collaborators. Add only approved public information.",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Full name",
+          "widget": "string",
+          "pattern": ["^.{1,100}$", "Use up to 100 characters."]
+        },
+        {
+          "name": "role",
+          "label": "Role",
+          "widget": "select",
+          "options": ["Founder", "Co-founder", "Collaborator"]
+        },
+        {
+          "name": "published",
+          "label": "Show on the public website",
+          "widget": "boolean",
+          "default": false,
+          "hint": "Keep off until the identity or article is approved. Drafts still exist in the public repository."
+        },
+        {
+          "name": "order",
+          "label": "Display order",
+          "widget": "number",
+          "default": 100,
+          "value_type": "int",
+          "min": 0,
+          "max": 9999
+        },
+        {
+          "name": "bio",
+          "label": "Biography",
+          "widget": "text",
+          "pattern": ["^[\\s\\S]{1,3000}$", "Use up to 3,000 characters."]
+        },
+        {
+          "name": "photo",
+          "label": "Portrait",
+          "widget": "image",
+          "required": false,
+          "allow_multiple": false,
+          "choose_url": false,
+          "hint": "PNG, JPEG, WebP or AVIF, up to 3 MB. Uploaded files are public in repository history."
+        },
+        {
+          "name": "photoAlt",
+          "label": "Portrait description",
+          "widget": "string",
+          "required": false,
+          "hint": "Required when you upload a portrait; describe the image."
+        },
+        {
+          "name": "links",
+          "label": "Public links",
+          "widget": "list",
+          "required": false,
+          "default": [],
+          "max": 10,
+          "fields": [
+            {
+              "name": "label",
+              "label": "Label",
+              "widget": "string"
+            },
+            {
+              "name": "url",
+              "label": "HTTPS URL",
+              "widget": "string",
+              "pattern": ["^https://[^\\s]+$", "Use a public https:// URL."]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "articles",
+      "label": "Project articles",
+      "label_singular": "Article",
+      "folder": "content/articles",
+      "create": true,
+      "delete": false,
+      "extension": "json",
+      "format": "json",
+      "slug": "{{slug}}",
+      "preview_path": "{{slug}}.html",
+      "summary": "{{title}}",
+      "description": "Edit the existing notes or create a new article. Keep established file names to preserve links.",
+      "fields": [
+        {
+          "name": "title",
+          "label": "Title",
+          "widget": "string",
+          "pattern": ["^.{1,140}$", "Use up to 140 characters."]
+        },
+        {
+          "name": "published",
+          "label": "Show on the public website",
+          "widget": "boolean",
+          "default": false,
+          "hint": "Keep off until the identity or article is approved. Drafts still exist in the public repository."
+        },
+        {
+          "name": "order",
+          "label": "Display order",
+          "widget": "number",
+          "default": 100,
+          "value_type": "int",
+          "min": 0,
+          "max": 9999
+        },
+        {
+          "name": "category",
+          "label": "Card category",
+          "widget": "select",
+          "options": [
+            "Product thinking",
+            "Engineering notes",
+            "Inside the build"
+          ]
+        },
+        {
+          "name": "categoryLabel",
+          "label": "Article eyebrow",
+          "widget": "string",
+          "hint": "For example: PRODUCT THINKING / ELPIDA"
+        },
+        {
+          "name": "tag",
+          "label": "Journal filter",
+          "widget": "select",
+          "options": [
+            {
+              "label": "Elpida",
+              "value": "elpida"
+            },
+            {
+              "label": "Systems",
+              "value": "systems"
+            },
+            {
+              "label": "Inside the build",
+              "value": "engineering"
+            }
+          ]
+        },
+        {
+          "name": "art",
+          "label": "Card illustration",
+          "widget": "select",
+          "options": ["elpida", "chaos", "screen", "code"]
+        },
+        {
+          "name": "summary",
+          "label": "Card summary",
+          "widget": "text",
+          "pattern": ["^[\\s\\S]{1,300}$", "Use up to 300 characters."]
+        },
+        {
+          "name": "intro",
+          "label": "Introduction and search description",
+          "widget": "text",
+          "pattern": ["^[\\s\\S]{1,500}$", "Use up to 500 characters."]
+        },
+        {
+          "name": "takeaway",
+          "label": "At-a-glance takeaway",
+          "widget": "text",
+          "pattern": ["^[\\s\\S]{1,300}$", "Use up to 300 characters."]
+        },
+        {
+          "name": "cover",
+          "label": "Cover image",
+          "widget": "image",
+          "required": false,
+          "allow_multiple": false,
+          "choose_url": false,
+          "hint": "PNG, JPEG, WebP or AVIF, up to 3 MB. Uploaded files are public in repository history."
+        },
+        {
+          "name": "coverAlt",
+          "label": "Cover description",
+          "widget": "string",
+          "required": false,
+          "hint": "Required if you upload a cover image."
+        },
+        {
+          "name": "product",
+          "label": "Related destination",
+          "widget": "select",
+          "options": [
+            {
+              "label": "Elpida",
+              "value": "elpida.html"
+            },
+            {
+              "label": "Chaos Engine",
+              "value": "chaos-engine.html"
+            },
+            {
+              "label": "The lab",
+              "value": "about.html"
+            },
+            {
+              "label": "Home",
+              "value": "index.html"
+            }
+          ]
+        },
+        {
+          "name": "productLabel",
+          "label": "Related link label",
+          "widget": "string"
+        },
+        {
+          "name": "body",
+          "label": "Article body",
+          "widget": "markdown",
+          "hint": "Start with a level-two heading (##). Use ## for each main section. Raw HTML is displayed as text; upload images through the media library."
+        }
+      ]
+    }
+  ]
+}

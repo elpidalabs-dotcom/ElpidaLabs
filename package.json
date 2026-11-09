@@ -15,10 +15,14 @@
     "build:social": "node scripts/generate-social.mjs",
     "test:experiences": "node scripts/test-experiences.mjs",
     "test:model": "node --test scripts/demo-model.test.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "test:content": "node --test scripts/content.test.mjs scripts/cms-oauth.test.mjs",
+    "test:reproducible": "node scripts/test-reproducible.mjs",
+    "test:admin": "node scripts/test-admin.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
+    "markdown-it": "15.0.3",
     "playwright": "1.65.0",
     "prettier": "3.6.2",
     "sharp": "0.35.5"
