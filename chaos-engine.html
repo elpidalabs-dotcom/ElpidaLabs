@@ -50,7 +50,17 @@
       content="Elpida Labs. Curiosity into code. Code into impact."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <link rel="icon" href="assets/elpida-mark.png" type="image/png" />
+    <link
+      rel="icon"
+      href="assets/favicon-96.png"
+      type="image/png"
+      sizes="96x96"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="assets/apple-touch-icon.png"
+      sizes="180x180"
+    />
     <link
       rel="preload"
       href="assets/fonts/manrope-latin.woff2"
@@ -72,7 +82,13 @@
             "name": "Elpida Labs",
             "url": "https://elpidalabs.xyz/",
             "email": "elpidalabs@gmail.com",
-            "logo": "https://elpidalabs.xyz/assets/elpida-mark.png",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://elpidalabs.xyz/assets/elpida-mark.png",
+              "width": 384,
+              "height": 384
+            },
+            "description": "A student-founded technology collective exploring AI, Web3, and software systems. Elpida and Chaos Engine are projects in development.",
             "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
           },
           {
@@ -504,6 +520,83 @@
           </p>
           <a class="text-link" href="designing-for-failure.html"
             >Read the detailed product note
+            <svg
+              class="arrow-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5 19 19 5M5 5h14v14" /></svg
+          ></a>
+        </div>
+      </section>
+      <section class="section wrap" aria-labelledby="product-use-cases">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">WHO IT IS FOR / WHAT TO EXPLORE</p>
+            <h2 id="product-use-cases">
+              A clearer purpose.<br /><span class="muted"
+                >A practical next step.</span
+              >
+            </h2>
+          </div>
+          <p>
+            Chaos Engine explores how to turn a failure scenario into a useful
+            engineering question.
+          </p>
+        </div>
+        <div class="capability-grid bordered">
+          <article>
+            <span>For engineers</span>
+            <h3>Ask one reliability question</h3>
+            <p>
+              For example: when a dependency slows down, does the application
+              wait indefinitely or return a useful fallback?
+            </p>
+          </article>
+          <article>
+            <span>For learners</span>
+            <h3>Compare two responses</h3>
+            <p>
+              Use the sandbox above to compare waiting with a bounded fallback.
+              Its generated values explain a tradeoff; they are not benchmark
+              results.
+            </p>
+          </article>
+          <article>
+            <span>Research scope</span>
+            <h3>Define the experiment first</h3>
+            <p>
+              The next objective is a reproducible experiment in an isolated
+              environment, with explicit stop conditions and verified cleanup.
+              No platform is released.
+            </p>
+          </article>
+        </div>
+        <div class="actions">
+          <a
+            class="button secondary"
+            href="mailto:elpidalabs@gmail.com?subject=Chaos%20Engine%20research%20feedback"
+            >Share product feedback
+            <svg
+              class="arrow-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5 19 19 5M5 5h14v14" /></svg></a
+          ><a class="text-link" href="designing-for-failure.html"
+            >Read the product direction
             <svg
               class="arrow-icon"
               viewBox="0 0 24 24"

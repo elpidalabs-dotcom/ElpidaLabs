@@ -16,6 +16,9 @@ import {
   journalEntries,
 } from "./enhancements.mjs";
 const generatedPages = [];
+const { key: indexNowKey } = JSON.parse(
+  readFileSync(new URL("../content/indexnow.json", import.meta.url), "utf8"),
+);
 const assetVersion = createHash("sha256")
   .update(
     [
@@ -94,7 +97,14 @@ function page(file, title, description, content, active = "") {
         name: "Elpida Labs",
         url: origin,
         email: site.email,
-        logo: origin + "assets/elpida-mark.png",
+        logo: {
+          "@type": "ImageObject",
+          url: origin + "assets/elpida-mark.png",
+          width: 384,
+          height: 384,
+        },
+        description:
+          "A student-founded technology collective exploring AI, Web3, and software systems. Elpida and Chaos Engine are projects in development.",
         sameAs: [site.repository],
       },
       {
@@ -202,7 +212,7 @@ function page(file, title, description, content, active = "") {
   ];
   write(
     file,
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${metadataTitle} — Elpida Labs</title><meta name="description" content="${metadataDescription}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${metadataTitle} — Elpida Labs"/><meta property="og:description" content="${metadataDescription}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta property="og:site_name" content="Elpida Labs"/><meta property="og:locale" content="en_US"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${metadataTitle} — Elpida Labs"/><meta name="twitter:description" content="${metadataDescription}"/><meta name="twitter:image" content="${origin}assets/${shareImage}"/><meta name="twitter:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="robots" content="${file === "404.html" ? "noindex, follow" : "index, follow, max-image-preview:large"}"/><link rel="icon" href="assets/elpida-mark.png" type="image/png"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, "\\u003c")}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <svg class="menu-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ${arrowUp}</a></div></div></footer></body></html>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta name="theme-color" content="#0b0e0c"/><title>${metadataTitle} — Elpida Labs</title><meta name="description" content="${metadataDescription}"/><link rel="canonical" href="${origin}${file === "index.html" ? "" : file}"/><meta property="og:type" content="${entry ? "article" : "website"}"/><meta property="og:title" content="${metadataTitle} — Elpida Labs"/><meta property="og:description" content="${metadataDescription}"/><meta property="og:url" content="${origin}${file === "index.html" ? "" : file}"/><meta property="og:image" content="${origin}assets/${shareImage}"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta property="og:site_name" content="Elpida Labs"/><meta property="og:locale" content="en_US"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="${metadataTitle} — Elpida Labs"/><meta name="twitter:description" content="${metadataDescription}"/><meta name="twitter:image" content="${origin}assets/${shareImage}"/><meta name="twitter:image:alt" content="Elpida Labs. Curiosity into code. Code into impact."/><meta name="robots" content="${file === "404.html" ? "noindex, follow" : "index, follow, max-image-preview:large"}"/><link rel="icon" href="assets/favicon-96.png" type="image/png" sizes="96x96"/><link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180"/><link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin/><link rel="stylesheet" href="styles.css?v=${assetVersion}"/><link rel="stylesheet" href="experience.css?v=${assetVersion}"/><script src="script.js?v=${assetVersion}" defer></script><script type="module" src="enhancements.js?v=${assetVersion}"></script><script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, "\\u003c")}</script></head><body data-page="${file.replace(".html", "")}"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="wrap nav-shell"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu <svg class="menu-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button><nav id="primary-nav" aria-label="Primary navigation">${links.map(([href, name]) => `<a href="${href}"${active === name ? ' aria-current="page"' : ""}>${name}</a>`).join("")}<a class="nav-visit" href="https://elpida.fun">Visit Elpida ${arrow}</a></nav></div></header><main id="main" tabindex="-1">${content}</main><footer class="site-footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="index.html">${logo}<span>elpida<span class="brand-muted">labs</span><b>.</b></span></a><p>Independent minds.<br>Shared momentum.</p></div><nav class="footer-nav" aria-label="Footer navigation"><div class="footer-group"><h2>The lab</h2><a href="about.html">About us</a><a href="team.html">Our people</a><a href="journal.html">Journal</a><a href="contact.html">Contact</a><a href="https://github.com/elpidalabs-dotcom/ElpidaLabs">GitHub ${arrow}</a></div><div class="footer-group"><h2>Our work</h2><a href="elpida.html">Elpida</a><a href="chaos-engine.html">Chaos Engine</a><a href="https://elpida.fun">Visit elpida.fun ${arrow}</a></div></nav></div><div class="footer-bottom"><span>© ${new Date().getUTCFullYear()} Elpida Labs</span><span class="footer-tagline">Student-founded. Future-focused.</span><a href="#main">Back to top ${arrowUp}</a></div></div></footer></body></html>`,
   );
 }
 page(
@@ -365,4 +375,22 @@ write(".nojekyll", "");
 write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${origin}sitemap.xml`);
 console.log(
   `Generated ${generatedPages.length - 1} content pages, 404 fallback, and sitemap.`,
+);
+
+// Public ownership proof, not an authentication credential.
+write(`${indexNowKey}.txt`, indexNowKey);
+write(
+  "indexnow-manifest.json",
+  JSON.stringify({
+    pages: Object.fromEntries(
+      generatedPages
+        .filter((file) => file !== "404.html")
+        .map((file) => [
+          origin + (file === "index.html" ? "" : file),
+          createHash("sha256")
+            .update(readFileSync(new URL(file, output)))
+            .digest("hex"),
+        ]),
+    ),
+  }),
 );

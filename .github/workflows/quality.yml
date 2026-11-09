@@ -36,6 +36,7 @@ jobs:
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run build
       - run: npm run check
+      - run: node --test scripts/indexnow.test.mjs
       - run: npm run test:model
       - run: npm run test:content
       - name: Verify Vercel root-domain artifact
@@ -113,6 +114,10 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel build --prod --token="$VERCEL_TOKEN"
+      - name: Snapshot previously published pages
+        continue-on-error: true
+        if: steps.revision.outputs.current == 'true'
+        run: node scripts/indexnow.mjs --snapshot
       - name: Deploy tested revision
         if: steps.revision.outputs.current == 'true'
         env:
@@ -123,3 +128,8 @@ jobs:
       - name: Verify production studio and sign-in routes
         if: steps.revision.outputs.current == 'true'
         run: node scripts/verify-production.mjs
+
+      - name: Notify search engines of published changes
+        if: steps.revision.outputs.current == 'true'
+        continue-on-error: true
+        run: node scripts/indexnow.mjs --submit

@@ -25,6 +25,23 @@ for (const file of [
 assert.ok(js < 35000, `Browser JavaScript budget exceeded: ${js}`);
 assert.ok(css < 100000, `Stylesheet budget exceeded: ${css}`);
 const pages = (await readdir(root)).filter((file) => file.endsWith(".html"));
+const favicon = await readFile(new URL("assets/favicon-96.png", root));
+assert.equal(favicon.readUInt32BE(16), 96);
+assert.equal(favicon.readUInt32BE(20), 96);
+const { key } = JSON.parse(
+  await readFile(new URL("content/indexnow.json", root), "utf8"),
+);
+assert.match(key, /^[a-f0-9]{32}$/);
+assert.equal((await readFile(new URL(key + ".txt", root), "utf8")).trim(), key);
+const manifest = JSON.parse(
+  await readFile(new URL("indexnow-manifest.json", root), "utf8"),
+);
+assert.equal(Object.keys(manifest.pages).length, pages.length - 1);
+assert.ok(
+  !Object.keys(manifest.pages).some(
+    (url) => url.includes("admin") || url.includes("404"),
+  ),
+);
 const titles = new Set();
 const descriptions = new Set();
 for (const file of pages) {
@@ -49,6 +66,8 @@ for (const file of pages) {
     !html.includes("↗"),
     `${file}: arrows must not depend on emoji fonts`,
   );
+  assert.match(html, /favicon-96\.png/);
+  assert.match(html, /apple-touch-icon/);
   assert.match(html, /name="twitter:image"/);
   assert.match(html, /property="og:site_name"/);
   assert.equal(

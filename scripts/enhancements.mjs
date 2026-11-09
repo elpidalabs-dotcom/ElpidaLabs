@@ -128,6 +128,7 @@ export function enhanceContent(file, content) {
     const ctaStart = content.lastIndexOf('<section class="cta wrap">');
     content =
       content.slice(0, ctaStart) +
+      productOverview(elpida) +
       productProgress(elpida) +
       content.slice(ctaStart);
   }
@@ -173,4 +174,76 @@ export function enhanceContent(file, content) {
     content = content.replace("</article>", `${extras.related}</article>`);
   }
   return content;
+}
+
+function productOverview(elpida) {
+  const cards = elpida
+    ? [
+        [
+          "For creators",
+          "Make an idea easier to understand",
+          "A proposed project profile brings a name, purpose, and development context together before a visitor considers a next step.",
+        ],
+        [
+          "For communities",
+          "Discover with more context",
+          "The direction is to help people understand what a project is exploring. Supported chains and launch mechanics remain unconfirmed.",
+        ],
+        [
+          "Try today",
+          "Walk through the interface study",
+          "Edit the sample story above and follow it into the preview. This is a website concept, not a working launchpad or token launch.",
+        ],
+      ]
+    : [
+        [
+          "For engineers",
+          "Ask one reliability question",
+          "For example: when a dependency slows down, does the application wait indefinitely or return a useful fallback?",
+        ],
+        [
+          "For learners",
+          "Compare two responses",
+          "Use the sandbox above to compare waiting with a bounded fallback. Its generated values explain a tradeoff; they are not benchmark results.",
+        ],
+        [
+          "Research scope",
+          "Define the experiment first",
+          "The next objective is a reproducible experiment in an isolated environment, with explicit stop conditions and verified cleanup. No platform is released.",
+        ],
+      ];
+  return (
+    '<section class="section wrap" aria-labelledby="product-use-cases"><div class="section-head"><div>' +
+    eyebrow("WHO IT IS FOR / WHAT TO EXPLORE") +
+    '<h2 id="product-use-cases">A clearer purpose.<br><span class="muted">A practical next step.</span></h2></div><p>' +
+    (elpida
+      ? "Elpida explores the journey from a creator’s idea to a community’s first understanding."
+      : "Chaos Engine explores how to turn a failure scenario into a useful engineering question.") +
+    '</p></div><div class="capability-grid bordered">' +
+    cards
+      .map(
+        ([tag, title, copy]) =>
+          "<article><span>" +
+          tag +
+          "</span><h3>" +
+          title +
+          "</h3><p>" +
+          copy +
+          "</p></article>",
+      )
+      .join("") +
+    '</div><div class="actions"><a class="button secondary" href="mailto:' +
+    site.email +
+    "?subject=" +
+    encodeURIComponent(
+      elpida ? "Elpida product feedback" : "Chaos Engine research feedback",
+    ) +
+    '">Share product feedback ' +
+    arrow +
+    '</a><a class="text-link" href="' +
+    (elpida ? "building-elpida.html" : "designing-for-failure.html") +
+    '">Read the product direction ' +
+    arrow +
+    "</a></div></section>"
+  );
 }
