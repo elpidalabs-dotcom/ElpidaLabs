@@ -122,12 +122,4 @@ jobs:
           printf 'Production deployment: %s\n' "$(cat deployment-url.txt)" >> "$GITHUB_STEP_SUMMARY"
       - name: Verify production studio and sign-in routes
         if: steps.revision.outputs.current == 'true'
-        shell: bash
-        run: |
-          curl --fail --silent --show-error --retry 3 --max-time 30 --output /dev/null https://elpidalabs.xyz/admin/index.html
-          headers=$(curl --silent --show-error --max-time 30 --dump-header - --output /dev/null https://elpidalabs.xyz/api/cms-auth)
-          printf '%s' "$headers" | grep -Eq '^HTTP/[^ ]+ 302'
-          printf '%s' "$headers" | grep -Eiq '^location: https://github.com/login/oauth/authorize'
-          status=$(curl --silent --show-error --max-time 30 --output /dev/null --write-out '%{http_code}' 'https://elpidalabs.xyz/api/cms-callback?state=invalid&code=invalid')
-          test "$status" = '403'
-          echo 'Content studio is reachable; sign-in starts securely and invalid callbacks are rejected.' >> "$GITHUB_STEP_SUMMARY"
+        run: node scripts/verify-production.mjs
