@@ -92,7 +92,7 @@ Check all of the following after DNS resolves:
 
 - `https://elpidalabs.xyz/` serves the website over HTTPS.
 - `https://www.elpidalabs.xyz/` redirects to the apex address.
-- `https://elpidalabs.xyz/contact.html` retains the confirmed `elpidalabs@gmail.com` destination.
+- `https://elpidalabs.xyz/contact.html` retains the confirmed `hello@elpida.fun` destination.
 - `https://elpidalabs.xyz/sitemap.xml` uses the production domain.
 - `https://elpidalabs.xyz/robots.txt` points to the production sitemap.
 - A missing URL such as `/missing/nested/page` produces a real 404 with working assets and navigation.

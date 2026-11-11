@@ -162,7 +162,7 @@ try {
       await page.locator("[data-copy-email]").click();
       assert.equal(
         await page.evaluate(() => window.__copiedText),
-        "elpidalabs@gmail.com",
+        "hello@elpida.fun",
       );
       await page.locator("#enquiry-form button[type=submit]").click();
       assert.equal(
@@ -182,7 +182,7 @@ try {
         await page.locator("#enquiry-mailto").getAttribute("href"),
       );
       assert.equal(destination.protocol, "mailto:");
-      assert.equal(destination.pathname, "elpidalabs@gmail.com");
+      assert.equal(destination.pathname, "hello@elpida.fun");
       assert.equal(destination.searchParams.get("body"), message);
       assert.match(
         destination.searchParams.get("subject"),
@@ -196,7 +196,7 @@ try {
       await page.locator("#copy-enquiry").click();
       assert.match(
         await page.evaluate(() => window.__copiedText),
-        /To: elpidalabs@gmail.com/,
+        /To: hello@elpida.fun/,
       );
       await axe(page, `${name} email draft`);
       await page.screenshot({
@@ -275,7 +275,7 @@ try {
       await staticPage.goto(base + "contact.html");
       assert.equal(
         await staticPage.locator("#enquiry-form").getAttribute("action"),
-        "mailto:elpidalabs@gmail.com",
+        "mailto:hello@elpida.fun",
       );
       await staticContext.close();
       await context.close();
