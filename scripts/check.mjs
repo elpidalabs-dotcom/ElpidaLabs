@@ -114,7 +114,7 @@ for (const file of pages) {
     "elpida.html": "data-elpida-demo",
     "chaos-engine.html": "data-chaos-demo",
     "journal.html": "data-journal-filter",
-    "contact.html": "mailto:elpidalabs@gmail.com",
+    "contact.html": "mailto:hello@elpida.fun",
   };
   if (required[file])
     assert.ok(

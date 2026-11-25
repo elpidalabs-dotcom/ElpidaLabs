@@ -1,0 +1,15 @@
+{
+  "name": "Adetola",
+  "role": "Founder",
+  "published": false,
+  "order": 0,
+  "bio": "Founder of Elpida Labs and of Elpida, the multichain token launchpad at elpida.fun.",
+  "photo": "",
+  "photoAlt": "",
+  "links": [
+    {
+      "label": "Elpida",
+      "url": "https://elpida.fun"
+    }
+  ]
+}
