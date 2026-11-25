@@ -46,12 +46,6 @@ export function diagram(kind, compact = false) {
   return `<figure class="system-diagram${compact ? " compact-diagram" : ""} ${elpida ? "" : "cyan-diagram"}"><figcaption>${icon(elpida ? "web" : "systems")}<span>${elpida ? "A proposed creator journey" : "A proposed experiment loop"}</span><span class="micro-label">CONCEPT MAP</span></figcaption><ol>${steps.map(([n, title, desc]) => `<li><span class="diagram-number">${n}</span><strong>${title}</strong><span>${desc}</span></li>`).join("")}</ol><p>${elpida ? "The creator journey, simplified. The live mainnet launchpad is available at elpida.fun." : "A learning loop for an isolated environment. This website does not connect to infrastructure."}</p></figure>`;
 }
 
-export const chaosDemo = `<section class="section wrap product-experience chaos-experience" id="resilience-sandbox" aria-labelledby="chaos-preview-title">${eyebrow("INTERACTIVE EXPLAINER / CHAOS ENGINE")}<div class="section-head"><div><h2 id="chaos-preview-title">Change a condition.<br><span class="serif">See the question.</span></h2></div><p>A deterministic browser illustration of a failure-and-recovery story. Values are generated for this explainer, not measured from a service.</p></div><div class="demo-window chaos-demo" data-chaos-demo><div class="demo-toolbar"><span class="window-lights" aria-hidden="true"><i></i><i></i><i></i></span><span>chaos engine / resilience sandbox</span><span class="demo-badge">ILLUSTRATIVE MODEL</span></div><div class="sandbox-layout"><div class="sandbox-controls"><p class="micro-label">DEFINE THE SCENARIO</p><label for="failure-mode">Disruption</label><select id="failure-mode"><option value="latency">A dependency slows down</option><option value="outage">A dependency becomes unavailable</option></select><label for="latency">Added delay <output id="latency-value" for="latency">300 ms</output></label><input id="latency" type="range" min="0" max="800" step="50" value="300"/><label for="recovery-mode">Illustrative response</label><select id="recovery-mode"><option value="wait">Wait for the dependency</option><option value="fallback">Use a bounded fallback</option></select><button type="button" class="button" id="run-scenario" disabled>Draw the scenario ${arrow}</button><button type="button" class="reset-button" id="reset-scenario" disabled>Reset illustration</button><p class="demo-note">No network requests. No real failures injected. Adjustments only change the model drawn here.</p></div><div class="sandbox-results"><div class="chart-heading"><div><span class="micro-label">SYNTHETIC RESPONSE TIME</span><h3>A bounded disruption.</h3></div><span class="chart-unit">ms</span></div><svg class="scenario-chart" viewBox="0 0 640 260" role="img" aria-labelledby="scenario-chart-title scenario-chart-description"><title id="scenario-chart-title">Illustrative response-time scenario</title><desc id="scenario-chart-description">Generated sample response times increase during a simulated disruption and return to the baseline afterward. This is not live telemetry.</desc><path class="chart-grid" d="M40 30H620M40 90H620M40 150H620M40 210H620"/><rect class="disruption-zone" x="230" y="20" width="190" height="195"/><text x="236" y="40" class="chart-label">DISRUPTION WINDOW</text><path id="scenario-line" class="chart-line" d="M40 195L160 192L230 195L250 122L400 126L430 194L620 192"/></svg><div class="chart-stages" aria-hidden="true"><span>BEFORE</span><span>DURING</span><span>AFTER</span></div><div class="scenario-summary" role="status" aria-live="polite" aria-atomic="true"><h4 id="scenario-result">A slowdown, then a return.</h4><p id="scenario-explanation">The default illustration adds 300 ms during the disruption window. The line returns to the generated baseline afterward.</p></div><div class="scenario-question"><span>THE USEFUL QUESTION</span><p id="scenario-question">Would a person using the application understand the delay and know what to do next?</p></div></div></div><div class="demo-footer"><span>EXPLAINER / NOT A TESTING SERVICE</span><span id="scenario-state">Default illustration</span></div></div><noscript><p class="demo-note">The default scenario is shown above. Enable JavaScript to change its generated values.</p></noscript>${diagram("chaos")}</section>`;
-
-export function productProgress(elpida) {
-  return `<section class="section wrap progress-section"><div>${eyebrow("DEVELOPMENT / THE NEXT USEFUL STEP")}<h2>Progress with<br><span class="muted">the context attached.</span></h2><p>Direction is useful. A clearly defined next objective is better.</p></div><ol class="development-track"><li class="is-current"><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">CURRENT STAGE</span><h3>${elpida ? "Live on mainnet" : "Research & concept exploration"}</h3><p>${elpida ? "Elpida is live at elpida.fun. This company website includes a separate concept study and links to the live creation and discovery flows." : "The resilience-testing direction is described here. This website now includes a synthetic scenario explainer."}</p></div></li><li><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">NEXT OBJECTIVE / PLANNED</span><h3>${elpida ? "Keep the live experience clear" : "Define one reproducible experiment"}</h3><p>${elpida ? "Keep product documentation aligned with the live interface, including network availability, review steps, and account requirements." : "Document a hypothesis, an isolated environment, a bounded disruption, and a verified cleanup procedure."}</p></div></li><li><span class="track-dot" aria-hidden="true"></span><div><span class="micro-label">FUTURE / NOT YET CONFIRMED</span><h3>${elpida ? "Continue product development" : "Evaluate a working prototype"}</h3><p>${elpida ? "Further features and network coverage will be documented as they become available. This page makes no commitment to unannounced releases." : "Scope, readiness criteria, and actual results need to be documented before claiming a released capability. No release date is announced."}</p></div></li></ol></section>`;
-}
-
 export const journalEntries = articles;
 const entryCard = (entry, i) =>
   `<article class="editorial-card" data-journal-category="${entry.tag}"><a class="editorial-art editorial-${entry.art}" href="${entry.file}" aria-label="EL / NOTE ${String(i + 1).padStart(2, "0")} — ${escape(entry.title)}"><span class="editorial-index" aria-hidden="true">EL / NOTE ${String(i + 1).padStart(2, "0")}</span>${entry.art === "elpida" ? '<img src="assets/elpida-mark.png" width="100" height="100" alt="" loading="lazy"/>' : icon(entry.art === "chaos" ? "systems" : entry.art === "screen" ? "web" : "code")}</a><div class="editorial-copy"><span class="micro-label">${escape(entry.category)}</span><h3><a href="${entry.file}">${escape(entry.title)}</a></h3><p>${escape(entry.summary)}</p><a class="text-link" href="${entry.file}">Read the note ${arrow}</a></div></article>`;
@@ -107,21 +101,6 @@ export function enhanceContent(file, content) {
       `${journalShowcase}</section>`,
     );
   }
-  if (file === "chaos-engine.html") {
-    const elpida = file === "elpida.html";
-    content = content.replace(
-      'href="designing-for-failure.html">Read the research note',
-      'href="#resilience-sandbox">Try the scenario',
-    );
-    const insert = content.indexOf('<section id="direction"');
-    content = content.slice(0, insert) + chaosDemo + content.slice(insert);
-    const ctaStart = content.lastIndexOf('<section class="cta wrap">');
-    content =
-      content.slice(0, ctaStart) +
-      productOverview(elpida) +
-      productProgress(elpida) +
-      content.slice(ctaStart);
-  }
   if (file === "about.html") {
     const insert = content.lastIndexOf('<section class="cta wrap">');
     content =
@@ -164,76 +143,4 @@ export function enhanceContent(file, content) {
     content = content.replace("</article>", `${extras.related}</article>`);
   }
   return content;
-}
-
-function productOverview(elpida) {
-  const cards = elpida
-    ? [
-        [
-          "For creators",
-          "Make an idea easier to understand",
-          "The live creation flow collects token details and community links, then provides pairing, reward, and review steps before creation.",
-        ],
-        [
-          "For communities",
-          "Discover with more context",
-          "The explorer provides project discovery with chain and pairing filters. Check the live product for current network availability and launch details.",
-        ],
-        [
-          "Try today",
-          "Walk through the interface study",
-          "Edit the sample story above and follow it into the preview. This is a website concept. Use elpida.fun for the live mainnet launchpad.",
-        ],
-      ]
-    : [
-        [
-          "For engineers",
-          "Ask one reliability question",
-          "For example: when a dependency slows down, does the application wait indefinitely or return a useful fallback?",
-        ],
-        [
-          "For learners",
-          "Compare two responses",
-          "Use the sandbox above to compare waiting with a bounded fallback. Its generated values explain a tradeoff; they are not benchmark results.",
-        ],
-        [
-          "Research scope",
-          "Define the experiment first",
-          "The next objective is a reproducible experiment in an isolated environment, with explicit stop conditions and verified cleanup. No platform is released.",
-        ],
-      ];
-  return (
-    '<section class="section wrap" aria-labelledby="product-use-cases"><div class="section-head"><div>' +
-    eyebrow("WHO IT IS FOR / WHAT TO EXPLORE") +
-    '<h2 id="product-use-cases">A clearer purpose.<br><span class="muted">A practical next step.</span></h2></div><p>' +
-    (elpida
-      ? "Elpida connects token creation and discovery on mainnet. This company page explains the product and links to the live experience."
-      : "Chaos Engine explores how to turn a failure scenario into a useful engineering question.") +
-    '</p></div><div class="capability-grid bordered">' +
-    cards
-      .map(
-        ([tag, title, copy]) =>
-          "<article><span>" +
-          tag +
-          "</span><h3>" +
-          title +
-          "</h3><p>" +
-          copy +
-          "</p></article>",
-      )
-      .join("") +
-    '</div><div class="actions"><a class="button secondary" href="mailto:' +
-    site.email +
-    "?subject=" +
-    encodeURIComponent(
-      elpida ? "Elpida product feedback" : "Chaos Engine research feedback",
-    ) +
-    '">Share product feedback ' +
-    arrow +
-    '</a><a class="text-link" href="' +
-    (elpida ? "building-elpida.html" : "designing-for-failure.html") +
-    '">Read the product direction ' +
-    arrow +
-    "</a></div></section>"
-  );
 }

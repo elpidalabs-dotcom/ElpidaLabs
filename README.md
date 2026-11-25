@@ -30,7 +30,7 @@ Open http://127.0.0.1:8000/ElpidaLabs/. The local-only preview mirrors the proje
 
 - **Meaningful orbit:** selectable AI, Web3, and Systems focus areas update the hero explanation, artwork, and destination. Keyboard arrows, Home/End, touch, pause/resume, and reduced motion are supported.
 - **Elpida product article:** a read-only overview of the live mainnet launchpad, its creation journey, discovery tools, and network information. Product actions take place at elpida.fun.
-- **Chaos Engine explainer:** deterministic synthetic data illustrates latency, dependency unavailability, and bounded fallback behavior. The graph, text summary, and accessible description update together. It does not test services, inject failures, or show real telemetry.
+- **Chaos Engine product article:** a read-only introduction to resilience research, the proposed experiment workflow, an example question, and the current development status.
 - **Product direction:** architecture/journey diagrams and development tracks distinguish current stages, planned next objectives, and unconfirmed future work.
 - **Journal:** four filterable notes, original technical diagrams, reading estimates, article summaries, reading progress, active contents links, and related reading. The two new engineering notes describe actual decisions in this website.
 - **Contact:** `hello@elpida.fun` is the owner-supplied destination. The enquiry form prepares a reviewed email draft; visitors send it in their own email app. Copy actions provide an alternative. Long drafts use copy/paste to avoid email-handler URL limits. Nothing is claimed to have been sent by the website, and enquiries are not stored here.
@@ -57,20 +57,20 @@ No personal identities have been seeded. Approved profiles are managed as `conte
 
 ## Pages
 
-| File                             | Purpose                                                                               |
-| -------------------------------- | ------------------------------------------------------------------------------------- |
-| `index.html`                     | Company overview, selectable orbit, products, journal                                 |
-| `elpida.html`                    | Read-only live mainnet product article, network information, and links to elpida.fun  |
-| `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives |
-| `about.html`                     | Lab principles, AI approach, and repository evidence                                  |
-| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                        |
-| `journal.html`                   | Four filterable product and engineering notes                                         |
-| `building-elpida.html`           | Live mainnet product guide and current limitations                                    |
-| `designing-for-failure.html`     | Resilience-testing research direction                                                 |
-| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                    |
-| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries             |
-| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                   |
-| `404.html`                       | Project-base-aware fallback                                                           |
+| File                             | Purpose                                                                                  |
+| -------------------------------- | ---------------------------------------------------------------------------------------- |
+| `index.html`                     | Company overview, selectable orbit, products, journal                                    |
+| `elpida.html`                    | Read-only live mainnet product article, network information, and links to elpida.fun     |
+| `chaos-engine.html`              | Read-only resilience research article, proposed workflow, and current development status |
+| `about.html`                     | Lab principles, AI approach, and repository evidence                                     |
+| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                           |
+| `journal.html`                   | Four filterable product and engineering notes                                            |
+| `building-elpida.html`           | Live mainnet product guide and current limitations                                       |
+| `designing-for-failure.html`     | Resilience-testing research direction                                                    |
+| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                       |
+| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries                |
+| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                      |
+| `404.html`                       | Project-base-aware fallback                                                              |
 
 ## Assets and attribution
 
@@ -120,3 +120,5 @@ Production deployments snapshot the previous public-page manifest before deploym
 After deployment, review Google Search Console and Bing Webmaster Tools weekly: impressions, clicks, queries and pages receiving traffic. Compare equivalent date ranges and record when content changes. Use received product enquiries to assess whether visitors understand the next step. No visitor tracking or analytics cookies were added in this update. Publishing verified screenshots, team biographies and actual milestones remains an editorial task in Content Studio; concept graphics must stay labelled.
 
 Decorative starbursts have been replaced with compact rotating Elpida marks. Reduced-motion preferences stop rotation; the footer control pauses decorative motion. Profiles support an approved actual name, optional alias, uploaded personal icon, and a dedicated GitHub profile URL. No team identities are seeded.
+
+All product pages are informational articles. Automated checks reject forms, input fields, selectors, and action buttons inside their main content. Navigation and outbound product links remain available.

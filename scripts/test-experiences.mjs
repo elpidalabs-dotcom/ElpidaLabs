@@ -90,44 +90,21 @@ try {
         fullPage: true,
       });
       await page.goto(base + "chaos-engine.html");
-      await page.waitForFunction(
-        () =>
-          document.querySelector("[data-chaos-demo]").dataset.ready === "true",
-      );
-      const initial = await page.locator("#scenario-line").getAttribute("d");
-      await page.locator("#latency").evaluate((el) => {
-        el.value = "600";
-        el.dispatchEvent(new Event("input", { bubbles: true }));
-      });
-      await page.locator("#run-scenario").click();
-      assert.notEqual(
-        await page.locator("#scenario-line").getAttribute("d"),
-        initial,
-      );
-      assert.match(
-        await page.locator("#scenario-explanation").textContent(),
-        /600 ms/,
-      );
-      await page.locator("#failure-mode").selectOption("outage");
-      assert.equal(await page.locator("#latency").isDisabled(), true);
-      await page.locator("#recovery-mode").selectOption("fallback");
-      await page.locator("#run-scenario").click();
-      assert.match(
-        await page.locator("#scenario-result").textContent(),
-        /fallback/,
-      );
-      assert.match(
-        await page.locator("#scenario-chart-description").textContent(),
-        /not live telemetry/,
-      );
-      await axe(page, `${name} scenario output`);
-      await page.locator("#reset-scenario").click();
+      assert.equal(await page.locator(".chaos-article").count(), 1);
       assert.equal(
-        await page.locator("#scenario-line").getAttribute("d"),
-        initial,
+        await page
+          .locator(
+            "#main input, #main textarea, #main select, #main form, #main button",
+          )
+          .count(),
+        0,
+        "Chaos Engine is read-only",
       );
-      assert.equal(await page.locator("#latency").isDisabled(), false);
-
+      await axe(page, `${name} Chaos Engine article`);
+      await page.screenshot({
+        path: `test-results/experiences/${name}-chaos-article.png`,
+        fullPage: true,
+      });
       await page.goto(base + "journal.html");
       await page.locator('[data-journal-filter="engineering"]').click();
       assert.equal(await page.locator(".editorial-card:visible").count(), 2);

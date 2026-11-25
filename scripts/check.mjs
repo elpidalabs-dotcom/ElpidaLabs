@@ -109,10 +109,20 @@ for (const file of pages) {
     !html.includes("hello@elpidalabs.xyz"),
     `${file}: no unconfigured mailbox`,
   );
+  if (["elpida.html", "chaos-engine.html"].includes(file)) {
+    const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] || "";
+    assert.ok(
+      !/<(?:form|input|textarea|select|button)\b/i.test(main),
+      file + ": product articles must stay read-only",
+    );
+    assert.ok(
+      !main.includes("data-chaos-demo") && !main.includes("data-elpida-demo"),
+    );
+  }
   const required = {
     "index.html": "data-orbit-explorer",
     "elpida.html": "elpida-article",
-    "chaos-engine.html": "data-chaos-demo",
+    "chaos-engine.html": "chaos-article",
     "journal.html": "data-journal-filter",
     "contact.html": "mailto:hello@elpida.fun",
   };

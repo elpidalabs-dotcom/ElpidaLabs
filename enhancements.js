@@ -84,57 +84,6 @@ if (explorer) {
   });
 }
 
-const sandbox = document.querySelector("[data-chaos-demo]");
-if (sandbox) {
-  const { simulateScenario } = await import(
-    "./demo-model.js" + new URL(import.meta.url).search
-  );
-  const delay = sandbox.querySelector("#latency");
-  const mode = sandbox.querySelector("#failure-mode");
-  const recovery = sandbox.querySelector("#recovery-mode");
-  let changed = false;
-  function draw() {
-    const scenario = simulateScenario({
-      delay: delay.value,
-      mode: mode.value,
-      recovery: recovery.value,
-    });
-    sandbox.querySelector("#latency-value").textContent = `${delay.value} ms`;
-    delay.disabled = mode.value === "outage";
-    sandbox.querySelector("#scenario-line").setAttribute("d", scenario.path);
-    sandbox.querySelector("#scenario-result").textContent = scenario.headline;
-    sandbox.querySelector("#scenario-explanation").textContent =
-      scenario.explanation;
-    sandbox.querySelector("#scenario-question").textContent = scenario.question;
-    sandbox.querySelector("#scenario-chart-description").textContent =
-      `${scenario.headline} ${scenario.explanation} Generated illustration, not live telemetry.`;
-    sandbox.querySelector("#scenario-state").textContent = changed
-      ? "Updated illustration"
-      : "Default illustration";
-  }
-  delay.addEventListener("input", () => {
-    sandbox.querySelector("#latency-value").textContent = `${delay.value} ms`;
-  });
-  mode.addEventListener("change", () => {
-    delay.disabled = mode.value === "outage";
-  });
-  sandbox.querySelector("#run-scenario").addEventListener("click", () => {
-    changed = true;
-    draw();
-  });
-  sandbox.querySelector("#reset-scenario").addEventListener("click", () => {
-    delay.value = "300";
-    mode.value = "latency";
-    recovery.value = "wait";
-    changed = false;
-    draw();
-  });
-  draw();
-  sandbox.querySelector("#run-scenario").disabled = false;
-  sandbox.querySelector("#reset-scenario").disabled = false;
-  sandbox.dataset.ready = "true";
-}
-
 const journal = document.querySelector("[data-journal]");
 if (journal) {
   const cards = [...journal.querySelectorAll("[data-journal-category]")];

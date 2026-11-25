@@ -1,3 +1,4 @@
+import { chaosArticle } from "./chaos-article.mjs";
 import { elpidaArticle } from "./elpida-article.mjs";
 import {
   articles,
@@ -241,68 +242,20 @@ page(
 <section class="section wrap">${sectionHead("04 / NOTES FROM THE LAB", 'The thinking<br><span class="muted">behind the building.</span>', "Product direction, engineering questions, and the decisions still ahead. Explore our first two product notes.")}${notes}</section>${cta}`,
   "Home",
 );
-const productPage = (kind) => {
-  const elpida = kind === "Elpida";
-  const name = elpida ? "Elpida" : "Chaos Engine";
-  if (elpida) {
-    page(
-      "elpida.html",
-      "Elpida: a multichain token launchpad",
-      "Learn about Elpida, the live mainnet token launchpad by Elpida Labs: token creation, discovery, networks, and product tools at elpida.fun.",
-      elpidaArticle(site, arrow),
-      "Our work",
-    );
-    return;
-  }
-  page(
-    elpida ? "elpida.html" : "chaos-engine.html",
-    name,
-    elpida
-      ? "Elpida is live on mainnet. Explore the token launchpad, its creation flow, discovery tools, portfolio, and analytics at elpida.fun."
-      : "Chaos Engine is an early resilience-testing research concept. Explore the proposed workflow, safety principles and questions still being investigated.",
-    `
- <section class="page-hero wrap"><a class="breadcrumb" href="index.html#work">← All explorations</a><div class="product-hero-grid"><div>${label(elpida ? "01 / WEB3 · MULTICHAIN" : "02 / DEVTOOLS · RESILIENCE")}${status(elpida ? "Live on mainnet" : "Research & exploration")}<h1>${name}${elpida ? '<span class="lime">.</span>' : ""}</h1><p class="lead">${elpida ? "A new starting point<br>for onchain ideas." : "Understand the failure.<br>Design the recovery."}</p><p>${elpida ? "A live mainnet launchpad for token creation and discovery, with portfolio, creator rewards, swap, and analytics destinations at elpida.fun." : "A planned testing platform exploring how teams could learn about software reliability through controlled failure experiments."}</p><div class="actions">${btn(elpida ? "https://elpida.fun" : "designing-for-failure.html", elpida ? "Visit elpida.fun" : "Read the research note")}${btn("#direction", "Explore the direction", true)}</div></div><div class="product-art ${elpida ? "elpida-art" : "chaos-art"} detail-art" aria-hidden="true">${elpida ? '<div class="art-rings"></div><img src="assets/elpida-mark.png" width="280" height="280" alt=""/>' : '<div class="chaos-grid"></div><span class="chaos-symbol">⌁</span><span class="signal signal-one"></span><span class="signal signal-two"></span>'}<span class="art-corner">${elpida ? "CREATE / DISCOVER / CONNECT" : "QUESTION / TEST / UNDERSTAND"}</span></div></div></section>
- <section id="direction" class="section wrap"><div class="intro-grid"><div>${label("THE PRODUCT DIRECTION")}<h2>${elpida ? "From a token launch<br>to a lasting community." : "A failure can be<br>a useful question."}</h2></div><div><p class="lead">${elpida ? "Launching is a moment. Building something people can understand and participate in is a longer journey." : "Software depends on systems that can slow down, become unavailable, or behave unexpectedly."}</p><p>${elpida ? "Elpida now runs on mainnet. Its live interface brings token details, trading-pair selection, creator rewards, an optional creator purchase, and a review step into the creation journey. Visit the product for current network availability, fees, and transaction details." : "Chaos Engine is a research concept for making those conditions easier to investigate. The intended direction is a deliberate workflow: define expected behavior, introduce a bounded disruption, observe the result, and use the findings to improve the system."}</p></div></div><div class="capability-grid bordered">${(elpida
-   ? [
-       [
-         "Create",
-         "Open the live token-creation flow, add project details, choose a trading pair, and review the proposed launch before signing.",
-       ],
-       [
-         "Discover",
-         "Browse the live explorer and filter tokens by name, ticker, address, pairing, or chain. Listings depend on indexed launches.",
-       ],
-       [
-         "Grow",
-         "Find portfolio, creator-reward, swap, and analytics views in the product. Check each view for current availability and account requirements.",
-       ],
-     ]
-   : [
-       [
-         "Define",
-         "Start with a specific reliability question and an explicit description of expected behavior.",
-       ],
-       [
-         "Experiment",
-         "Explore bounded disruptions such as latency or dependency failures in an isolated test environment.",
-       ],
-       [
-         "Learn",
-         "Compare observations with expectations and document changes worth testing next.",
-       ],
-     ]
- )
-   .map(
-     ([t, p], i) =>
-       `<article><span>0${i + 1} / ${elpida ? "LIVE PRODUCT" : "PROPOSED DIRECTION"}</span><h3>${t}</h3><p>${p}</p></article>`,
-   )
-   .join("")}</div></section>
- <section class="section wrap development"><div>${label("AN HONEST DEVELOPMENT NOTE")}<h2>Ambition, with<br><span class="muted">the status attached.</span></h2></div><div><h3>${elpida ? "Live product, continuing development" : "A concept, still taking shape"}</h3><p>${elpida ? "Elpida is live on mainnet at elpida.fun. On 25 November 2026, the live site displayed Base Mainnet and a token-creation flow. Its network selector also listed BNB Chain, Robinhood Chain, and Ethereum as Mainnet options. A listed network is not a claim that every operation is available on it; check the product’s current state before proceeding." : "There is no released Chaos Engine platform presented here. Experiment types, integrations, deployment options, reporting, and a release timeline are not confirmed. The research may lead to a prototype, a narrower tool, or a different approach."}</p><p>${elpida ? "The interactive study on this company site remains an illustrative demo. Actual token creation, wallet connections, fees, and transactions take place on elpida.fun. Mainnet availability does not establish an audit or guarantee outcomes." : "A future prototype would need explicit scope, access controls, stop conditions, and reliable cleanup before any real system experiments. The illustrative graphics on this site do not run tests or connect to infrastructure."}</p><a class="text-link" href="${elpida ? "building-elpida.html" : "designing-for-failure.html"}">Read the detailed product note ${arrow}</a></div></section>${cta}`,
-    "Our work",
-  );
-};
-productPage("Elpida");
-productPage("Chaos Engine");
+page(
+  "elpida.html",
+  "Elpida: a multichain token launchpad",
+  "Learn about Elpida, the live mainnet token launchpad by Elpida Labs: token creation, discovery, networks, and product tools at elpida.fun.",
+  elpidaArticle(site, arrow),
+  "Our work",
+);
+page(
+  "chaos-engine.html",
+  "Chaos Engine: software resilience research",
+  "Learn about Chaos Engine, an Elpida Labs research concept exploring controlled failure experiments, software resilience, and recovery.",
+  chaosArticle(site, arrow),
+  "Our work",
+);
 page(
   "about.html",
   "The lab",

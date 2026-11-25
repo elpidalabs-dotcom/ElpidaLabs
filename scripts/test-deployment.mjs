@@ -166,14 +166,14 @@ try {
         0,
       );
       await page.goto(base + "chaos-engine.html");
-      await page.waitForFunction(
-        () =>
-          document.querySelector("[data-chaos-demo]").dataset.ready === "true",
-      );
-      await page.locator("#run-scenario").click();
+      assert.equal(await page.locator(".chaos-article").count(), 1);
       assert.equal(
-        await page.locator("#scenario-state").textContent(),
-        "Updated illustration",
+        await page
+          .locator(
+            "#main input, #main textarea, #main select, #main form, #main button",
+          )
+          .count(),
+        0,
       );
       await page.goto(base + "about");
       assert.equal(
