@@ -84,60 +84,6 @@ if (explorer) {
   });
 }
 
-const creator = document.querySelector("[data-elpida-demo]");
-if (creator) {
-  const steps = [...creator.querySelectorAll("[data-demo-step]")];
-  const panels = [...creator.querySelectorAll("[data-demo-panel]")];
-  function showStep(index, moveFocus = false) {
-    panels.forEach((panel, i) => {
-      panel.hidden = i !== index;
-    });
-    steps.forEach((step, i) =>
-      step.setAttribute("aria-pressed", String(i === index)),
-    );
-    creator.querySelector("[data-demo-position]").textContent =
-      `Step ${index + 1} of ${panels.length}`;
-    if (moveFocus) {
-      const heading = panels[index].querySelector("h3");
-      heading.tabIndex = -1;
-      heading.focus({ preventScroll: true });
-      heading.scrollIntoView({
-        block: "start",
-        behavior: reducedMotion.matches ? "instant" : "smooth",
-      });
-    }
-  }
-  steps.forEach((step) =>
-    step.addEventListener("click", () =>
-      showStep(Number(step.dataset.demoStep)),
-    ),
-  );
-  creator
-    .querySelectorAll("[data-demo-next]")
-    .forEach((button) =>
-      button.addEventListener("click", () =>
-        showStep(Number(button.dataset.demoNext), true),
-      ),
-    );
-  function updateSample() {
-    const name =
-      creator.querySelector("#sample-name").value.trim() || "Sample project";
-    const purpose =
-      creator.querySelector("#sample-purpose").value.trim() ||
-      "A project idea, still taking shape.";
-    creator.querySelectorAll("[data-sample-name]").forEach((el) => {
-      el.textContent = name;
-    });
-    creator.querySelectorAll("[data-sample-purpose]").forEach((el) => {
-      el.textContent = purpose;
-    });
-  }
-  creator
-    .querySelectorAll("input,textarea")
-    .forEach((field) => field.addEventListener("input", updateSample));
-  showStep(0);
-}
-
 const sandbox = document.querySelector("[data-chaos-demo]");
 if (sandbox) {
   const { simulateScenario } = await import(

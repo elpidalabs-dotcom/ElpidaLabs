@@ -156,8 +156,15 @@ try {
       await page.locator("a.button").click();
       await page.waitForURL(base);
       await page.goto(base + "elpida.html");
-      await page.locator('[data-demo-next="1"]').click();
-      assert.equal(await page.locator("#review-panel").isVisible(), true);
+      assert.equal(await page.locator(".elpida-article").count(), 1);
+      assert.equal(
+        await page
+          .locator(
+            "#main input, #main textarea, #main select, #main form, #main button",
+          )
+          .count(),
+        0,
+      );
       await page.goto(base + "chaos-engine.html");
       await page.waitForFunction(
         () =>

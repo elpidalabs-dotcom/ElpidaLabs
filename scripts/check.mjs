@@ -111,7 +111,7 @@ for (const file of pages) {
   );
   const required = {
     "index.html": "data-orbit-explorer",
-    "elpida.html": "data-elpida-demo",
+    "elpida.html": "elpida-article",
     "chaos-engine.html": "data-chaos-demo",
     "journal.html": "data-journal-filter",
     "contact.html": "mailto:hello@elpida.fun",

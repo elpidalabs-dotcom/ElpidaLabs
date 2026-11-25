@@ -29,7 +29,7 @@ Open http://127.0.0.1:8000/ElpidaLabs/. The local-only preview mirrors the proje
 ## Experience
 
 - **Meaningful orbit:** selectable AI, Web3, and Systems focus areas update the hero explanation, artwork, and destination. Keyboard arrows, Home/End, touch, pause/resume, and reduced motion are supported.
-- **Elpida interface study:** a three-step sample creator journey carries edited project information into review and discovery views. It is explicitly a concept, with no wallet, token creation, transactions, or network claims. Edits stay in the current page.
+- **Elpida product article:** a read-only overview of the live mainnet launchpad, its creation journey, discovery tools, and network information. Product actions take place at elpida.fun.
 - **Chaos Engine explainer:** deterministic synthetic data illustrates latency, dependency unavailability, and bounded fallback behavior. The graph, text summary, and accessible description update together. It does not test services, inject failures, or show real telemetry.
 - **Product direction:** architecture/journey diagrams and development tracks distinguish current stages, planned next objectives, and unconfirmed future work.
 - **Journal:** four filterable notes, original technical diagrams, reading estimates, article summaries, reading progress, active contents links, and related reading. The two new engineering notes describe actual decisions in this website.
@@ -57,20 +57,20 @@ No personal identities have been seeded. Approved profiles are managed as `conte
 
 ## Pages
 
-| File                             | Purpose                                                                                   |
-| -------------------------------- | ----------------------------------------------------------------------------------------- |
-| `index.html`                     | Company overview, selectable orbit, products, journal                                     |
-| `elpida.html`                    | Live mainnet product overview, separate interface study, journey diagram, next objectives |
-| `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives     |
-| `about.html`                     | Lab principles, AI approach, and repository evidence                                      |
-| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                            |
-| `journal.html`                   | Four filterable product and engineering notes                                             |
-| `building-elpida.html`           | Live mainnet product guide and current limitations                                        |
-| `designing-for-failure.html`     | Resilience-testing research direction                                                     |
-| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                        |
-| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries                 |
-| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                       |
-| `404.html`                       | Project-base-aware fallback                                                               |
+| File                             | Purpose                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------- |
+| `index.html`                     | Company overview, selectable orbit, products, journal                                 |
+| `elpida.html`                    | Read-only live mainnet product article, network information, and links to elpida.fun  |
+| `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives |
+| `about.html`                     | Lab principles, AI approach, and repository evidence                                  |
+| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                        |
+| `journal.html`                   | Four filterable product and engineering notes                                         |
+| `building-elpida.html`           | Live mainnet product guide and current limitations                                    |
+| `designing-for-failure.html`     | Resilience-testing research direction                                                 |
+| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                    |
+| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries             |
+| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                   |
+| `404.html`                       | Project-base-aware fallback                                                           |
 
 ## Assets and attribution
 

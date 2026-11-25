@@ -1,3 +1,4 @@
+import { elpidaArticle } from "./elpida-article.mjs";
 import {
   articles,
   articleRecords,
@@ -243,6 +244,16 @@ page(
 const productPage = (kind) => {
   const elpida = kind === "Elpida";
   const name = elpida ? "Elpida" : "Chaos Engine";
+  if (elpida) {
+    page(
+      "elpida.html",
+      "Elpida: a multichain token launchpad",
+      "Learn about Elpida, the live mainnet token launchpad by Elpida Labs: token creation, discovery, networks, and product tools at elpida.fun.",
+      elpidaArticle(site, arrow),
+      "Our work",
+    );
+    return;
+  }
   page(
     elpida ? "elpida.html" : "chaos-engine.html",
     name,

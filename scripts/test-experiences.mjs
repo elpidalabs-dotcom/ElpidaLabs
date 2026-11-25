@@ -74,39 +74,21 @@ try {
       );
 
       await page.goto(base + "elpida.html");
-      assert.equal(await page.locator("[data-demo-panel]:visible").count(), 1);
-      const example = "<img src=x onerror=alert(1)> & Sample";
-      await page.locator("#sample-name").fill(example);
-      await page
-        .locator("#sample-purpose")
-        .fill("An illustrative project description edited in this browser.");
-      await page.locator('[data-demo-next="1"]').click();
-      assert.equal(
-        await page.locator("#review-panel [data-sample-name]").textContent(),
-        example,
-      );
-      assert.equal(await page.locator('#review-panel img[src="x"]').count(), 0);
+      assert.equal(await page.locator(".elpida-article").count(), 1);
       assert.equal(
         await page
-          .locator("#review-panel h3")
-          .evaluate((el) => el === document.activeElement),
-        true,
-        "step change focus",
+          .locator(
+            "#main input, #main textarea, #main select, #main form, #main button",
+          )
+          .count(),
+        0,
+        "Elpida is a read-only informational article",
       );
-      await axe(page, `${name} Elpida review panel`);
-      await page.locator('[data-demo-next="2"]').click();
-      assert.equal(
-        await page.locator("#discover-panel [data-sample-name]").textContent(),
-        example,
-      );
-      await axe(page, `${name} Elpida discovery panel`);
+      await axe(page, `${name} Elpida article`);
       await page.screenshot({
-        path: `test-results/experiences/${name}-elpida-discovery.png`,
+        path: `test-results/experiences/${name}-elpida-article.png`,
         fullPage: true,
       });
-      await page.locator('[data-demo-next="0"]').click();
-      assert.equal(await page.locator("#sample-name").inputValue(), example);
-
       await page.goto(base + "chaos-engine.html");
       await page.waitForFunction(
         () =>
@@ -263,9 +245,9 @@ try {
       const staticPage = await staticContext.newPage();
       await staticPage.goto(base + "elpida.html");
       assert.equal(
-        await staticPage.locator("[data-demo-panel]:visible").count(),
-        3,
-        "all concept steps readable without JS",
+        await staticPage.locator(".elpida-article h2").count(),
+        6,
+        "Product information remains readable without JS",
       );
       await staticPage.goto(base + "journal.html");
       assert.equal(
