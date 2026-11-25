@@ -18,6 +18,22 @@ for (let attempt = 1; attempt <= 10; attempt++) {
           signal: AbortSignal.timeout(15000),
         },
       );
+    const about = await request("/about");
+    assert.equal(about.status, 200, "Clean public route must be available.");
+    assert.ok(
+      (await about.text()).includes('href="https://elpidalabs.xyz/about"'),
+      "Clean canonical URL must be present.",
+    );
+    const legacy = await request("/about.html");
+    assert.equal(
+      legacy.status,
+      308,
+      "Legacy HTML route must permanently redirect.",
+    );
+    assert.equal(
+      new URL(legacy.headers.get("location"), origin).pathname,
+      "/about",
+    );
     const studio = await request("/admin/index.html");
     assert.equal(studio.status, 200, "Studio must be available.");
     assert.ok(

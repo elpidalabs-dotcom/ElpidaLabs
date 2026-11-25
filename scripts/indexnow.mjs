@@ -13,9 +13,10 @@ export function validateManifest(manifest) {
       parsed.search ||
       parsed.hash ||
       !(
-        parsed.pathname === "/" || /^\/[a-z0-9-]+\.html$/.test(parsed.pathname)
+        parsed.pathname === "/" ||
+        /^\/[a-z0-9-]+(?:\.html)?$/.test(parsed.pathname)
       ) ||
-      parsed.pathname === "/404.html" ||
+      ["/404.html", "/404", "/admin", "/api"].includes(parsed.pathname) ||
       !/^[a-f0-9]{64}$/.test(hash)
     )
       throw new Error("Invalid public page in IndexNow manifest");

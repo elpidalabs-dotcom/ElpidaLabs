@@ -141,3 +141,7 @@ accounts, denied repository access, unsafe links/images, and escaping.
 References: [Decap GitHub backend](https://decapcms.org/docs/github-backend/),
 [editorial workflow](https://decapcms.org/docs/editorial-workflows/),
 and [GitHub OAuth flow](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps).
+
+## Names, aliases, and icons
+
+Use an approved actual name in Full name, then an optional Alias / handle. The public profile displays the actual name first, followed by the alias. Upload an individual icon or avatar in Personal icon / avatar; a face photograph is not required. Add meaningful alternative text and use the dedicated GitHub profile field for the person’s public account. Other approved links remain supported. Keep profiles unpublished until each person approves their public information. The GitHub organization migration is separate from publishing people on the website; adding a profile does not grant repository access.

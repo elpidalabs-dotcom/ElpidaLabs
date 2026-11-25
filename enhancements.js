@@ -22,7 +22,7 @@ if (explorer) {
     web3: [
       "01 / ORIGINAL PRODUCTS",
       "Ideas, onchain.",
-      "Explore Elpida: a multichain launchpad in development, starting with a clearer journey for creators and communities.",
+      "Explore Elpida: a live mainnet token launchpad for creators and communities, with token discovery, portfolio, and analytics tools.",
       "elpida.html",
       "Explore Elpida",
     ],
@@ -49,7 +49,10 @@ if (explorer) {
       explorer.querySelector("[data-orbit-description]").textContent =
         description;
       const anchor = explorer.querySelector("[data-orbit-link]");
-      anchor.href = href;
+      anchor.href =
+        document.body.dataset.cleanUrls === "true"
+          ? "/" + href.replace(/\.html(?=[#?]|$)/, "")
+          : href;
       anchor.replaceChildren(document.createTextNode(link + " "));
       anchor.insertAdjacentHTML("beforeend", arrow);
       if (!reducedMotion.matches && explorer.animate) {

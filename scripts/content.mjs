@@ -122,6 +122,13 @@ export function validateArticle(item) {
 export function validatePerson(item) {
   assert.match(item.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid person ID.");
   text(item.name, "Name", 100);
+  if (item.alias) text(item.alias, "Alias", 100);
+  if (item.github)
+    assert.match(
+      item.github,
+      /^https:\/\/github\.com\/[A-Za-z0-9-]+\/?$/,
+      "Use a GitHub profile URL.",
+    );
   text(item.bio, "Biography", 3000);
   assert.ok(
     ["Founder", "Co-founder", "Collaborator"].includes(item.role),
@@ -196,5 +203,5 @@ export function renderContentArticleBody(body) {
   return sections;
 }
 export function renderPeople(members) {
-  return `<section class="section wrap profiles"><p class="eyebrow">MEET THE COLLECTIVE</p>${members.map((member, i) => `<details class="profile"><summary><span class="profile-icon" aria-hidden="true">${member.photo ? `<img src="${escapeText(mediaPath(member.photo))}" width="64" height="64" alt="" loading="lazy"/>` : String(i + 1).padStart(2, "0")}</span><span><span class="eyebrow">${escapeText(member.role)}</span><span class="profile-title">${escapeText(member.name)}</span></span><span class="profile-state">Read profile</span><span class="expand" aria-hidden="true">+</span></summary><div class="profile-body">${member.photo ? `<img class="profile-portrait" src="${escapeText(mediaPath(member.photo))}" width="240" height="240" alt="${escapeText(member.photoAlt)}" loading="lazy"/>` : ""}<p>${escapeText(member.bio).replace(/\n/g, "<br/>")}</p>${member.links.map((link) => `<a class="text-link" href="${escapeText(link.url)}">${escapeText(link.label)}</a>`).join("")}</div></details>`).join("")}</section>`;
+  return `<section class="section wrap profiles"><p class="eyebrow">MEET THE COLLECTIVE</p>${members.map((member, i) => `<details class="profile"><summary><span class="profile-icon" aria-hidden="true">${member.photo ? `<img src="${escapeText(mediaPath(member.photo))}" width="64" height="64" alt="" loading="lazy"/>` : String(i + 1).padStart(2, "0")}</span><span><span class="eyebrow">${escapeText(member.role)}</span><span class="profile-title">${escapeText(member.name)}${member.alias ? `<span class="profile-alias"> · ${escapeText(member.alias)}</span>` : ""}</span></span><span class="profile-state">Read profile</span><span class="expand" aria-hidden="true">+</span></summary><div class="profile-body">${member.photo ? `<img class="profile-portrait" src="${escapeText(mediaPath(member.photo))}" width="240" height="240" alt="${escapeText(member.photoAlt)}" loading="lazy"/>` : ""}<p>${escapeText(member.bio).replace(/\n/g, "<br/>")}</p>${member.github ? `<a class="text-link" href="${escapeText(member.github)}">GitHub profile</a>` : ""}${member.links.map((link) => `<a class="text-link" href="${escapeText(link.url)}">${escapeText(link.label)}</a>`).join("")}</div></details>`).join("")}</section>`;
 }

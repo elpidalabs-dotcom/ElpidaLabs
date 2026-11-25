@@ -46,6 +46,20 @@ if (!window.CMS) {
           })
         : null,
       h("h1", {}, data.get("name") || "Profile name"),
+      data.get("alias") ? h("p", {}, "Alias: " + data.get("alias")) : null,
+      data.get("github")
+        ? h(
+            "a",
+            {
+              href: /^https:\/\/github\.com\/[A-Za-z0-9-]+\/?$/.test(
+                data.get("github"),
+              )
+                ? data.get("github")
+                : undefined,
+            },
+            "GitHub profile",
+          )
+        : null,
       h(
         "p",
         { style: { whiteSpace: "pre-wrap" } },

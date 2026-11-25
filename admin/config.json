@@ -40,6 +40,25 @@
           "pattern": ["^.{1,100}$", "Use up to 100 characters."]
         },
         {
+          "name": "alias",
+          "label": "Alias / handle",
+          "widget": "string",
+          "required": false,
+          "hint": "Optional. Shown after the approved actual name. Do not repeat the actual name.",
+          "pattern": ["^.{0,100}$", "Use up to 100 characters."]
+        },
+        {
+          "name": "github",
+          "label": "GitHub profile",
+          "widget": "string",
+          "required": false,
+          "hint": "Public profile URL, such as https://github.com/your-handle.",
+          "pattern": [
+            "^https://github\\.com/[A-Za-z0-9-]+/?$",
+            "Use a GitHub profile URL."
+          ]
+        },
+        {
           "name": "role",
           "label": "Role",
           "widget": "select",
@@ -69,16 +88,16 @@
         },
         {
           "name": "photo",
-          "label": "Portrait",
+          "label": "Personal icon / avatar",
           "widget": "image",
           "required": false,
           "allow_multiple": false,
           "choose_url": false,
-          "hint": "PNG, JPEG, WebP or AVIF, up to 3 MB. Uploaded files are public in repository history."
+          "hint": "Use an approved individual icon or avatar; a face photo is not required. PNG, JPEG, WebP or AVIF, up to 3 MB."
         },
         {
           "name": "photoAlt",
-          "label": "Portrait description",
+          "label": "Icon description",
           "widget": "string",
           "required": false,
           "hint": "Required when you upload a portrait; describe the image."
@@ -116,7 +135,7 @@
       "extension": "json",
       "format": "json",
       "slug": "{{slug}}",
-      "preview_path": "{{slug}}.html",
+      "preview_path": "{{slug}}",
       "summary": "{{title}}",
       "description": "Edit the existing notes or create a new article. Keep established file names to preserve links.",
       "fields": [

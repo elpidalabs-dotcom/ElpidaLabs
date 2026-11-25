@@ -26,6 +26,19 @@ export function serve(
       res.writeHead(404).end();
       return;
     }
+    // Emulate production public clean routes; admin documents retain their paths.
+    if (basePath === "/" && /^\/[a-z0-9-]+\.html$/.test(path)) {
+      const suffix = new URL(req.url, "http://localhost").search;
+      res
+        .writeHead(308, {
+          Location:
+            (path === "/index.html" ? "/" : path.replace(/\.html$/, "")) +
+            suffix,
+        })
+        .end();
+      return;
+    }
+    if (basePath === "/" && /^\/[a-z0-9-]+$/.test(path)) path += ".html";
     const target = resolve(
       contentRoot,
       (path.slice(basePath.length) || "") +

@@ -323,7 +323,7 @@ em {
   font-size: 31px;
   color: var(--lime);
 }
-.asterisk {
+.elpida-spinner {
   display: block;
   width: 1em;
   height: 1em;
@@ -825,9 +825,10 @@ em {
 }
 .cta-star {
   position: absolute;
-  font-size: 230px;
-  right: -20px;
-  top: -100px;
+  font-size: 64px;
+  right: 24px;
+  top: 24px;
+  opacity: 0.3;
   color: #a7d75e55;
   line-height: 1;
 }
@@ -994,10 +995,10 @@ em {
 }
 .manifesto-star {
   position: absolute;
-  font-size: 300px;
-  color: #c3fa7122;
-  right: 50px;
-  top: -50px;
+  font-size: 64px;
+  opacity: 0.35;
+  right: 32px;
+  top: 24px;
   line-height: 1;
 }
 .profiles {
@@ -1710,5 +1711,73 @@ main:focus {
   html:not(.js) #primary-nav .nav-visit {
     border: 0;
     margin: 0;
+  }
+}
+
+/* Decorative brand marks stay compact and never depend on emoji glyphs. */
+.elpida-spinner {
+  object-fit: contain;
+  animation: brand-turn 18s linear infinite;
+}
+.line-icon.elpida-spinner {
+  width: 20px;
+  height: 20px;
+}
+.manifesto-star .elpida-spinner,
+.cta-star .elpida-spinner {
+  max-width: 64px;
+  max-height: 64px;
+}
+.decorative-motion {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 10px 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.decorations-paused .elpida-spinner {
+  animation-play-state: paused;
+}
+@keyframes brand-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .elpida-spinner {
+    animation: none;
+  }
+}
+
+.decorative-motion {
+  display: none;
+}
+.js .decorative-motion:not([hidden]) {
+  display: inline-flex;
+}
+.profile-alias {
+  color: var(--muted);
+  font-size: 0.8em;
+}
+
+.manifesto-star {
+  font-size: 64px;
+  right: 24px;
+  top: 24px;
+}
+@media (max-width: 700px) {
+  .manifesto-star {
+    font-size: 40px;
+    right: 16px;
+    top: auto;
+    bottom: 12px;
+  }
+  .manifesto-star .elpida-spinner {
+    max-width: 40px;
+    max-height: 40px;
   }
 }

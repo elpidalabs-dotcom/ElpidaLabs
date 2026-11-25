@@ -12,14 +12,14 @@
       name="description"
       content="Product direction and engineering notes from Elpida Labs. Read about Elpida and the early Chaos Engine research concept."
     />
-    <link rel="canonical" href="https://elpidalabs.xyz/journal.html" />
+    <link rel="canonical" href="https://elpidalabs.xyz/journal" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Journal — Elpida Labs" />
     <meta
       property="og:description"
       content="Product direction and engineering notes from Elpida Labs. Read about Elpida and the early Chaos Engine research concept."
     />
-    <meta property="og:url" content="https://elpidalabs.xyz/journal.html" />
+    <meta property="og:url" content="https://elpidalabs.xyz/journal" />
     <meta
       property="og:image"
       content="https://elpidalabs.xyz/assets/social-card.png"
@@ -65,10 +65,10 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="styles.css?v=16f661022d69" />
-    <link rel="stylesheet" href="experience.css?v=16f661022d69" />
-    <script src="script.js?v=16f661022d69" defer></script>
-    <script type="module" src="enhancements.js?v=16f661022d69"></script>
+    <link rel="stylesheet" href="styles.css?v=c234d2f634ce" />
+    <link rel="stylesheet" href="experience.css?v=c234d2f634ce" />
+    <script src="script.js?v=c234d2f634ce" defer></script>
+    <script type="module" src="enhancements.js?v=c234d2f634ce"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -85,7 +85,7 @@
               "width": 384,
               "height": 384
             },
-            "description": "A student-founded technology collective exploring AI, Web3, and software systems. Elpida and Chaos Engine are projects in development.",
+            "description": "A student-founded technology collective exploring AI, Web3, and software systems. Elpida is a live mainnet token launchpad; Chaos Engine is a resilience research concept.",
             "sameAs": ["https://github.com/elpidalabs-dotcom/ElpidaLabs"]
           },
           {
@@ -98,12 +98,12 @@
           },
           {
             "@type": "CollectionPage",
-            "@id": "https://elpidalabs.xyz/journal.html#webpage",
+            "@id": "https://elpidalabs.xyz/journal#webpage",
             "headline": "Journal",
             "name": "Journal",
             "description": "Product direction and engineering notes from Elpida Labs. Read about Elpida and the early Chaos Engine research concept.",
             "inLanguage": "en",
-            "url": "https://elpidalabs.xyz/journal.html",
+            "url": "https://elpidalabs.xyz/journal",
             "isPartOf": { "@id": "https://elpidalabs.xyz/#website" },
             "about": { "@id": "https://elpidalabs.xyz/#organization" },
             "primaryImageOfPage": {
@@ -112,13 +112,11 @@
               "width": 1200,
               "height": 630
             },
-            "breadcrumb": {
-              "@id": "https://elpidalabs.xyz/journal.html#breadcrumb"
-            }
+            "breadcrumb": { "@id": "https://elpidalabs.xyz/journal#breadcrumb" }
           },
           {
             "@type": "BreadcrumbList",
-            "@id": "https://elpidalabs.xyz/journal.html#breadcrumb",
+            "@id": "https://elpidalabs.xyz/journal#breadcrumb",
             "itemListElement": [
               {
                 "@type": "ListItem",
@@ -130,7 +128,7 @@
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Journal",
-                "item": "https://elpidalabs.xyz/journal.html"
+                "item": "https://elpidalabs.xyz/journal"
               }
             ]
           }
@@ -138,7 +136,7 @@
       }
     </script>
   </head>
-  <body data-page="journal">
+  <body data-page="journal" data-clean-urls="false">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap nav-shell">
@@ -247,7 +245,7 @@
               <a
                 class="editorial-art editorial-elpida"
                 href="building-elpida.html"
-                aria-label="EL / NOTE 01 — Building Elpida: from launch to community."
+                aria-label="EL / NOTE 01 — Elpida on mainnet: creation, discovery, and what comes next."
                 ><span class="editorial-index" aria-hidden="true"
                   >EL / NOTE 01</span
                 ><img
@@ -261,12 +259,13 @@
                 <span class="micro-label">Product thinking</span>
                 <h3>
                   <a href="building-elpida.html"
-                    >Building Elpida: from launch to community.</a
+                    >Elpida on mainnet: creation, discovery, and what comes
+                    next.</a
                   >
                 </h3>
                 <p>
-                  Creation, discovery, and the context that makes an onchain
-                  project easier to understand.
+                  Elpida is live on mainnet. A guide to the token-creation
+                  journey, explorer, and product destinations.
                 </p>
                 <a class="text-link" href="building-elpida.html"
                   >Read the note
@@ -433,9 +432,9 @@
           </div>
         </div>
         <p class="work-note">
-          Product notes describe development direction. Inside-the-build notes
-          explain decisions in this website. Product capabilities remain in
-          development.
+          Product notes distinguish Elpida’s live mainnet experience from Chaos
+          Engine’s research direction. Inside-the-build notes explain this
+          website’s engineering.
         </p>
       </section>
       <section class="cta wrap">
@@ -464,19 +463,14 @@
           ></a>
         </div>
         <span class="cta-star" aria-hidden="true"
-          ><svg
-            class="asterisk"
-            viewBox="0 0 64 64"
+          ><img
+            class="elpida-spinner"
+            src="assets/elpida-mark.png"
+            width="32"
+            height="32"
+            alt=""
             aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M32 5v54M5 32h54M13 13l38 38M13 51l38-38"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="5"
-            /></svg
-        ></span>
+        /></span>
       </section>
     </main>
     <footer class="site-footer">
@@ -542,6 +536,8 @@
         <div class="footer-bottom">
           <span>© 2026 Elpida Labs</span
           ><span class="footer-tagline">Student-founded. Future-focused.</span
+          ><button type="button" class="decorative-motion" aria-pressed="false">
+            Pause decorative motion</button
           ><a href="#main"
             >Back to top
             <svg

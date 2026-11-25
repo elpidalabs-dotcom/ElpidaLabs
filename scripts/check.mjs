@@ -48,7 +48,7 @@ for (const file of pages) {
   const html = await readFile(new URL(file, root), "utf8");
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(new Set(ids).size, ids.length, `${file}: duplicate IDs`);
-  const canonical = `https://elpidalabs.xyz/${file === "index.html" ? "" : file}`;
+  const canonical = `https://elpidalabs.xyz/${file === "index.html" ? "" : file.replace(/\.html$/, "")}`;
   assert.ok(
     html.match(/rel="canonical"\s+href="([^"]+)"/)?.[1] === canonical,
     `${file}: production canonical on both hosts`,

@@ -69,9 +69,9 @@ No application environment variables or secrets are required for this static web
 
 ## 3. Check the initial deployment
 
-Wait for Vercel to report the deployment as Ready, then check its assigned `.vercel.app` URL. Verify the home page, `elpida.html`, `chaos-engine.html`, `contact.html`, and a missing nested path. The missing path must display the custom 404 page, and Return to the lab must lead to `/`.
+Wait for Vercel to report the deployment as Ready, then check its assigned `.vercel.app` URL. Verify the home page, `/elpida`, `/chaos-engine`, `/contact`, and a missing nested path. The missing path must display the custom 404 page, and Return to the lab must lead to `/`.
 
-The deployment keeps `.html` URLs. It does not use an SPA catch-all rewrite. Canonical URLs and social metadata intentionally point to the final production domain, including while viewing a Vercel preview.
+The deployment uses clean public URLs and permanent redirects from old `.html` URLs. Static files retain their `.html` filenames; a single-segment rewrite serves them. Admin routes remain unchanged. It does not use an SPA catch-all rewrite. Canonical URLs and social metadata intentionally point to the final production domain, including while viewing a Vercel preview.
 
 ## 4. Attach the purchased domain
 
@@ -92,7 +92,7 @@ Check all of the following after DNS resolves:
 
 - `https://elpidalabs.xyz/` serves the website over HTTPS.
 - `https://www.elpidalabs.xyz/` redirects to the apex address.
-- `https://elpidalabs.xyz/contact.html` retains the confirmed `elpidalabs@gmail.com` destination.
+- `https://elpidalabs.xyz/contact` retains the confirmed `elpidalabs@gmail.com` destination.
 - `https://elpidalabs.xyz/sitemap.xml` uses the production domain.
 - `https://elpidalabs.xyz/robots.txt` points to the production sitemap.
 - A missing URL such as `/missing/nested/page` produces a real 404 with working assets and navigation.

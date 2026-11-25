@@ -14,7 +14,7 @@ motion suppresses both decorative loops and entrance/focus transitions.
 
 ## Content administration
 
-The new `/admin/` Content Studio manages approved team profiles, portrait uploads, and project articles through GitHub sign-in and draft publishing. See [ADMIN.md](ADMIN.md) for the setup, public-repository privacy limits, and publishing guide. The public site stays static; only the two admin OAuth routes need Vercel Functions. CMS content lives in `content/people` and `content/articles`, with images in `assets/uploads`.
+The new `/admin/` Content Studio manages approved team profiles, personal icon/avatar uploads, and project articles through GitHub sign-in and draft publishing. See [ADMIN.md](ADMIN.md) for the setup, public-repository privacy limits, and publishing guide. The public site stays static; only the two admin OAuth routes need Vercel Functions. CMS content lives in `content/people` and `content/articles`, with images in `assets/uploads`.
 
 ## Preview and build
 
@@ -53,24 +53,24 @@ Without JavaScript, core content and navigation remain available, all three conc
 
 Run `npm run build` after content, CSS, or browser-script changes. It writes formatted HTML and updates the shared asset fingerprint so newly deployed pages request the matching CSS and JavaScript. Relative navigation and assets preserve the `/ElpidaLabs/` project path. The 404 document has a fixed project base for missing nested URLs.
 
-No personal identities have been seeded. Approved profiles are managed as `content/people/*.json` through the Content Studio; article content lives in `content/articles/*.json`. Portraits and article images go in `assets/uploads`. Public text and links are validated and escaped. See [ADMIN.md](ADMIN.md) for editing, privacy, and publishing details.
+No personal identities have been seeded. Approved profiles are managed as `content/people/*.json` through the Content Studio; article content lives in `content/articles/*.json`. Personal icons and article images go in `assets/uploads`. Public text and links are validated and escaped. See [ADMIN.md](ADMIN.md) for editing, privacy, and publishing details.
 
 ## Pages
 
-| File                             | Purpose                                                                               |
-| -------------------------------- | ------------------------------------------------------------------------------------- |
-| `index.html`                     | Company overview, selectable orbit, products, journal                                 |
-| `elpida.html`                    | Development direction, editable interface study, journey diagram, next objectives     |
-| `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives |
-| `about.html`                     | Lab principles, AI approach, and repository evidence                                  |
-| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                        |
-| `journal.html`                   | Four filterable product and engineering notes                                         |
-| `building-elpida.html`           | Product direction and open questions                                                  |
-| `designing-for-failure.html`     | Resilience-testing research direction                                                 |
-| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                    |
-| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries             |
-| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                   |
-| `404.html`                       | Project-base-aware fallback                                                           |
+| File                             | Purpose                                                                                   |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| `index.html`                     | Company overview, selectable orbit, products, journal                                     |
+| `elpida.html`                    | Live mainnet product overview, separate interface study, journey diagram, next objectives |
+| `chaos-engine.html`              | Research direction, synthetic scenario explainer, experiment diagram, next objectives     |
+| `about.html`                     | Lab principles, AI approach, and repository evidence                                      |
+| `team.html`                      | Expandable founder, co-founder, and collaborator role profiles                            |
+| `journal.html`                   | Four filterable product and engineering notes                                             |
+| `building-elpida.html`           | Live mainnet product guide and current limitations                                        |
+| `designing-for-failure.html`     | Resilience-testing research direction                                                     |
+| `building-for-every-screen.html` | Actual responsive-design decisions in this website                                        |
+| `why-we-build-static.html`       | Website architecture, progressive enhancement, and operational boundaries                 |
+| `contact.html`                   | Direct email and reviewed enquiry-draft preparation                                       |
+| `404.html`                       | Project-base-aware fallback                                                               |
 
 ## Assets and attribution
 
@@ -109,7 +109,7 @@ Local verification uses Chrome, Edge, and WebKit. The downloaded Firefox test br
 
 `.github/workflows/quality.yml` runs on pushes to `main`, pull requests, and manual runs. Its Linux matrix checks Chromium, WebKit, and Firefox, verifies reproducible content builds, and saves screenshots/reports for seven days. Third-party actions are pinned to verified commit SHAs, and GitHub token permissions are read-only. After every browser job passes, pushes or manual runs on `main` deploy to the existing Vercel project through the CLI and the `VERCEL_TOKEN` repository secret. Pull requests never deploy. To enforce checks before merging, configure the desired required checks in GitHub repository rules.
 
-GitHub Pages can continue publishing from the repository root; `.nojekyll` preserves plain static output and `/ElpidaLabs/` remains supported. Vercel uses the separate root-domain artifact. Direct `.html` routes need no SPA fallback or server rewrite. Local build and test scripts do not publish; an approved push to `main` triggers the hosted quality and deployment workflow.
+GitHub Pages can continue publishing from the repository root; `.nojekyll` preserves plain static output and `/ElpidaLabs/` remains supported. Vercel uses the separate root-domain artifact. Production public URLs omit `.html`: `/about`, `/elpida`, and article slugs. Permanent redirects preserve old `.html` links; a single-segment Vercel rewrite serves the static HTML document. Admin URLs retain their established paths. GitHub Pages keeps file-based navigation for `/ElpidaLabs/` compatibility. Local build and test scripts do not publish; an approved push to `main` triggers the hosted quality and deployment workflow.
 
 ## Search discovery and measurement
 
@@ -118,3 +118,5 @@ The generated pages declare a stable 96 px PNG favicon, an Apple touch icon, can
 Production deployments snapshot the previous public-page manifest before deployment, verify production routes, then notify IndexNow only about added, changed, or removed public URLs. The public ownership key in `content/indexnow.json` is emitted as a root text file; it is not a login token. The notification script verifies the live manifest and key before submitting. Draft/admin URLs are excluded. A notification failure is visible in the workflow but does not roll back a healthy deployment. Do not run submissions for previews. HTTP 200/202 acknowledges receipt, not indexing. See https://www.indexnow.org/documentation.
 
 After deployment, review Google Search Console and Bing Webmaster Tools weekly: impressions, clicks, queries and pages receiving traffic. Compare equivalent date ranges and record when content changes. Use received product enquiries to assess whether visitors understand the next step. No visitor tracking or analytics cookies were added in this update. Publishing verified screenshots, team biographies and actual milestones remains an editorial task in Content Studio; concept graphics must stay labelled.
+
+Decorative starbursts have been replaced with compact rotating Elpida marks. Reduced-motion preferences stop rotation; the footer control pauses decorative motion. Profiles support an approved actual name, optional alias, uploaded personal icon, and a dedicated GitHub profile URL. No team identities are seeded.

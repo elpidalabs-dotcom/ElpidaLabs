@@ -57,12 +57,41 @@ assert.ok(sitemap.includes("https://elpidalabs.xyz/"));
 assert.ok(!sitemap.includes("github.io"));
 const robots = await readFile(new URL("robots.txt", dist), "utf8");
 assert.match(robots, /Sitemap: https:\/\/elpidalabs\.xyz\/sitemap.xml/);
+const ownership = JSON.parse(
+  await readFile(new URL("../content/indexnow.json", import.meta.url), "utf8"),
+);
+assert.equal(
+  (await readFile(new URL(ownership.key + ".txt", dist), "utf8")).trim(),
+  ownership.key,
+);
+const manifest = JSON.parse(
+  await readFile(new URL("indexnow-manifest.json", dist), "utf8"),
+);
+assert.ok(
+  Object.keys(manifest.pages).every((url) => !url.endsWith(".html")),
+  "IndexNow uses canonical clean URLs",
+);
+assert.ok(!sitemap.includes(".html"), "Sitemap uses clean URLs");
 const server = await serve(0, {
   directory: fileURLToPath(dist),
   basePath: "/",
 });
 const base = `http://127.0.0.1:${server.address().port}/`;
 try {
+  for (const slug of ["about", "elpida", "building-elpida", "team"]) {
+    const old = await fetch(base + slug + ".html?from=old", {
+      redirect: "manual",
+    });
+    assert.equal(old.status, 308);
+    assert.equal(old.headers.get("location"), "/" + slug + "?from=old");
+    assert.equal((await fetch(base + slug)).status, 200);
+  }
+  assert.equal(
+    (await fetch(base + "admin/index.html")).status,
+    200,
+    "Admin route stays available",
+  );
+  assert.equal((await fetch(base + "not-a-real-page")).status, 404);
   for (const name of (process.env.TEST_BROWSERS || "chrome,webkit").split(
     ",",
   )) {
@@ -83,6 +112,10 @@ try {
         );
         assert.equal(response.status(), 200, `${file}: static route`);
         assert.equal(await page.locator("h1").count(), 1);
+        assert.ok(
+          !new URL(page.url()).pathname.endsWith(".html"),
+          "Public browser URL is clean",
+        );
         assert.ok(
           await page
             .locator("link[rel=canonical]")
@@ -135,6 +168,41 @@ try {
         await page.locator("#scenario-state").textContent(),
         "Updated illustration",
       );
+      await page.goto(base + "about");
+      assert.equal(
+        await page.locator("svg.asterisk").count(),
+        0,
+        "Old starbursts removed",
+      );
+      const mark = page.locator(".manifesto-star .elpida-spinner");
+      assert.equal(
+        await mark.evaluate((el) => getComputedStyle(el).animationName),
+        "none",
+        "Reduced motion stops brand rotation",
+      );
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await page.waitForFunction(
+        () => !document.querySelector(".decorative-motion").hidden,
+      );
+      assert.equal(
+        await mark.evaluate((el) => getComputedStyle(el).animationName),
+        "brand-turn",
+      );
+      await page.locator(".decorative-motion").click();
+      assert.equal(
+        await mark.evaluate((el) => getComputedStyle(el).animationPlayState),
+        "paused",
+      );
+      assert.ok(
+        await mark.evaluate((el) => el.getBoundingClientRect().width <= 64),
+        "Brand mark stays miniature",
+      );
+      await page.locator("#main").focus();
+      await page.evaluate(() => scrollTo(0, 0));
+      await page.screenshot({
+        path: "test-results/updated-about-mobile.png",
+        fullPage: true,
+      });
       assert.deepEqual(errors, [], `${name}: production script errors`);
       await context.close();
       console.log(

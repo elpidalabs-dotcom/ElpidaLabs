@@ -146,3 +146,25 @@ if ("IntersectionObserver" in window && !reduced.matches) {
     }
   });
 }
+
+const decorativeControl = document.querySelector(".decorative-motion");
+if (decorativeControl) {
+  const preference = matchMedia("(prefers-reduced-motion: reduce)");
+  const setDecorationsPaused = (paused) => {
+    document.documentElement.classList.toggle("decorations-paused", paused);
+    decorativeControl.setAttribute("aria-pressed", String(paused));
+    decorativeControl.textContent = paused
+      ? "Resume decorative motion"
+      : "Pause decorative motion";
+    decorativeControl.hidden = preference.matches;
+  };
+  setDecorationsPaused(preference.matches);
+  decorativeControl.addEventListener("click", () =>
+    setDecorationsPaused(
+      decorativeControl.getAttribute("aria-pressed") !== "true",
+    ),
+  );
+  preference.addEventListener("change", () =>
+    setDecorationsPaused(preference.matches),
+  );
+}

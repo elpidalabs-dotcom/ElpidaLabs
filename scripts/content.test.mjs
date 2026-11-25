@@ -88,3 +88,30 @@ test("team entries are escaped and require approved HTTPS links", () => {
     }),
   );
 });
+
+test("profiles render approved names, aliases, avatars and GitHub independently", () => {
+  const person = {
+    slug: "test-person",
+    name: "Test Name",
+    alias: "Test Alias",
+    role: "Collaborator",
+    bio: "Fixture only",
+    published: true,
+    order: 0,
+    photo: "",
+    photoAlt: "",
+    github: "https://github.com/test-account",
+    links: [],
+  };
+  const html = renderPeople([validatePerson(person)]);
+  assert.ok(html.includes("Test Name"));
+  assert.ok(html.includes("Test Alias"));
+  assert.ok(html.includes("https://github.com/test-account"));
+  assert.throws(() =>
+    validatePerson({
+      ...person,
+      github: "https://github.com/test-account/repo",
+    }),
+  );
+  assert.throws(() => validatePerson({ ...person, alias: 12 }));
+});
